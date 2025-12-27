@@ -23,7 +23,7 @@
     <meta name="twitter:image" content="{% if site_settings.og_image %}{{ site_settings.og_image.url }}{% else %}{% static 'assets/images/og-image.jpg' %}{% endif %}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{% if site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}/assets/images/favicon.png{% endif %}">
+    <link rel="icon" type="image/png" href="{% if site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}{% static 'assets/images/favicon.png' %}{% endif %}">
 
     <title>{% block title %}{{ page_settings.meta_title|default:site_settings.meta_title|default:site_settings.site_name|default:"AIFA Football Academy" }} | Where Champions Are Made{% endblock %}</title>
 
@@ -33,10 +33,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/design-system.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/animations.css">
-    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="{% static 'css/design-system.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
     {% block extra_css %}{% endblock %}
 
     <!-- Google Analytics -->
@@ -54,7 +54,7 @@
     {% block body %}{% endblock %}
 
     <!-- Scripts -->
-    <script src="/js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

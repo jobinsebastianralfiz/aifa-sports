@@ -4,7 +4,7 @@
     <div class="footer-grid container">
         <div class="footer-brand">
             <a href="/" class="footer-logo">
-                <img src="{% if site_settings.logo_white %}{{ site_settings.logo_white.url }}{% else %}/assets/images/logo-white.png{% endif %}" alt="{{ site_settings.site_name|default:'AIFA Football Academy' }}">
+                <img src="{% if site_settings.logo_white %}{{ site_settings.logo_white.url }}{% else %}{% static 'assets/images/logo-white.png' %}{% endif %}" alt="{{ site_settings.site_name|default:'AIFA Football Academy' }}">
             </a>
             <h3 class="footer-brand-name">Altius International Football Academy</h3>
             <p>{{ site_settings.footer_about|default:"Training champions since 2014. Where passion meets excellence and dreams become reality." }}</p>

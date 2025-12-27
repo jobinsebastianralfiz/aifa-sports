@@ -158,6 +158,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'frontend',  # Your frontend assets (css, js, assets)
+    ('admin-css', BASE_DIR / 'admin' / 'css'),  # Admin CSS
+    ('admin-js', BASE_DIR / 'admin' / 'js'),  # Admin JS
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 

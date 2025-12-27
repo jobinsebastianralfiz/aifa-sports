@@ -3,7 +3,7 @@
 <nav class="navbar {{ navbar_class|default:'navbar-scrolled' }}">
     <a href="{% if nav_items %}{{ nav_items.0.url }}{% else %}/{% endif %}" class="navbar-brand">
         <img src="{% static 'images/aifl.jpg' %}" alt="AIFL" class="navbar-partner-logo">
-        <img src="{% if site_settings.logo %}{{ site_settings.logo.url }}{% else %}/assets/images/logo.png{% endif %}" alt="{{ site_settings.site_name|default:'AIFA Football Academy' }}">
+        <img src="{% if site_settings.logo %}{{ site_settings.logo.url }}{% else %}{% static 'assets/images/logo.png' %}{% endif %}" alt="{{ site_settings.site_name|default:'AIFA Football Academy' }}">
     </a>
     <ul class="navbar-menu" id="navbar-menu">
         {% for item in nav_items %}
