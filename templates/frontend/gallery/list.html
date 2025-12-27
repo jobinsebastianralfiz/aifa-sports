@@ -1,0 +1,162 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Gallery | {{ site_settings.site_name|default:"AIFA Football Academy" }}{% endblock %}
+
+{% block meta_description %}View photos and videos from Altius International Football Academy. Explore our training sessions, events, matches, and memorable moments.{% endblock %}
+
+{% block og_title %}Gallery | AIFA Football Academy{% endblock %}
+{% block og_description %}View photos and videos from AIFA - training sessions, events, and memorable moments.{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="page-hero-bg" style="background-image: url('{% if page_settings.hero_image %}{{ page_settings.hero_image.url }}{% else %}https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1920&q=80{% endif %}')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <div class="section-tag animate-on-scroll">Moments Captured</div>
+        <h1 class="page-hero-title animate-on-scroll">{{ page_settings.hero_title|default:"OUR <span class='text-gradient'>GALLERY</span>"|safe }}</h1>
+        <p class="page-hero-text animate-on-scroll">{{ page_settings.hero_subtitle|default:"Relive the action, passion, and triumphs of AIFA" }}</p>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="section">
+    <div class="container">
+        <!-- Media Type Tabs -->
+        <div class="media-tabs animate-on-scroll">
+            <button class="media-tab active" data-tab="photos">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                Photos
+            </button>
+            <button class="media-tab" data-tab="videos">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                Videos
+            </button>
+        </div>
+
+        <!-- Photos Tab Content -->
+        <div class="media-content active" id="photos-content">
+            {% if categories %}
+            <!-- Gallery Filters -->
+            <div class="gallery-filters animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">All</button>
+                {% for category in categories %}
+                <button class="filter-btn" data-filter="{{ category.slug }}">{{ category.name }}</button>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid stagger-children">
+                {% for image in recent_images %}
+                <div class="gallery-item {% cycle '' 'wide' '' 'tall' '' '' %}" data-category="{{ image.category.slug|default:'uncategorized' }}">
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">{{ image.title }}</div>
+                            <div class="gallery-item-category">{{ image.category.name|default:"Gallery" }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state text-center" style="grid-column: 1 / -1; padding: var(--space-12);">
+                    <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto var(--space-4); color: var(--glass-white-30);">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <h3 class="text-light mb-2">No images yet</h3>
+                    <p class="text-muted">Check back soon for our latest gallery updates.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Videos Tab Content -->
+        <div class="media-content" id="videos-content">
+            <!-- Video Filters -->
+            <div class="gallery-filters animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">All Videos</button>
+                <button class="filter-btn" data-filter="youtube">YouTube</button>
+                <button class="filter-btn" data-filter="youtube_shorts">Shorts</button>
+                <button class="filter-btn" data-filter="instagram">Reels</button>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="video-grid stagger-children">
+                {% for video in videos %}
+                <div class="video-item {% if video.is_vertical %}vertical{% endif %}" data-category="{{ video.platform }}" data-embed="{{ video.embed_url }}">
+                    <div class="video-thumbnail">
+                        {% if video.thumbnail_url %}
+                        <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+                        {% else %}
+                        <div class="video-placeholder">
+                            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </div>
+                        {% endif %}
+                        <div class="video-play-btn">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </div>
+                        <span class="video-platform-badge">{{ video.get_platform_display }}</span>
+                    </div>
+                    <div class="video-info">
+                        <h4 class="video-title">{{ video.title }}</h4>
+                        {% if video.description %}
+                        <p class="video-description">{{ video.description|truncatewords:15 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state text-center" style="grid-column: 1 / -1; padding: var(--space-12);">
+                    <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto var(--space-4); color: var(--glass-white-30);">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <h3 class="text-light mb-2">No videos yet</h3>
+                    <p class="text-muted">Check back soon for our latest video content.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="lightbox" id="gallery-lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+    </button>
+    <button class="lightbox-next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+        </svg>
+    </button>
+    <div class="lightbox-content">
+        <img src="" alt="" class="lightbox-image">
+        <div class="lightbox-caption"></div>
+    </div>
+</div>
+
+<!-- Video Modal -->
+<div class="video-modal" id="video-modal">
+    <button class="video-modal-close" aria-label="Close">&times;</button>
+    <div class="video-modal-content">
+        <div class="video-modal-wrapper">
+            <iframe id="video-iframe" src="" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}{{ coach.first_name }} {{ coach.last_name }} | AIFA Football Academy{% endblock %}
+
+{% block meta_description %}{{ coach.first_name }} {{ coach.last_name }} - {{ coach.designation|default:"Coach" }} at AIFA Football Academy. {{ coach.bio|truncatewords:20 }}{% endblock %}
+
+{% block og_title %}{{ coach.first_name }} {{ coach.last_name }} | AIFA Football Academy{% endblock %}
+{% block og_description %}{{ coach.designation|default:"Coach" }} at AIFA - {{ coach.bio|truncatewords:15 }}{% endblock %}
+{% block og_image %}{% if coach.photo %}{{ coach.photo.url }}{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero" style="min-height: 50vh;">
+    <div class="page-hero-bg" style="background-image: url('{% if coach.photo %}{{ coach.photo.url }}{% else %}https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80{% endif %}')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        {% if coach.certification %}
+        <div class="section-tag animate-on-scroll">{{ coach.certification }}</div>
+        {% endif %}
+        <h1 class="page-hero-title animate-on-scroll">{{ coach.first_name|upper }} {{ coach.last_name|upper }}</h1>
+        <p class="page-hero-text animate-on-scroll">{{ coach.role|default:"Coach" }}</p>
+    </div>
+</section>
+
+<!-- Coach Profile -->
+<section class="section">
+    <div class="container">
+        <div class="program-detail-card animate-on-scroll">
+            <div class="program-detail-grid">
+                <div class="program-detail-image">
+                    {% if coach.photo %}
+                    <img src="{{ coach.photo.url }}" alt="{{ coach.first_name }} {{ coach.last_name }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="{{ coach.first_name }} {{ coach.last_name }}">
+                    {% endif %}
+                </div>
+                <div class="program-detail-content">
+                    <h2 class="h2 mb-4">About {{ coach.first_name }}</h2>
+
+                    {% if coach.bio %}
+                    <div class="text-light mb-6">{{ coach.bio|linebreaks }}</div>
+                    {% endif %}
+
+                    <div class="about-features stagger-children mb-8">
+                        {% if coach.specialization %}
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polygon points="10 8 16 12 10 16 10 8"/>
+                                </svg>
+                            </div>
+                            <span>{{ coach.specialization }}</span>
+                        </div>
+                        {% endif %}
+                        {% if coach.experience_years %}
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                            </div>
+                            <span>{{ coach.experience_years }}+ Years Experience</span>
+                        </div>
+                        {% endif %}
+                        {% if coach.certification %}
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                                    <path d="M4 22h16"/>
+                                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                                </svg>
+                            </div>
+                            <span>{{ coach.certification }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="coach-socials" style="justify-content: flex-start; gap: 1rem;">
+                        {% if coach.twitter_url %}
+                        <a href="{{ coach.twitter_url }}" class="btn btn-outline" target="_blank">Twitter</a>
+                        {% endif %}
+                        {% if coach.instagram_url %}
+                        <a href="{{ coach.instagram_url }}" class="btn btn-outline" target="_blank">Instagram</a>
+                        {% endif %}
+                        {% if coach.linkedin_url %}
+                        <a href="{{ coach.linkedin_url }}" class="btn btn-outline" target="_blank">LinkedIn</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section">
+    <div class="cta-box animate-scale">
+        <h2 class="cta-title">TRAIN WITH {{ coach.first_name|upper }}</h2>
+        <p class="cta-text">Join our academy and learn from the best</p>
+        <div class="cta-buttons">
+            <a href="{% url 'frontend:contact' %}" class="btn btn-primary">Contact Us</a>
+            <a href="{% url 'coaches:list' %}" class="btn btn-outline">Our Team</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

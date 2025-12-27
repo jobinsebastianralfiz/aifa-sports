@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 2 - Stadium Spotlight | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Stadium Background */
+        .stadium-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(20, 60, 20, 0.3) 0%, transparent 50%),
+                linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+            opacity: 0;
+            animation: stadiumIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes stadiumIn {
+            to { opacity: 1; }
+        }
+
+        /* Stadium Lights */
+        .stadium-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 10%;
+        }
+
+        .light-tower {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .light-fixture {
+            width: 60px;
+            height: 30px;
+            background: #1a1a1a;
+            border-radius: 5px;
+            position: relative;
+            margin: 5px;
+        }
+
+        .light-beam {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            width: 200px;
+            height: 600px;
+            background: linear-gradient(180deg, rgba(255, 255, 200, 0.4) 0%, transparent 100%);
+            transform: translateX(-50%);
+            clip-path: polygon(30% 0, 70% 0, 100% 100%, 0% 100%);
+            opacity: 0;
+            filter: blur(10px);
+        }
+
+        .light-tower:nth-child(1) .light-beam {
+            animation: lightOn 0.3s ease-out 0.8s forwards;
+        }
+        .light-tower:nth-child(2) .light-beam {
+            animation: lightOn 0.3s ease-out 1s forwards;
+        }
+        .light-tower:nth-child(3) .light-beam {
+            animation: lightOn 0.3s ease-out 1.2s forwards;
+        }
+        .light-tower:nth-child(4) .light-beam {
+            animation: lightOn 0.3s ease-out 1.4s forwards;
+        }
+
+        @keyframes lightOn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scaleY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scaleY(1);
+            }
+        }
+
+        /* Spotlight */
+        .spotlight {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: spotlightMove 2s ease-in-out 1.8s forwards;
+            filter: blur(20px);
+        }
+
+        @keyframes spotlightMove {
+            0% {
+                opacity: 0;
+                transform: translate(-200px, 100px) scale(0.5);
+            }
+            30% {
+                opacity: 1;
+                transform: translate(-100px, 50px) scale(0.8);
+            }
+            60% {
+                transform: translate(100px, -30px) scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1.2);
+            }
+        }
+
+        /* Logo Container */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: logoReveal 0.8s ease-out 3s forwards;
+        }
+
+        @keyframes logoReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+                filter: brightness(2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: brightness(1);
+            }
+        }
+
+        .logo {
+            width: 150px;
+            height: 180px;
+            margin-bottom: 20px;
+        }
+
+        .logo-shield {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7320 100%);
+            border-radius: 10px 10px 75px 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow:
+                0 0 60px rgba(212, 175, 55, 0.5),
+                0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-shield::before {
+            content: 'AIFA';
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: #030303;
+            letter-spacing: 4px;
+        }
+
+        .academy-text {
+            font-size: 14px;
+            color: #D4AF37;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: textFade 0.5s ease-out 3.5s forwards;
+        }
+
+        @keyframes textFade {
+            to { opacity: 1; }
+        }
+
+        /* Crowd Silhouette */
+        .crowd {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 30'%3E%3Cellipse cx='10' cy='25' rx='8' ry='12' fill='%23111'/%3E%3Cellipse cx='25' cy='27' rx='7' ry='10' fill='%23111'/%3E%3Cellipse cx='40' cy='24' rx='9' ry='13' fill='%23111'/%3E%3Cellipse cx='55' cy='26' rx='8' ry='11' fill='%23111'/%3E%3Cellipse cx='70' cy='25' rx='7' ry='12' fill='%23111'/%3E%3Cellipse cx='85' cy='27' rx='9' ry='10' fill='%23111'/%3E%3Cellipse cx='100' cy='24' rx='8' ry='13' fill='%23111'/%3E%3C/svg%3E") repeat-x bottom;
+            opacity: 0;
+            animation: crowdIn 0.5s ease-out 2s forwards;
+        }
+
+        @keyframes crowdIn {
+            to { opacity: 0.5; }
+        }
+
+        /* Loading */
+        .loading-text {
+            position: absolute;
+            bottom: 50px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: loadingPulse 1s ease-in-out 3.5s infinite;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="stadium-bg"></div>
+
+        <div class="stadium-lights">
+            <div class="light-tower">
+                <div class="light-fixture"><div class="light-beam"></div></div>
+            </div>
+            <div class="light-tower">
+                <div class="light-fixture"><div class="light-beam"></div></div>
+            </div>
+            <div class="light-tower">
+                <div class="light-fixture"><div class="light-beam"></div></div>
+            </div>
+            <div class="light-tower">
+                <div class="light-fixture"><div class="light-beam"></div></div>
+            </div>
+        </div>
+
+        <div class="spotlight"></div>
+
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-shield"></div>
+            </div>
+            <div class="academy-text">Football Academy</div>
+        </div>
+
+        <div class="crowd"></div>
+        <div class="loading-text">Loading Experience</div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

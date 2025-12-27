@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 13 - Jersey Flip Countdown | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #030303 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            perspective: 1000px;
+        }
+
+        /* Jersey Container */
+        .jersey-container {
+            position: relative;
+            width: 200px;
+            height: 250px;
+            transform-style: preserve-3d;
+        }
+
+        /* Jersey Card */
+        .jersey-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            opacity: 0;
+        }
+
+        .jersey-card.card-3 {
+            animation: flipIn 0.6s ease-out 0.5s forwards, flipOut 0.6s ease-in 1.3s forwards;
+        }
+
+        .jersey-card.card-2 {
+            animation: flipIn 0.6s ease-out 1.5s forwards, flipOut 0.6s ease-in 2.3s forwards;
+        }
+
+        .jersey-card.card-1 {
+            animation: flipIn 0.6s ease-out 2.5s forwards, flipOut 0.6s ease-in 3.3s forwards;
+        }
+
+        .jersey-card.card-logo {
+            animation: flipIn 0.6s ease-out 3.5s forwards;
+        }
+
+        @keyframes flipIn {
+            0% {
+                opacity: 0;
+                transform: rotateY(-90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+        }
+
+        @keyframes flipOut {
+            0% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+        }
+
+        /* Jersey Front */
+        .jersey-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* Jersey Shape */
+        .jersey-shape {
+            width: 180px;
+            height: 220px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7320 100%);
+            clip-path: polygon(
+                20% 0%, 80% 0%,
+                100% 15%, 100% 100%,
+                70% 100%, 70% 95%,
+                30% 95%, 30% 100%,
+                0% 100%, 0% 15%
+            );
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Collar */
+        .jersey-collar {
+            position: absolute;
+            top: 0;
+            width: 60px;
+            height: 25px;
+            background: #030303;
+            border-radius: 0 0 30px 30px;
+        }
+
+        /* Stripes */
+        .jersey-stripe {
+            position: absolute;
+            top: 25%;
+            width: 100%;
+            height: 3px;
+            background: #030303;
+            opacity: 0.3;
+        }
+
+        .jersey-stripe:nth-child(2) { top: 30%; }
+        .jersey-stripe:nth-child(3) { top: 35%; }
+
+        /* Number */
+        .jersey-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 120px;
+            color: #030303;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.2);
+            z-index: 1;
+        }
+
+        /* Logo Jersey */
+        .jersey-shape.logo-jersey {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 3px solid #D4AF37;
+        }
+
+        .jersey-logo {
+            width: 100px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+        }
+
+        /* Countdown Text */
+        .countdown-label {
+            position: absolute;
+            bottom: -60px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: labelIn 0.3s ease-out 0.5s forwards, labelOut 0.3s ease-out 3.3s forwards;
+        }
+
+        @keyframes labelIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes labelOut {
+            to { opacity: 0; }
+        }
+
+        /* Brand Text */
+        .brand-container {
+            position: absolute;
+            bottom: 80px;
+            text-align: center;
+            opacity: 0;
+            animation: brandIn 0.8s ease-out 4s forwards;
+        }
+
+        @keyframes brandIn {
+            to { opacity: 1; }
+        }
+
+        .brand-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* Spotlight Effect */
+        .spotlight {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            animation: spotlightIn 0.5s ease-out 0.3s forwards;
+        }
+
+        @keyframes spotlightIn {
+            to { opacity: 1; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        .confetti:nth-child(odd) { background: #D4AF37; }
+        .confetti:nth-child(even) { background: #fff; }
+
+        .confetti:nth-child(1) { left: 20%; animation: confettiFall 2s ease-out 4s forwards; }
+        .confetti:nth-child(2) { left: 30%; animation: confettiFall 2.3s ease-out 4.1s forwards; }
+        .confetti:nth-child(3) { left: 40%; animation: confettiFall 1.8s ease-out 4.2s forwards; }
+        .confetti:nth-child(4) { left: 50%; animation: confettiFall 2.1s ease-out 4s forwards; }
+        .confetti:nth-child(5) { left: 60%; animation: confettiFall 1.9s ease-out 4.15s forwards; }
+        .confetti:nth-child(6) { left: 70%; animation: confettiFall 2.2s ease-out 4.05s forwards; }
+        .confetti:nth-child(7) { left: 80%; animation: confettiFall 2s ease-out 4.1s forwards; }
+
+        @keyframes confettiFall {
+            0% {
+                top: -10px;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 110%;
+                opacity: 0;
+                transform: rotate(720deg);
+            }
+        }
+
+        /* Loading */
+        .loading-bar {
+            position: absolute;
+            bottom: 30px;
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 4.5s forwards;
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #D4AF37;
+            animation: load 1.5s ease-in-out 4.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="spotlight"></div>
+
+        <!-- Confetti -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+
+        <!-- Jersey Cards -->
+        <div class="jersey-container">
+            <!-- Number 3 -->
+            <div class="jersey-card card-3">
+                <div class="jersey-front">
+                    <div class="jersey-shape">
+                        <div class="jersey-collar"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-number">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Number 2 -->
+            <div class="jersey-card card-2">
+                <div class="jersey-front">
+                    <div class="jersey-shape">
+                        <div class="jersey-collar"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-number">2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Number 1 -->
+            <div class="jersey-card card-1">
+                <div class="jersey-front">
+                    <div class="jersey-shape">
+                        <div class="jersey-collar"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-stripe"></div>
+                        <div class="jersey-number">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logo -->
+            <div class="jersey-card card-logo">
+                <div class="jersey-front">
+                    <div class="jersey-shape logo-jersey">
+                        <div class="jersey-collar"></div>
+                        <img src="../assets/images/logo.png" alt="AIFA" class="jersey-logo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="countdown-label">Get Ready</div>
+        </div>
+
+        <!-- Brand -->
+        <div class="brand-container">
+            <div class="brand-text">AIFA</div>
+            <div class="tagline">Football Academy</div>
+        </div>
+
+        <div class="loading-bar"></div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

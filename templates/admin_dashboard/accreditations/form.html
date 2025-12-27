@@ -1,0 +1,167 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}{% if object %}Edit{% else %}Add{% endif %} Accreditation{% endblock %}
+{% block header_title %}{% if object %}Edit{% else %}Add{% endif %} Accreditation{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>{% if object %}Edit{% else %}Add{% endif %} Accreditation</h2>
+        <p class="text-muted">{% if object %}Update accreditation details{% else %}Add a new certification, affiliation, or partnership{% endif %}</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:accreditations:list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to List
+        </a>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="admin-form">
+    {% csrf_token %}
+
+    <div class="form-layout">
+        <div class="form-main">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Accreditation Details</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="id_name">Name *</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                        <span class="form-error">{{ form.name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="id_issuing_body">Issuing Body *</label>
+                            {{ form.issuing_body }}
+                            <span class="form-hint">e.g., FIFA, UEFA, AIFF</span>
+                            {% if form.issuing_body.errors %}
+                            <span class="form-error">{{ form.issuing_body.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_accreditation_type">Type *</label>
+                            {{ form.accreditation_type }}
+                            {% if form.accreditation_type.errors %}
+                            <span class="form-error">{{ form.accreditation_type.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_description">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <span class="form-error">{{ form.description.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="id_website_url">Website URL</label>
+                            {{ form.website_url }}
+                            {% if form.website_url.errors %}
+                            <span class="form-error">{{ form.website_url.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_issued_date">Issued Date</label>
+                            {{ form.issued_date }}
+                            {% if form.issued_date.errors %}
+                            <span class="form-error">{{ form.issued_date.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="id_rating">Star Rating</label>
+                            {{ form.rating }}
+                            <span class="form-hint">Rate from 1 to 5 stars</span>
+                            {% if form.rating.errors %}
+                            <span class="form-error">{{ form.rating.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_rating_label">Rating Label</label>
+                            {{ form.rating_label }}
+                            <span class="form-hint">e.g., "4 Star Academy", "Elite Member"</span>
+                            {% if form.rating_label.errors %}
+                            <span class="form-error">{{ form.rating_label.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_logo">Logo *</label>
+                        {% if object.logo %}
+                        <div class="current-image">
+                            <img src="{{ object.logo.url }}" alt="Current logo" style="max-width: 150px; margin-bottom: 10px; border-radius: 8px; background: var(--glass-white-10); padding: 10px;">
+                        </div>
+                        {% endif %}
+                        {{ form.logo }}
+                        <span class="form-hint">Recommended: 200x200px (PNG with transparent background)</span>
+                        {% if form.logo.errors %}
+                        <span class="form-error">{{ form.logo.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-sidebar">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ form.is_active }}
+                            <span>Active</span>
+                        </label>
+                        <span class="form-hint">Show this accreditation on the website</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ form.is_featured }}
+                            <span>Featured</span>
+                        </label>
+                        <span class="form-hint">Highlight this accreditation</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ form.show_on_homepage }}
+                            <span>Show on Homepage</span>
+                        </label>
+                        <span class="form-hint">Display in the homepage accreditations section</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_display_order">Display Order</label>
+                        {{ form.display_order }}
+                        <span class="form-hint">Lower numbers appear first</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block">
+                    {% if object %}Update{% else %}Create{% endif %} Accreditation
+                </button>
+                <a href="{% url 'admin_dashboard:accreditations:list' %}" class="btn btn-ghost btn-block">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

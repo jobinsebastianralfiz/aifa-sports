@@ -1,0 +1,956 @@
+/**
+ * AIFA Football Academy - Design System
+ * Version: 1.0
+ *
+ * Table of Contents:
+ * 1. CSS Variables (Colors, Typography, Spacing, Shadows, etc.)
+ * 2. Reset & Base Styles
+ * 3. Typography
+ * 4. Layout Utilities
+ * 5. Spacing Utilities
+ * 6. Color Utilities
+ * 7. Display Utilities
+ * 8. Flexbox Utilities
+ * 9. Grid Utilities
+ * 10. Border Utilities
+ * 11. Shadow Utilities
+ * 12. Animation Utilities
+ */
+
+/* ==========================================================================
+   1. CSS VARIABLES
+   ========================================================================== */
+
+:root {
+    /* ----------------------
+       Primary Colors (Gold)
+       ---------------------- */
+    --primary-50: #fefce8;
+    --primary-100: #fef9c3;
+    --primary-200: #fef08a;
+    --primary-300: #fde047;
+    --primary-400: #facc15;
+    --primary-500: #eab308;  /* Main Primary - Gold */
+    --primary-600: #ca8a04;
+    --primary-700: #a16207;
+    --primary-800: #854d0e;
+    --primary-900: #713f12;
+
+    /* Semantic primary aliases */
+    --primary: var(--primary-400);
+    --primary-light: var(--primary-300);
+    --primary-dark: var(--primary-500);
+    --primary-hover: var(--primary-300);
+
+    /* ----------------------
+       Secondary Colors (White/Light)
+       ---------------------- */
+    --secondary-50: #ffffff;
+    --secondary-100: #fafafa;
+    --secondary-200: #f5f5f5;
+    --secondary-300: #e5e5e5;
+    --secondary-400: #d4d4d4;
+    --secondary-500: #a3a3a3;
+    --secondary-600: #737373;
+    --secondary-700: #525252;
+    --secondary-800: #404040;
+    --secondary-900: #262626;
+
+    --secondary: var(--secondary-50);
+
+    /* ----------------------
+       Dark Colors (Background)
+       ---------------------- */
+    --dark-50: #1a1a1a;
+    --dark-100: #141414;
+    --dark-200: #0f0f0f;
+    --dark-300: #0a0a0a;  /* Main Dark */
+    --dark-400: #050505;
+    --dark-500: #030303;  /* Darker */
+    --dark-600: #020202;
+    --dark-700: #010101;
+    --dark-800: #000000;
+
+    --dark: var(--dark-300);
+    --darker: var(--dark-500);
+    --darkest: var(--dark-800);
+
+    /* ----------------------
+       Accent Colors
+       ---------------------- */
+    --accent-gold: #ffd700;
+    --accent-orange: #ff6b35;
+    --accent-red: #ef4444;
+    --accent-green: #22c55e;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-cyan: #06b6d4;
+
+    /* ----------------------
+       Semantic Colors
+       ---------------------- */
+    --success: #22c55e;
+    --success-light: #86efac;
+    --success-dark: #16a34a;
+
+    --warning: #f59e0b;
+    --warning-light: #fcd34d;
+    --warning-dark: #d97706;
+
+    --error: #ef4444;
+    --error-light: #fca5a5;
+    --error-dark: #dc2626;
+    --danger: #ef4444; /* Alias for error */
+
+    --info: #3b82f6;
+    --info-light: #93c5fd;
+    --info-dark: #2563eb;
+
+    /* ----------------------
+       Glass Effects
+       ---------------------- */
+    --glass-white-3: rgba(255, 255, 255, 0.03);
+    --glass-white-5: rgba(255, 255, 255, 0.05);
+    --glass-white-10: rgba(255, 255, 255, 0.1);
+    --glass-white-15: rgba(255, 255, 255, 0.15);
+    --glass-white-20: rgba(255, 255, 255, 0.2);
+    --glass-white-30: rgba(255, 255, 255, 0.3);
+    --glass-white-40: rgba(255, 255, 255, 0.4);
+    --glass-white-50: rgba(255, 255, 255, 0.5);
+    --glass-white-60: rgba(255, 255, 255, 0.6);
+    --glass-white-70: rgba(255, 255, 255, 0.7);
+    --glass-white-80: rgba(255, 255, 255, 0.8);
+    --glass-white-90: rgba(255, 255, 255, 0.9);
+
+    --glass-black-5: rgba(0, 0, 0, 0.05);
+    --glass-black-10: rgba(0, 0, 0, 0.1);
+    --glass-black-20: rgba(0, 0, 0, 0.2);
+    --glass-black-30: rgba(0, 0, 0, 0.3);
+    --glass-black-50: rgba(0, 0, 0, 0.5);
+    --glass-black-70: rgba(0, 0, 0, 0.7);
+
+    --glass-primary-10: rgba(59, 130, 246, 0.1);
+    --glass-primary-15: rgba(59, 130, 246, 0.15);
+    --glass-primary-20: rgba(59, 130, 246, 0.2);
+    --glass-primary-30: rgba(59, 130, 246, 0.3);
+
+    /* Glass component styles */
+    --glass: var(--glass-white-5);
+    --glass-border: var(--glass-white-10);
+    --glass-hover: var(--glass-white-15);
+
+    /* ----------------------
+       Typography
+       ---------------------- */
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-accent: 'Playfair Display', serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Font Sizes */
+    --text-xs: 0.75rem;      /* 12px */
+    --text-sm: 0.875rem;     /* 14px */
+    --text-base: 1rem;       /* 16px */
+    --text-lg: 1.125rem;     /* 18px */
+    --text-xl: 1.25rem;      /* 20px */
+    --text-2xl: 1.5rem;      /* 24px */
+    --text-3xl: 1.875rem;    /* 30px */
+    --text-4xl: 2.25rem;     /* 36px */
+    --text-5xl: 3rem;        /* 48px */
+    --text-6xl: 3.75rem;     /* 60px */
+    --text-7xl: 4.5rem;      /* 72px */
+    --text-8xl: 6rem;        /* 96px */
+    --text-9xl: 8rem;        /* 128px */
+
+    /* Font Weights */
+    --font-thin: 100;
+    --font-extralight: 200;
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+    --font-black: 900;
+
+    /* Line Heights */
+    --leading-none: 1;
+    --leading-tight: 1.25;
+    --leading-snug: 1.375;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose: 2;
+
+    /* Letter Spacing */
+    --tracking-tighter: -0.05em;
+    --tracking-tight: -0.025em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
+    --tracking-widest: 0.1em;
+    --tracking-mega: 0.2em;
+
+    /* ----------------------
+       Spacing Scale
+       ---------------------- */
+    --space-0: 0;
+    --space-1: 0.25rem;      /* 4px */
+    --space-2: 0.5rem;       /* 8px */
+    --space-3: 0.75rem;      /* 12px */
+    --space-4: 1rem;         /* 16px */
+    --space-5: 1.25rem;      /* 20px */
+    --space-6: 1.5rem;       /* 24px */
+    --space-7: 1.75rem;      /* 28px */
+    --space-8: 2rem;         /* 32px */
+    --space-9: 2.25rem;      /* 36px */
+    --space-10: 2.5rem;      /* 40px */
+    --space-11: 2.75rem;     /* 44px */
+    --space-12: 3rem;        /* 48px */
+    --space-14: 3.5rem;      /* 56px */
+    --space-16: 4rem;        /* 64px */
+    --space-20: 5rem;        /* 80px */
+    --space-24: 6rem;        /* 96px */
+    --space-28: 7rem;        /* 112px */
+    --space-32: 8rem;        /* 128px */
+    --space-36: 9rem;        /* 144px */
+    --space-40: 10rem;       /* 160px */
+    --space-44: 11rem;       /* 176px */
+    --space-48: 12rem;       /* 192px */
+    --space-52: 13rem;       /* 208px */
+    --space-56: 14rem;       /* 224px */
+    --space-60: 15rem;       /* 240px */
+    --space-64: 16rem;       /* 256px */
+    --space-72: 18rem;       /* 288px */
+    --space-80: 20rem;       /* 320px */
+    --space-96: 24rem;       /* 384px */
+
+    /* ----------------------
+       Border Radius
+       ---------------------- */
+    --radius-none: 0;
+    --radius-sm: 0.125rem;   /* 2px */
+    --radius-default: 0.25rem; /* 4px */
+    --radius-md: 0.375rem;   /* 6px */
+    --radius-lg: 0.5rem;     /* 8px */
+    --radius-xl: 0.75rem;    /* 12px */
+    --radius-2xl: 1rem;      /* 16px */
+    --radius-3xl: 1.5rem;    /* 24px */
+    --radius-4xl: 2rem;      /* 32px */
+    --radius-full: 9999px;
+
+    /* ----------------------
+       Shadows
+       ---------------------- */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+    /* Glow Shadows */
+    --shadow-glow-sm: 0 0 10px rgba(59, 130, 246, 0.3);
+    --shadow-glow-md: 0 0 20px rgba(59, 130, 246, 0.4);
+    --shadow-glow-lg: 0 0 30px rgba(59, 130, 246, 0.5);
+    --shadow-glow-xl: 0 10px 40px rgba(59, 130, 246, 0.4);
+
+    /* Card Shadows */
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --shadow-card-gold: 0 10px 30px rgba(59, 130, 246, 0.2);
+
+    /* ----------------------
+       Transitions
+       ---------------------- */
+    --transition-fast: 150ms;
+    --transition-normal: 300ms;
+    --transition-slow: 500ms;
+    --transition-slower: 700ms;
+
+    --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ----------------------
+       Z-Index Scale
+       ---------------------- */
+    --z-negative: -1;
+    --z-0: 0;
+    --z-10: 10;
+    --z-20: 20;
+    --z-30: 30;
+    --z-40: 40;
+    --z-50: 50;
+    --z-60: 60;
+    --z-70: 70;
+    --z-80: 80;
+    --z-90: 90;
+    --z-100: 100;
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
+    --z-max: 9999;
+
+    /* ----------------------
+       Breakpoints (for reference)
+       ---------------------- */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+
+    /* ----------------------
+       Container Widths
+       ---------------------- */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+    --container-2xl: 1400px;
+
+    /* ----------------------
+       Sidebar & Header
+       ---------------------- */
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 80px;
+    --header-height: 70px;
+    --footer-height: 60px;
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--darker);
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-normal);
+    color: var(--secondary);
+    background-color: var(--darker);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 320px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Universal overflow prevention */
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Selection */
+::selection {
+    background: var(--primary);
+    color: var(--darker);
+}
+
+::-moz-selection {
+    background: var(--primary);
+    color: var(--darker);
+}
+
+/* Links */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast) var(--ease-default);
+}
+
+a:hover {
+    color: var(--primary);
+}
+
+/* Images */
+img,
+video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Lists */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Buttons & Inputs */
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Focus Styles */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY
+   ========================================================================== */
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-wide);
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+h1, .h1 { font-size: clamp(var(--text-5xl), 10vw, var(--text-9xl)); }
+h2, .h2 { font-size: clamp(var(--text-4xl), 8vw, var(--text-7xl)); }
+h3, .h3 { font-size: clamp(var(--text-3xl), 6vw, var(--text-5xl)); }
+h4, .h4 { font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl)); }
+h5, .h5 { font-size: var(--text-xl); }
+h6, .h6 { font-size: var(--text-lg); }
+
+/* Body Text */
+p {
+    margin-bottom: var(--space-4);
+}
+
+.lead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--glass-white-70);
+}
+
+.small {
+    font-size: var(--text-sm);
+}
+
+.tiny {
+    font-size: var(--text-xs);
+}
+
+/* Text Styles */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light), var(--secondary), var(--primary));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientMove 4s ease infinite;
+}
+
+.text-stroke {
+    -webkit-text-stroke: 2px var(--glass-white-30);
+    color: transparent;
+}
+
+.text-accent {
+    font-family: var(--font-accent);
+    font-style: italic;
+    color: var(--primary);
+}
+
+.text-mono {
+    font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   4. LAYOUT UTILITIES
+   ========================================================================== */
+
+.container {
+    width: 100%;
+    max-width: var(--container-2xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+}
+
+@media (min-width: 640px) {
+    .container { padding-left: var(--space-6); padding-right: var(--space-6); }
+}
+
+@media (min-width: 1024px) {
+    .container { padding-left: var(--space-8); padding-right: var(--space-8); }
+}
+
+.container-sm { max-width: var(--container-sm); }
+.container-md { max-width: var(--container-md); }
+.container-lg { max-width: var(--container-lg); }
+.container-xl { max-width: var(--container-xl); }
+
+/* Section */
+.section {
+    padding: var(--space-24) 5%;
+    position: relative;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.section-sm { padding: var(--space-16) 5%; }
+.section-lg { padding: var(--space-32) 5%; }
+
+/* ==========================================================================
+   5. SPACING UTILITIES
+   ========================================================================== */
+
+/* Margin */
+.m-0 { margin: 0; }
+.m-1 { margin: var(--space-1); }
+.m-2 { margin: var(--space-2); }
+.m-3 { margin: var(--space-3); }
+.m-4 { margin: var(--space-4); }
+.m-5 { margin: var(--space-5); }
+.m-6 { margin: var(--space-6); }
+.m-8 { margin: var(--space-8); }
+.m-auto { margin: auto; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mt-10 { margin-top: var(--space-10); }
+.mt-12 { margin-top: var(--space-12); }
+.mt-16 { margin-top: var(--space-16); }
+.mt-20 { margin-top: var(--space-20); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mb-10 { margin-bottom: var(--space-10); }
+.mb-12 { margin-bottom: var(--space-12); }
+.mb-16 { margin-bottom: var(--space-16); }
+.mb-20 { margin-bottom: var(--space-20); }
+
+.ml-auto { margin-left: auto; }
+.mr-auto { margin-right: auto; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Padding */
+.p-0 { padding: 0; }
+.p-1 { padding: var(--space-1); }
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5); }
+.p-6 { padding: var(--space-6); }
+.p-8 { padding: var(--space-8); }
+.p-10 { padding: var(--space-10); }
+.p-12 { padding: var(--space-12); }
+
+.px-4 { padding-left: var(--space-4); padding-right: var(--space-4); }
+.px-6 { padding-left: var(--space-6); padding-right: var(--space-6); }
+.px-8 { padding-left: var(--space-8); padding-right: var(--space-8); }
+
+.py-4 { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+.py-6 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+.py-8 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+.py-10 { padding-top: var(--space-10); padding-bottom: var(--space-10); }
+.py-12 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+
+/* Gap */
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+.gap-10 { gap: var(--space-10); }
+.gap-12 { gap: var(--space-12); }
+
+/* ==========================================================================
+   6. COLOR UTILITIES
+   ========================================================================== */
+
+/* Text Colors */
+.text-primary { color: var(--primary); }
+.text-primary-light { color: var(--primary-light); }
+.text-primary-dark { color: var(--primary-dark); }
+.text-secondary { color: var(--secondary); }
+.text-white { color: #fff; }
+.text-dark { color: var(--dark); }
+.text-muted { color: var(--glass-white-50); }
+.text-light { color: var(--glass-white-70); }
+
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-error { color: var(--error); }
+.text-danger { color: var(--error); }
+.text-info { color: var(--info); }
+
+/* Background Colors */
+.bg-primary { background-color: var(--primary); }
+.bg-primary-light { background-color: var(--primary-light); }
+.bg-primary-dark { background-color: var(--primary-dark); }
+.bg-dark { background-color: var(--dark); }
+.bg-darker { background-color: var(--darker); }
+.bg-white { background-color: #fff; }
+.bg-glass { background-color: var(--glass); }
+
+.bg-success { background-color: var(--success); }
+.bg-warning { background-color: var(--warning); }
+.bg-error { background-color: var(--error); }
+.bg-info { background-color: var(--info); }
+
+/* Gradient Backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+.bg-gradient-gold {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+
+.bg-gradient-dark {
+    background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+}
+
+/* ==========================================================================
+   7. DISPLAY UTILITIES
+   ========================================================================== */
+
+.hidden { display: none; }
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+.opacity-0 { opacity: 0; }
+.opacity-25 { opacity: 0.25; }
+.opacity-50 { opacity: 0.5; }
+.opacity-75 { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+/* ==========================================================================
+   8. FLEXBOX UTILITIES
+   ========================================================================== */
+
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-col-reverse { flex-direction: column-reverse; }
+
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+.flex-1 { flex: 1 1 0%; }
+.flex-auto { flex: 1 1 auto; }
+.flex-none { flex: none; }
+.flex-grow { flex-grow: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+/* ==========================================================================
+   9. GRID UTILITIES
+   ========================================================================== */
+
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+.col-span-1 { grid-column: span 1 / span 1; }
+.col-span-2 { grid-column: span 2 / span 2; }
+.col-span-3 { grid-column: span 3 / span 3; }
+.col-span-4 { grid-column: span 4 / span 4; }
+.col-span-6 { grid-column: span 6 / span 6; }
+.col-span-full { grid-column: 1 / -1; }
+
+/* ==========================================================================
+   10. BORDER UTILITIES
+   ========================================================================== */
+
+.border { border: 1px solid var(--glass-border); }
+.border-0 { border: none; }
+.border-2 { border-width: 2px; }
+.border-t { border-top: 1px solid var(--glass-border); }
+.border-b { border-bottom: 1px solid var(--glass-border); }
+.border-l { border-left: 1px solid var(--glass-border); }
+.border-r { border-right: 1px solid var(--glass-border); }
+
+.border-primary { border-color: var(--primary); }
+.border-white { border-color: #fff; }
+.border-glass { border-color: var(--glass-border); }
+
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded { border-radius: var(--radius-default); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-3xl { border-radius: var(--radius-3xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ==========================================================================
+   11. SHADOW UTILITIES
+   ========================================================================== */
+
+.shadow-none { box-shadow: none; }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow-md); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-2xl { box-shadow: var(--shadow-2xl); }
+
+.shadow-glow { box-shadow: var(--shadow-glow-md); }
+.shadow-glow-lg { box-shadow: var(--shadow-glow-lg); }
+.shadow-card { box-shadow: var(--shadow-card); }
+
+/* ==========================================================================
+   12. POSITION UTILITIES
+   ========================================================================== */
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+.static { position: static; }
+
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+/* ==========================================================================
+   13. SIZE UTILITIES
+   ========================================================================== */
+
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.w-screen { width: 100vw; }
+.h-full { height: 100%; }
+.h-auto { height: auto; }
+.h-screen { height: 100vh; }
+.min-h-screen { min-height: 100vh; }
+
+/* ==========================================================================
+   14. OVERFLOW UTILITIES
+   ========================================================================== */
+
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-scroll { overflow: scroll; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+
+/* ==========================================================================
+   15. TEXT UTILITIES
+   ========================================================================== */
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+.font-thin { font-weight: var(--font-thin); }
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+.font-extrabold { font-weight: var(--font-extrabold); }
+
+.italic { font-style: italic; }
+.not-italic { font-style: normal; }
+
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+.no-underline { text-decoration: none; }
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Text Sizes */
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
+.text-6xl { font-size: var(--text-6xl); }
+.text-7xl { font-size: var(--text-7xl); }
+.text-8xl { font-size: var(--text-8xl); }
+
+.whitespace-nowrap { white-space: nowrap; }
+.whitespace-normal { white-space: normal; }
+
+/* ==========================================================================
+   16. CURSOR & INTERACTION
+   ========================================================================== */
+
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+.cursor-not-allowed { cursor: not-allowed; }
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+.select-none { user-select: none; }
+.select-text { user-select: text; }
+
+/* ==========================================================================
+   17. TRANSITION UTILITIES
+   ========================================================================== */
+
+.transition {
+    transition-property: all;
+    transition-duration: var(--transition-normal);
+    transition-timing-function: var(--ease-default);
+}
+
+.transition-fast { transition-duration: var(--transition-fast); }
+.transition-slow { transition-duration: var(--transition-slow); }
+
+.ease-in { transition-timing-function: var(--ease-in); }
+.ease-out { transition-timing-function: var(--ease-out); }
+.ease-in-out { transition-timing-function: var(--ease-in-out); }
+.ease-bounce { transition-timing-function: var(--ease-bounce); }
+
+/* ==========================================================================
+   18. RESPONSIVE UTILITIES
+   ========================================================================== */
+
+/* Mobile menu visibility */
+@media (max-width: 991px) {
+    .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 992px) {
+    .hide-desktop { display: none !important; }
+}
+
+/* Responsive grid */
+@media (min-width: 640px) {
+    .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .lg\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+/* Responsive flex */
+@media (min-width: 768px) {
+    .md\:flex-row { flex-direction: row; }
+}
+
+/* Responsive display */
+@media (max-width: 767px) {
+    .mobile\:hidden { display: none; }
+}
+
+@media (min-width: 768px) {
+    .desktop\:hidden { display: none; }
+}

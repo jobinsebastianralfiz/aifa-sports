@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 8 - Trophy Rise | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #0a0a0a 0%, #030303 50%, #0a0505 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Pedestal */
+        .pedestal {
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+            opacity: 0;
+            animation: pedestalIn 0.5s ease-out 0.3s forwards;
+        }
+
+        .pedestal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+
+        @keyframes pedestalIn {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Trophy */
+        .trophy-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .trophy {
+            width: 150px;
+            height: 200px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(300px);
+            animation: trophyRise 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        }
+
+        @keyframes trophyRise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Trophy Parts */
+        .trophy-cup {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 100px;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 30%, #8B7320 60%, #D4AF37 100%);
+            border-radius: 0 0 60px 60px;
+            box-shadow:
+                inset -10px -10px 30px rgba(0,0,0,0.3),
+                0 10px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .trophy-cup::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 0 0 40px 40px;
+        }
+
+        /* Trophy Handles */
+        .trophy-handle {
+            position: absolute;
+            top: 20px;
+            width: 30px;
+            height: 50px;
+            border: 8px solid #D4AF37;
+            border-radius: 20px;
+        }
+
+        .trophy-handle.left {
+            left: -15px;
+            border-right: none;
+            border-radius: 20px 0 0 20px;
+        }
+
+        .trophy-handle.right {
+            right: -15px;
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+        }
+
+        /* Trophy Stem */
+        .trophy-stem {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 40px;
+            background: linear-gradient(90deg, #8B7320, #D4AF37, #8B7320);
+        }
+
+        /* Trophy Base */
+        .trophy-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 30px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7320 100%);
+            border-radius: 5px;
+        }
+
+        .trophy-base::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 15px;
+            background: linear-gradient(180deg, #D4AF37, #8B7320);
+            border-radius: 3px;
+        }
+
+        /* Light Rays */
+        .light-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            opacity: 0;
+            animation: raysIn 1s ease-out 2s forwards;
+        }
+
+        @keyframes raysIn {
+            to { opacity: 1; }
+        }
+
+        .ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 3px;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.8) 0%, transparent 100%);
+            transform-origin: bottom center;
+        }
+
+        .ray:nth-child(1) { transform: rotate(0deg); }
+        .ray:nth-child(2) { transform: rotate(30deg); }
+        .ray:nth-child(3) { transform: rotate(60deg); }
+        .ray:nth-child(4) { transform: rotate(90deg); }
+        .ray:nth-child(5) { transform: rotate(120deg); }
+        .ray:nth-child(6) { transform: rotate(150deg); }
+        .ray:nth-child(7) { transform: rotate(180deg); }
+        .ray:nth-child(8) { transform: rotate(210deg); }
+        .ray:nth-child(9) { transform: rotate(240deg); }
+        .ray:nth-child(10) { transform: rotate(270deg); }
+        .ray:nth-child(11) { transform: rotate(300deg); }
+        .ray:nth-child(12) { transform: rotate(330deg); }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 1s ease-out infinite;
+        }
+
+        .sparkle:nth-child(1) { top: 20%; left: 30%; animation-delay: 2.2s; }
+        .sparkle:nth-child(2) { top: 30%; right: 25%; animation-delay: 2.4s; }
+        .sparkle:nth-child(3) { top: 50%; left: 20%; animation-delay: 2.6s; }
+        .sparkle:nth-child(4) { top: 40%; right: 30%; animation-delay: 2.8s; }
+        .sparkle:nth-child(5) { top: 60%; left: 35%; animation-delay: 3s; }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Logo in Trophy */
+        .logo-reveal {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+            animation: logoIn 0.8s ease-out 2.5s forwards;
+        }
+
+        @keyframes logoIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .logo-reveal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 1));
+        }
+
+        /* Text */
+        .brand-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+            opacity: 0;
+            animation: textIn 0.8s ease-out 3s forwards;
+        }
+
+        @keyframes textIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            opacity: 0;
+            animation: textIn 0.8s ease-out 3.3s forwards;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        .confetti:nth-child(odd) { background: #D4AF37; }
+        .confetti:nth-child(even) { background: #fff; }
+
+        .confetti:nth-child(1) { left: 20%; animation: fall 2s ease-out 2.3s forwards; }
+        .confetti:nth-child(2) { left: 30%; animation: fall 2.2s ease-out 2.4s forwards; }
+        .confetti:nth-child(3) { left: 40%; animation: fall 1.8s ease-out 2.5s forwards; }
+        .confetti:nth-child(4) { left: 50%; animation: fall 2.1s ease-out 2.3s forwards; }
+        .confetti:nth-child(5) { left: 60%; animation: fall 1.9s ease-out 2.6s forwards; }
+        .confetti:nth-child(6) { left: 70%; animation: fall 2.3s ease-out 2.4s forwards; }
+        .confetti:nth-child(7) { left: 80%; animation: fall 2s ease-out 2.5s forwards; }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 110%;
+                opacity: 0;
+                transform: rotate(720deg);
+            }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <!-- Light Rays -->
+        <div class="light-rays">
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+        </div>
+
+        <!-- Sparkles -->
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+
+        <!-- Confetti -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+
+        <!-- Trophy -->
+        <div class="trophy-container">
+            <div class="trophy">
+                <div class="trophy-cup">
+                    <div class="trophy-handle left"></div>
+                    <div class="trophy-handle right"></div>
+                    <div class="logo-reveal">
+                        <img src="../assets/images/logo.png" alt="AIFA">
+                    </div>
+                </div>
+                <div class="trophy-stem"></div>
+                <div class="trophy-base"></div>
+            </div>
+        </div>
+
+        <div class="brand-text">AIFA</div>
+        <div class="tagline">Where Champions Are Made</div>
+
+        <div class="pedestal"></div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

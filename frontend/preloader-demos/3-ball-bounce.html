@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 3 - Logo Reveal | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #030303 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Logo Reveal */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0);
+            animation: logoExplode 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+        }
+
+        @keyframes logoExplode {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .logo-img {
+            width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));
+        }
+
+        /* Explosion Particles */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .particle:nth-child(1) { animation: explode 0.8s ease-out 0.5s forwards; --x: -100px; --y: -80px; }
+        .particle:nth-child(2) { animation: explode 0.8s ease-out 0.5s forwards; --x: 100px; --y: -80px; }
+        .particle:nth-child(3) { animation: explode 0.8s ease-out 0.5s forwards; --x: -120px; --y: 20px; }
+        .particle:nth-child(4) { animation: explode 0.8s ease-out 0.5s forwards; --x: 120px; --y: 20px; }
+        .particle:nth-child(5) { animation: explode 0.8s ease-out 0.5s forwards; --x: -80px; --y: 100px; }
+        .particle:nth-child(6) { animation: explode 0.8s ease-out 0.5s forwards; --x: 80px; --y: 100px; }
+        .particle:nth-child(7) { animation: explode 0.8s ease-out 0.5s forwards; --x: 0px; --y: -120px; }
+        .particle:nth-child(8) { animation: explode 0.8s ease-out 0.5s forwards; --x: 0px; --y: 120px; }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) scale(0);
+            }
+        }
+
+        /* Ring Burst */
+        .ring-burst {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #D4AF37;
+            border-radius: 50%;
+            opacity: 0;
+            animation: ringExpand 0.8s ease-out 0.5s forwards;
+        }
+
+        @keyframes ringExpand {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(8);
+            }
+        }
+
+        /* Text Animation */
+        .brand-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: textSlide 0.6s ease-out 1s forwards;
+        }
+
+        @keyframes textSlide {
+            0% {
+                opacity: 0;
+                letter-spacing: 50px;
+            }
+            100% {
+                opacity: 1;
+                letter-spacing: 15px;
+            }
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 1.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Loading Bar */
+        .loading-bar {
+            position: absolute;
+            bottom: 80px;
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out 1.7s forwards;
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #FFD700, #D4AF37);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s ease-in-out 2s infinite;
+            width: 100%;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+
+        <!-- Explosion Effects -->
+        <div class="ring-burst"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="../assets/images/logo.png" alt="AIFA" class="logo-img">
+            <div class="tagline">Where Champions Are Made</div>
+        </div>
+
+        <div class="loading-bar"></div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

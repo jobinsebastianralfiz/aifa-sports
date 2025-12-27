@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 15 - Golden Boot Kick | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #030303 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Ground Line */
+        .ground-line {
+            position: absolute;
+            bottom: 25%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            opacity: 0;
+            animation: groundIn 0.5s ease-out 0.3s forwards;
+        }
+
+        @keyframes groundIn {
+            to { opacity: 1; }
+        }
+
+        /* Golden Boot */
+        .boot-container {
+            position: absolute;
+            bottom: 26%;
+            left: 5%;
+            width: 150px;
+            height: 100px;
+            opacity: 0;
+            animation: bootIn 0.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes bootIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .boot {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: kickMotion 0.4s ease-out 1.5s forwards;
+            transform-origin: right center;
+        }
+
+        @keyframes kickMotion {
+            0% { transform: rotate(0deg); }
+            30% { transform: rotate(-30deg); }
+            60% { transform: rotate(20deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Boot SVG */
+        .boot svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 10px 30px rgba(212, 175, 55, 0.5));
+        }
+
+        .boot-fill {
+            fill: url(#bootGradient);
+        }
+
+        .boot-detail {
+            fill: #8B7320;
+        }
+
+        /* Football */
+        .football {
+            position: absolute;
+            bottom: 27%;
+            left: 12%;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            animation:
+                ballAppear 0.3s ease-out 0.8s forwards,
+                ballKick 1s cubic-bezier(0.25, 0.1, 0.25, 1) 1.8s forwards;
+        }
+
+        @keyframes ballAppear {
+            to { opacity: 1; }
+        }
+
+        @keyframes ballKick {
+            0% {
+                left: 12%;
+                bottom: 27%;
+                transform: rotate(0deg) scale(1);
+            }
+            30% {
+                left: 35%;
+                bottom: 55%;
+                transform: rotate(360deg) scale(1);
+            }
+            60% {
+                left: 50%;
+                bottom: 45%;
+                transform: rotate(720deg) scale(1.2);
+            }
+            100% {
+                left: 50%;
+                bottom: 45%;
+                transform: rotate(1080deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .ball-inner {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #ddd 40%, #aaa 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow:
+                inset -5px -5px 15px rgba(0,0,0,0.3),
+                0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .ball-inner::before {
+            content: '';
+            position: absolute;
+            inset: 20%;
+            background:
+                conic-gradient(
+                    from 0deg,
+                    #333 0deg 72deg,
+                    transparent 72deg 144deg,
+                    #333 144deg 216deg,
+                    transparent 216deg 288deg,
+                    #333 288deg 360deg
+                );
+            border-radius: 50%;
+        }
+
+        /* Speed Lines */
+        .speed-line {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+            opacity: 0;
+        }
+
+        .speed-line:nth-child(1) {
+            width: 100px;
+            bottom: 50%;
+            left: 20%;
+            animation: speedIn 0.3s ease-out 1.9s forwards;
+        }
+        .speed-line:nth-child(2) {
+            width: 80px;
+            bottom: 45%;
+            left: 25%;
+            animation: speedIn 0.3s ease-out 2s forwards;
+        }
+        .speed-line:nth-child(3) {
+            width: 120px;
+            bottom: 55%;
+            left: 15%;
+            animation: speedIn 0.3s ease-out 2.1s forwards;
+        }
+
+        @keyframes speedIn {
+            0% { opacity: 0; transform: translateX(50px); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(-50px); }
+        }
+
+        /* Impact Effect */
+        .impact {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+        }
+
+        .impact-ring {
+            position: absolute;
+            inset: 0;
+            border: 3px solid #D4AF37;
+            border-radius: 50%;
+            animation: impactExpand 0.5s ease-out 2.5s forwards;
+        }
+
+        .impact-ring:nth-child(2) {
+            animation-delay: 2.6s;
+        }
+
+        @keyframes impactExpand {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(5);
+            }
+        }
+
+        /* Logo */
+        .logo-container {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: logoReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2.7s forwards;
+        }
+
+        @keyframes logoReveal {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .logo-img {
+            width: 160px;
+            height: auto;
+            filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8));
+            margin-bottom: 20px;
+        }
+
+        .brand-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #D4AF37;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .sparkle:nth-child(1) { top: 30%; left: 40%; animation: sparkleOut 0.5s ease-out 2.7s; }
+        .sparkle:nth-child(2) { top: 35%; left: 60%; animation: sparkleOut 0.5s ease-out 2.8s; }
+        .sparkle:nth-child(3) { top: 50%; left: 35%; animation: sparkleOut 0.5s ease-out 2.9s; }
+        .sparkle:nth-child(4) { top: 55%; left: 65%; animation: sparkleOut 0.5s ease-out 2.75s; }
+        .sparkle:nth-child(5) { top: 40%; left: 45%; animation: sparkleOut 0.5s ease-out 2.85s; }
+
+        @keyframes sparkleOut {
+            0% { opacity: 1; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        /* Loading */
+        .loading-bar {
+            position: absolute;
+            bottom: 60px;
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 3.5s forwards;
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #D4AF37;
+            animation: load 1.5s ease-in-out 3.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="ground-line"></div>
+
+        <!-- Golden Boot -->
+        <div class="boot-container">
+            <div class="boot">
+                <svg viewBox="0 0 200 120">
+                    <defs>
+                        <linearGradient id="bootGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFD700"/>
+                            <stop offset="50%" style="stop-color:#D4AF37"/>
+                            <stop offset="100%" style="stop-color:#8B7320"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Boot shape -->
+                    <path class="boot-fill" d="M20,60 L40,40 L80,35 L120,30 L160,35 L180,50 L190,70 L180,90 L140,95 L100,95 L60,90 L30,85 L15,75 Z"/>
+                    <!-- Boot details -->
+                    <path class="boot-detail" d="M60,50 L100,45 L140,50" fill="none" stroke="#8B7320" stroke-width="3"/>
+                    <path class="boot-detail" d="M80,60 L120,58" fill="none" stroke="#8B7320" stroke-width="2"/>
+                    <!-- Studs -->
+                    <circle cx="50" cy="90" r="5" fill="#8B7320"/>
+                    <circle cx="80" cy="93" r="5" fill="#8B7320"/>
+                    <circle cx="110" cy="93" r="5" fill="#8B7320"/>
+                    <circle cx="140" cy="90" r="5" fill="#8B7320"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Football -->
+        <div class="football">
+            <div class="ball-inner"></div>
+        </div>
+
+        <!-- Speed Lines -->
+        <div class="speed-line"></div>
+        <div class="speed-line"></div>
+        <div class="speed-line"></div>
+
+        <!-- Impact -->
+        <div class="impact">
+            <div class="impact-ring"></div>
+            <div class="impact-ring"></div>
+        </div>
+
+        <!-- Sparkles -->
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="../assets/images/logo.png" alt="AIFA" class="logo-img">
+            <div class="brand-text">AIFA</div>
+            <div class="tagline">Where Champions Are Made</div>
+        </div>
+
+        <div class="loading-bar"></div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

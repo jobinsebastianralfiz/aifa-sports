@@ -1,0 +1,102 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Achievements{% endblock %}
+{% block header_title %}Achievements{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Achievements</h2>
+        <p class="text-muted">Manage trophies, awards, and achievements</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:achievements:create' %}" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Achievement
+        </a>
+    </div>
+</div>
+
+<div class="content-card">
+    {% if achievements %}
+    <div class="admin-grid">
+        {% for achievement in achievements %}
+        <div class="admin-card">
+            <div class="admin-card-image">
+                {% if achievement.image %}
+                <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}">
+                {% else %}
+                <div class="admin-card-placeholder">
+                    <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="8" r="6"/>
+                        <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+                    </svg>
+                </div>
+                {% endif %}
+            </div>
+            <div class="admin-card-body">
+                <h4>{{ achievement.title }}</h4>
+                <p class="text-muted">{{ achievement.year }} - {{ achievement.get_category_display }}</p>
+                <div class="admin-card-badges">
+                    {% if achievement.is_featured %}
+                    <span class="badge badge-primary">Featured</span>
+                    {% endif %}
+                    {% if achievement.show_on_homepage %}
+                    <span class="badge badge-info">Homepage</span>
+                    {% endif %}
+                    {% if achievement.is_active %}
+                    <span class="badge badge-success">Active</span>
+                    {% else %}
+                    <span class="badge badge-secondary">Inactive</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="admin-card-footer">
+                <a href="{% url 'admin_dashboard:achievements:update' achievement.pk %}" class="btn btn-ghost btn-sm">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </a>
+                <a href="{% url 'admin_dashboard:achievements:delete' achievement.pk %}" class="btn btn-ghost btn-sm text-danger">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    Delete
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <div class="pagination-wrapper">
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn">&laquo; Previous</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn">Next &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="empty-state">
+        <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="8" r="6"/>
+            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+        </svg>
+        <h3>No achievements yet</h3>
+        <p>Add your first trophy, award, or achievement</p>
+        <a href="{% url 'admin_dashboard:achievements:create' %}" class="btn btn-primary">Add Achievement</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

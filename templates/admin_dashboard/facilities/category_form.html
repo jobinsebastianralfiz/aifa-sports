@@ -1,0 +1,63 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}{% if object %}Edit{% else %}Add{% endif %} Category{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>{% if object %}Edit{% else %}Add{% endif %} Category</h2>
+        <p class="text-muted">{% if object %}Update category details{% else %}Create a new facility category{% endif %}</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:facilities:category-list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to Categories
+        </a>
+    </div>
+</div>
+
+<form method="post" class="admin-form">
+    {% csrf_token %}
+
+    <div class="content-card" style="max-width: 600px;">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="id_name">Name *</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                <span class="form-error">{{ form.name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_icon">Icon</label>
+                {{ form.icon }}
+                <span class="form-hint">e.g., "football", "dumbbell", "home"</span>
+            </div>
+
+            <div class="form-group">
+                <label for="id_display_order">Display Order</label>
+                {{ form.display_order }}
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    {{ form.is_active }}
+                    <span>Active</span>
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    {% if object %}Update{% else %}Create{% endif %} Category
+                </button>
+                <a href="{% url 'admin_dashboard:facilities:category-list' %}" class="btn btn-ghost">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 17 - Player Kick Goal | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #050510 0%, #0a0a15 50%, #030308 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Stadium Ambient Light */
+        .stadium-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 60%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            animation: glowIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes glowIn {
+            to { opacity: 1; }
+        }
+
+        /* Ground/Pitch */
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35%;
+            background: linear-gradient(180deg, #1a4d1a 0%, #0d260d 100%);
+            opacity: 0;
+            animation: groundIn 0.8s ease-out 0.3s forwards;
+        }
+
+        .ground::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(255,255,255,0.02) 0px,
+                rgba(255,255,255,0.02) 50px,
+                transparent 50px,
+                transparent 100px
+            );
+        }
+
+        @keyframes groundIn {
+            to { opacity: 1; }
+        }
+
+        /* Goal Post */
+        .goal-post {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 200px;
+            opacity: 0;
+            animation: goalIn 0.8s ease-out 0.5s forwards;
+        }
+
+        @keyframes goalIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        .goal-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .goal-crossbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(180deg, #fff 0%, #ccc 100%);
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .goal-post-left,
+        .goal-post-right {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(90deg, #fff 0%, #ccc 100%);
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .goal-post-left { left: 0; }
+        .goal-post-right { right: 0; }
+
+        /* Goal Net */
+        .goal-net {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 0;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 15px 15px;
+            opacity: 0.5;
+        }
+
+        /* Player Container */
+        .player-container {
+            position: absolute;
+            bottom: 35%;
+            left: -150px;
+            width: 120px;
+            height: 180px;
+            animation: playerRun 1.5s ease-out 1s forwards;
+        }
+
+        @keyframes playerRun {
+            0% {
+                left: -150px;
+            }
+            60% {
+                left: 25%;
+            }
+            100% {
+                left: 25%;
+            }
+        }
+
+        /* Player Figure */
+        .player {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: playerRunCycle 0.3s ease-in-out 1s 5;
+        }
+
+        @keyframes playerRunCycle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Player Body Parts */
+        .player-head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(180deg, #e8d5b7 0%, #c9b896 100%);
+            border-radius: 50%;
+            box-shadow: inset -3px -3px 10px rgba(0,0,0,0.2);
+        }
+
+        .player-body {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 60px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7320 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Jersey Number */
+        .player-body::after {
+            content: '10';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: #030303;
+        }
+
+        .player-shorts {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 30px;
+            background: #030303;
+            border-radius: 5px;
+        }
+
+        /* Player Legs */
+        .player-leg {
+            position: absolute;
+            top: 115px;
+            width: 15px;
+            height: 50px;
+            background: linear-gradient(180deg, #e8d5b7 0%, #c9b896 100%);
+            border-radius: 5px;
+        }
+
+        .player-leg.left {
+            left: 30%;
+            animation: legKick 0.4s ease-out 2.3s forwards;
+            transform-origin: top center;
+        }
+
+        .player-leg.right {
+            right: 30%;
+        }
+
+        @keyframes legKick {
+            0% { transform: rotate(0deg); }
+            40% { transform: rotate(-60deg); }
+            70% { transform: rotate(30deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Player Arms */
+        .player-arm {
+            position: absolute;
+            top: 40px;
+            width: 12px;
+            height: 40px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7320 100%);
+            border-radius: 5px;
+        }
+
+        .player-arm.left {
+            left: 5px;
+            transform: rotate(20deg);
+            animation: armSwing 0.3s ease-in-out 1s 5 alternate;
+        }
+
+        .player-arm.right {
+            right: 5px;
+            transform: rotate(-20deg);
+            animation: armSwing 0.3s ease-in-out 1s 5 alternate-reverse;
+        }
+
+        @keyframes armSwing {
+            0% { transform: rotate(20deg); }
+            100% { transform: rotate(-20deg); }
+        }
+
+        /* Football */
+        .football {
+            position: absolute;
+            bottom: 37%;
+            left: 20%;
+            width: 30px;
+            height: 30px;
+            opacity: 0;
+            animation: ballAppear 0.3s ease-out 1.8s forwards;
+        }
+
+        @keyframes ballAppear {
+            to { opacity: 1; }
+        }
+
+        .football.kicked {
+            animation:
+                ballAppear 0.3s ease-out 1.8s forwards,
+                ballFly 1s cubic-bezier(0.25, 0.1, 0.25, 1) 2.5s forwards;
+        }
+
+        @keyframes ballFly {
+            0% {
+                left: 28%;
+                bottom: 37%;
+                transform: rotate(0deg) scale(1);
+            }
+            40% {
+                left: 45%;
+                bottom: 55%;
+                transform: rotate(360deg) scale(0.9);
+            }
+            70% {
+                left: 50%;
+                bottom: 45%;
+                transform: rotate(720deg) scale(0.7);
+            }
+            100% {
+                left: 50%;
+                bottom: 42%;
+                transform: rotate(1080deg) scale(0.6);
+            }
+        }
+
+        .ball-inner {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #ddd 40%, #aaa 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow:
+                inset -3px -3px 8px rgba(0,0,0,0.3),
+                0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .ball-inner::before {
+            content: '';
+            position: absolute;
+            inset: 20%;
+            background:
+                conic-gradient(
+                    from 0deg,
+                    #333 0deg 72deg,
+                    transparent 72deg 144deg,
+                    #333 144deg 216deg,
+                    transparent 216deg 288deg,
+                    #333 288deg 360deg
+                );
+            border-radius: 50%;
+        }
+
+        /* Net Bulge Effect */
+        .net-bulge {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: netBulge 0.5s ease-out 3.3s forwards;
+        }
+
+        @keyframes netBulge {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.5);
+            }
+            100% {
+                opacity: 0.5;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* GOAL Text */
+        .goal-text {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 100px;
+            color: #D4AF37;
+            letter-spacing: 20px;
+            text-shadow:
+                0 0 50px rgba(212, 175, 55, 0.8),
+                0 0 100px rgba(212, 175, 55, 0.5);
+            opacity: 0;
+            animation: goalTextIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 3.5s forwards;
+        }
+
+        @keyframes goalTextIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.5);
+                letter-spacing: 50px;
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+                letter-spacing: 20px;
+            }
+        }
+
+        /* Celebration Particles */
+        .celebration {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        .confetti:nth-child(odd) { background: #D4AF37; }
+        .confetti:nth-child(even) { background: #fff; }
+
+        .confetti:nth-child(1) { left: 30%; animation: confettiFall 2s ease-out 3.6s forwards; }
+        .confetti:nth-child(2) { left: 35%; animation: confettiFall 2.2s ease-out 3.7s forwards; }
+        .confetti:nth-child(3) { left: 40%; animation: confettiFall 1.8s ease-out 3.65s forwards; }
+        .confetti:nth-child(4) { left: 45%; animation: confettiFall 2.1s ease-out 3.6s forwards; }
+        .confetti:nth-child(5) { left: 50%; animation: confettiFall 1.9s ease-out 3.75s forwards; }
+        .confetti:nth-child(6) { left: 55%; animation: confettiFall 2.3s ease-out 3.7s forwards; }
+        .confetti:nth-child(7) { left: 60%; animation: confettiFall 2s ease-out 3.65s forwards; }
+        .confetti:nth-child(8) { left: 65%; animation: confettiFall 1.85s ease-out 3.8s forwards; }
+        .confetti:nth-child(9) { left: 70%; animation: confettiFall 2.15s ease-out 3.6s forwards; }
+
+        @keyframes confettiFall {
+            0% {
+                top: 10%;
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+            100% {
+                top: 90%;
+                opacity: 0;
+                transform: rotate(720deg) scale(0.5);
+            }
+        }
+
+        /* Logo Reveal */
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            z-index: 100;
+            animation: logoIn 1s ease-out 4.5s forwards;
+        }
+
+        @keyframes logoIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .logo-img {
+            width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.8));
+            margin-bottom: 15px;
+        }
+
+        .brand-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        /* Fade overlay for logo */
+        .fade-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(3, 3, 3, 0.9);
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 4.3s forwards;
+            z-index: 50;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Loading */
+        .loading-bar {
+            position: absolute;
+            bottom: 40px;
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            opacity: 0;
+            z-index: 101;
+            animation: loadIn 0.5s ease-out 5s forwards;
+        }
+
+        @keyframes loadIn {
+            to { opacity: 1; }
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #D4AF37;
+            animation: load 1.5s ease-in-out 5.3s forwards;
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="stadium-glow"></div>
+        <div class="ground"></div>
+
+        <!-- Goal Post -->
+        <div class="goal-post">
+            <div class="goal-frame">
+                <div class="goal-crossbar"></div>
+                <div class="goal-post-left"></div>
+                <div class="goal-post-right"></div>
+                <div class="goal-net"></div>
+            </div>
+            <div class="net-bulge"></div>
+        </div>
+
+        <!-- Player -->
+        <div class="player-container">
+            <div class="player">
+                <div class="player-head"></div>
+                <div class="player-arm left"></div>
+                <div class="player-arm right"></div>
+                <div class="player-body"></div>
+                <div class="player-shorts"></div>
+                <div class="player-leg left"></div>
+                <div class="player-leg right"></div>
+            </div>
+        </div>
+
+        <!-- Football -->
+        <div class="football kicked">
+            <div class="ball-inner"></div>
+        </div>
+
+        <!-- GOAL Text -->
+        <div class="goal-text">GOAL!</div>
+
+        <!-- Celebration -->
+        <div class="celebration">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+        </div>
+
+        <!-- Fade & Logo -->
+        <div class="fade-overlay"></div>
+        <div class="logo-container">
+            <img src="../assets/images/logo.png" alt="AIFA" class="logo-img">
+            <div class="brand-text">AIFA</div>
+            <div class="tagline">Where Champions Are Made</div>
+        </div>
+
+        <div class="loading-bar"></div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

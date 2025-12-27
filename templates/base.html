@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}{{ page_settings.meta_description|default:site_settings.meta_description|default:"AIFA Football Academy - Where champions are made. Elite football training for all age groups." }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{{ site_settings.meta_keywords|default:"football academy, soccer training, sports academy, youth football, coaching" }}{% endblock %}">
+    <meta name="author" content="{{ site_settings.site_name|default:"AIFA Football Academy" }}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}{{ page_settings.meta_title|default:site_settings.meta_title|default:site_settings.site_name|default:"AIFA Football Academy" }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ page_settings.meta_description|default:site_settings.meta_description|default:"Elite football training for all age groups with professional coaches and world-class facilities." }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% if site_settings.og_image %}{{ site_settings.og_image.url }}{% else %}{% static 'assets/images/og-image.jpg' %}{% endif %}{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site_settings.site_name|default:"AIFA Football Academy" }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_settings.meta_title|default:site_settings.meta_title|default:site_settings.site_name }}">
+    <meta name="twitter:description" content="{{ page_settings.meta_description|default:site_settings.meta_description }}">
+    <meta name="twitter:image" content="{% if site_settings.og_image %}{{ site_settings.og_image.url }}{% else %}{% static 'assets/images/og-image.jpg' %}{% endif %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% if site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}/assets/images/favicon.png{% endif %}">
+
+    <title>{% block title %}{{ page_settings.meta_title|default:site_settings.meta_title|default:site_settings.site_name|default:"AIFA Football Academy" }} | Where Champions Are Made{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    {% block extra_css %}{% endblock %}
+
+    <!-- Google Analytics -->
+    {% if site_settings.google_analytics_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site_settings.google_analytics_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ site_settings.google_analytics_id }}');
+    </script>
+    {% endif %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

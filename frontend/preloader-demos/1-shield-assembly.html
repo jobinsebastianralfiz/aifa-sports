@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 1 - Shield Assembly | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #030303 0%, #0a0a0a 50%, #030303 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Shield Container */
+        .shield-container {
+            position: relative;
+            width: 200px;
+            height: 240px;
+            margin-bottom: 40px;
+        }
+
+        /* Shield Parts */
+        .shield-part {
+            position: absolute;
+            opacity: 0;
+        }
+
+        /* Shield Outline */
+        .shield-outline {
+            width: 200px;
+            height: 240px;
+            border: 3px solid #D4AF37;
+            border-radius: 10px 10px 100px 100px;
+            animation: outlineIn 0.8s ease-out 0.2s forwards;
+        }
+
+        @keyframes outlineIn {
+            0% {
+                opacity: 0;
+                transform: scale(1.5);
+                border-color: transparent;
+            }
+            50% {
+                border-color: #D4AF37;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                border-color: #D4AF37;
+            }
+        }
+
+        /* Shield Fill */
+        .shield-fill {
+            width: 194px;
+            height: 234px;
+            left: 3px;
+            top: 3px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7320 100%);
+            border-radius: 8px 8px 97px 97px;
+            animation: fillIn 0.6s ease-out 0.8s forwards;
+        }
+
+        @keyframes fillIn {
+            0% {
+                opacity: 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            }
+            100% {
+                opacity: 1;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        /* Inner Shield */
+        .shield-inner {
+            width: 160px;
+            height: 190px;
+            left: 20px;
+            top: 20px;
+            background: #030303;
+            border-radius: 6px 6px 80px 80px;
+            animation: innerIn 0.5s ease-out 1.2s forwards;
+        }
+
+        @keyframes innerIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Football Icon */
+        .football-icon {
+            width: 60px;
+            height: 60px;
+            left: 70px;
+            top: 40px;
+            animation: footballIn 0.6s ease-out 1.5s forwards;
+        }
+
+        .football-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes footballIn {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* AIFA Text */
+        .aifa-text {
+            left: 50%;
+            top: 120px;
+            transform: translateX(-50%);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            color: #D4AF37;
+            letter-spacing: 8px;
+            animation: textIn 0.5s ease-out 1.8s forwards;
+        }
+
+        @keyframes textIn {
+            0% {
+                opacity: 0;
+                letter-spacing: 30px;
+            }
+            100% {
+                opacity: 1;
+                letter-spacing: 8px;
+            }
+        }
+
+        /* Subtitle */
+        .subtitle {
+            left: 50%;
+            top: 175px;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: #D4AF37;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            animation: subtitleIn 0.5s ease-out 2.1s forwards;
+        }
+
+        @keyframes subtitleIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Glow Effect */
+        .shield-glow {
+            width: 300px;
+            height: 350px;
+            left: -50px;
+            top: -55px;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+            filter: blur(30px);
+            animation: glowPulse 2s ease-in-out 2.3s infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Loading Bar */
+        .loading-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            opacity: 0;
+            animation: barIn 0.3s ease-out 2.5s forwards;
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+            animation: loading 1.5s ease-in-out 2.8s forwards;
+        }
+
+        @keyframes barIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes loading {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Tagline */
+        .tagline {
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: taglineIn 0.5s ease-out 2.5s forwards;
+        }
+
+        @keyframes taglineIn {
+            to { opacity: 1; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="shield-container">
+            <div class="shield-part shield-glow"></div>
+            <div class="shield-part shield-outline"></div>
+            <div class="shield-part shield-fill"></div>
+            <div class="shield-part shield-inner"></div>
+            <div class="shield-part football-icon">
+                <svg viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" fill="#D4AF37"/>
+                    <path d="M50 10 L65 35 L50 50 L35 35 Z" fill="#030303"/>
+                    <path d="M90 50 L65 35 L65 65 Z" fill="#030303"/>
+                    <path d="M50 90 L65 65 L35 65 Z" fill="#030303"/>
+                    <path d="M10 50 L35 35 L35 65 Z" fill="#030303"/>
+                    <circle cx="50" cy="50" r="15" fill="#030303"/>
+                </svg>
+            </div>
+            <div class="shield-part aifa-text">AIFA</div>
+            <div class="shield-part subtitle">Football Academy</div>
+        </div>
+        <div class="loading-bar"></div>
+        <div class="tagline">Where Champions Are Made</div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

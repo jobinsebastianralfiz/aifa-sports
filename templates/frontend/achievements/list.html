@@ -1,0 +1,80 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Achievements | {{ site_settings.site_name|default:"AIFA Football Academy" }}{% endblock %}
+
+{% block meta_description %}Celebrate our achievements and milestones at Altius International Football Academy. Discover the success stories and accomplishments of our players and teams.{% endblock %}
+
+{% block og_title %}Achievements | AIFA Football Academy{% endblock %}
+{% block og_description %}Celebrate our achievements and milestones at AIFA Football Academy.{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="page-hero-bg">
+        {% if page_settings.hero_image %}
+        <img src="{{ page_settings.hero_image.url }}" alt="Achievements">
+        {% else %}
+        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80" alt="Achievements">
+        {% endif %}
+        <div class="page-hero-overlay"></div>
+    </div>
+    <div class="page-hero-content container">
+        <h1 class="page-hero-title animate-on-scroll">OUR <span class="text-gradient">ACHIEVEMENTS</span></h1>
+        <p class="page-hero-subtitle animate-on-scroll">Celebrating our journey of excellence</p>
+    </div>
+</section>
+
+<!-- Achievements Grid -->
+<section class="section">
+    <div class="container">
+        {% if achievements %}
+        <div class="achievements-grid">
+            {% for achievement in achievements %}
+            <div class="achievement-card animate-on-scroll">
+                <div class="achievement-image">
+                    {% if achievement.image %}
+                    <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}">
+                    {% else %}
+                    <div class="achievement-placeholder">
+                        <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="8" r="6"/>
+                            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="achievement-content">
+                    <span class="achievement-year">{{ achievement.year }}</span>
+                    <h3 class="achievement-title">{{ achievement.title }}</h3>
+                    <span class="achievement-category">{{ achievement.get_category_display }}</span>
+                    {% if achievement.description %}
+                    <p class="achievement-description">{{ achievement.description|truncatewords:20 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="pagination-wrapper">
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline">&laquo; Previous</a>
+                {% endif %}
+                <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline">Next &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No achievements to display yet</h3>
+            <p>Check back soon for our latest trophies and awards!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

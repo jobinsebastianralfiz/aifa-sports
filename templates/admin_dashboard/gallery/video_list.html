@@ -1,0 +1,121 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Videos{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Video Gallery</h2>
+        <p class="text-muted">Manage YouTube, Shorts, Instagram Reels, and more</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:gallery:image-list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Photos
+        </a>
+        <a href="{% url 'admin_dashboard:gallery:video-create' %}" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Video
+        </a>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar mb-6">
+    <div class="filter-group">
+        <label>Platform:</label>
+        <select onchange="window.location.href='?platform=' + this.value" class="form-select" style="width: auto;">
+            <option value="">All Platforms</option>
+            {% for value, label in platforms %}
+            <option value="{{ value }}" {% if selected_platform == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<!-- Video Grid -->
+<div class="gallery-admin-grid">
+    {% for video in videos %}
+    <div class="gallery-admin-item video-admin-item">
+        <div class="gallery-item-image">
+            {% if video.thumbnail_url %}
+            <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+            {% else %}
+            <div class="video-placeholder-admin">
+                <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+            </div>
+            {% endif %}
+            <div class="video-platform-badge">{{ video.get_platform_display }}</div>
+            {% if video.is_featured %}
+            <div class="video-featured-badge">Featured</div>
+            {% endif %}
+            <div class="gallery-item-overlay">
+                <div class="gallery-item-actions">
+                    <a href="{{ video.video_url }}" target="_blank" class="btn-icon" title="Watch">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                    </a>
+                    <a href="{% url 'admin_dashboard:gallery:video-update' video.pk %}" class="btn-icon" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                    </a>
+                    <a href="{% url 'admin_dashboard:gallery:video-delete' video.pk %}" class="btn-icon text-danger" title="Delete">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="gallery-item-info">
+            <span class="gallery-item-title">{{ video.title|truncatewords:5 }}</span>
+            <span class="gallery-item-meta">{{ video.get_platform_display }} | {{ video.created_at|date:"M d, Y" }}</span>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty-state" style="grid-column: 1 / -1;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        <h3 class="empty-title">No Videos Yet</h3>
+        <p class="empty-text">Get started by adding your first video.</p>
+        <a href="{% url 'admin_dashboard:gallery:video-create' %}" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add First Video
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if selected_platform %}&platform={{ selected_platform }}{% endif %}" class="btn btn-ghost">Previous</a>
+        {% endif %}
+        <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if selected_platform %}&platform={{ selected_platform }}{% endif %}" class="btn btn-ghost">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

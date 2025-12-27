@@ -1,0 +1,38 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Delete Achievement{% endblock %}
+{% block header_title %}Delete Achievement{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Delete Achievement</h2>
+        <p class="text-muted">This action cannot be undone</p>
+    </div>
+</div>
+
+<div class="content-card" style="max-width: 600px;">
+    <div class="card-body">
+        <div class="delete-confirmation">
+            <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="var(--danger)" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+            <h3>Are you sure you want to delete this achievement?</h3>
+            <p class="text-muted">
+                <strong>{{ object.title }}</strong> ({{ object.year }})<br>
+                This will permanently remove the achievement from the system.
+            </p>
+        </div>
+
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            <div class="form-actions">
+                <a href="{% url 'admin_dashboard:achievements:list' %}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-danger">Delete Achievement</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

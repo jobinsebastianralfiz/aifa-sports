@@ -1,0 +1,124 @@
+{% extends 'admin_dashboard/base.html' %}
+{% load event_filters %}
+
+{% block page_title %}Registrations - {{ event.title }}{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Event Registrations</h2>
+        <p class="text-muted">{{ event.title }} - {{ registrations.count }} registration(s)</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:events:export-registrations' event.pk %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export CSV
+        </a>
+        <a href="{% url 'admin_dashboard:events:form-builder' event.pk %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 2v6h6"/>
+            </svg>
+            Form Builder
+        </a>
+        <a href="{% url 'admin_dashboard:events:update' event.pk %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to Event
+        </a>
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid mb-6">
+    <div class="stat-card">
+        <div class="stat-value">{{ registrations.count }}</div>
+        <div class="stat-label">Total Registrations</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ event.max_participants|default:"∞" }}</div>
+        <div class="stat-label">Max Capacity</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{% if event.is_free %}Free{% else %}Rs. {{ event.registration_fee }}{% endif %}</div>
+        <div class="stat-label">Entry Fee</div>
+    </div>
+</div>
+
+<!-- Registrations Table -->
+<div class="data-table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                {% for field in form_fields %}
+                <th>{{ field.label }}</th>
+                {% endfor %}
+                <th>Status</th>
+                <th>Registered At</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reg in registrations %}
+            <tr>
+                <td>#{{ reg.id }}</td>
+                {% for field in form_fields %}
+                <td>{{ reg.form_data|get_item:field.field_name|default:"-" }}</td>
+                {% endfor %}
+                <td>
+                    <span class="badge {% if reg.status == 'confirmed' %}badge-success{% elif reg.status == 'pending' %}badge-warning{% elif reg.status == 'cancelled' %}badge-danger{% else %}badge-secondary{% endif %}">
+                        {{ reg.get_status_display }}
+                    </span>
+                </td>
+                <td>{{ reg.created_at|date:"M d, Y H:i" }}</td>
+                <td class="text-right">
+                    <a href="{% url 'admin_dashboard:events:registration-detail' reg.pk %}" class="btn-icon" title="View Details">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{{ form_fields.count|add:4 }}">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                        <h3 class="empty-title">No Registrations Yet</h3>
+                        <p class="empty-text">Registrations will appear here when users sign up for this event.</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-ghost">Previous</a>
+        {% endif %}
+        <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-ghost">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

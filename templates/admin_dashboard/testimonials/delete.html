@@ -1,0 +1,27 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Delete Testimonial{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block content %}
+<div class="delete-confirmation">
+    <div class="delete-card">
+        <div class="delete-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+        </div>
+        <h2>Delete Testimonial</h2>
+        <p>Are you sure you want to delete the testimonial from "<strong>{{ object.name }}</strong>"?</p>
+        <p class="text-muted">This action cannot be undone.</p>
+
+        <form method="post" class="delete-actions">
+            {% csrf_token %}
+            <a href="{% url 'admin_dashboard:testimonials:list' %}" class="btn btn-ghost">Cancel</a>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

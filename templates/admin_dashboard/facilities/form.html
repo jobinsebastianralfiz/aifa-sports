@@ -1,0 +1,158 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}{% if object %}Edit{% else %}Add{% endif %} Facility{% endblock %}
+{% block header_title %}{% if object %}Edit{% else %}Add{% endif %} Facility{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>{% if object %}Edit{% else %}Add{% endif %} Facility</h2>
+        <p class="text-muted">{% if object %}Update facility details{% else %}Add a new facility to showcase{% endif %}</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:facilities:list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to List
+        </a>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="admin-form">
+    {% csrf_token %}
+
+    <div class="form-layout">
+        <div class="form-main">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Facility Details</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="id_name">Name *</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                        <span class="form-error">{{ form.name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="id_category">Category</label>
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                            <span class="form-error">{{ form.category.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_area_size">Area Size</label>
+                            {{ form.area_size }}
+                            <span class="form-hint">e.g., "80,000 Sqft", "600 sq ft"</span>
+                            {% if form.area_size.errors %}
+                            <span class="form-error">{{ form.area_size.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_short_description">Short Description</label>
+                        {{ form.short_description }}
+                        <span class="form-hint">Brief description for cards (max 300 chars)</span>
+                        {% if form.short_description.errors %}
+                        <span class="form-error">{{ form.short_description.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_description">Full Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <span class="form-error">{{ form.description.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_features">Features</label>
+                        {{ form.features }}
+                        <span class="form-hint">Enter one feature per line</span>
+                        {% if form.features.errors %}
+                        <span class="form-error">{{ form.features.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_icon">Icon Name</label>
+                        {{ form.icon }}
+                        <span class="form-hint">e.g., "football", "dumbbell", "home", "users"</span>
+                        {% if form.icon.errors %}
+                        <span class="form-error">{{ form.icon.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_image">Image *</label>
+                        {% if object.image %}
+                        <div class="current-image">
+                            <img src="{{ object.image.url }}" alt="Current image" style="max-width: 200px; margin-bottom: 10px; border-radius: 8px;">
+                        </div>
+                        {% endif %}
+                        {{ form.image }}
+                        <span class="form-hint">Recommended: 800x600px or similar aspect ratio</span>
+                        {% if form.image.errors %}
+                        <span class="form-error">{{ form.image.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-sidebar">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ form.is_active }}
+                            <span>Active</span>
+                        </label>
+                        <span class="form-hint">Show on website</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ form.is_featured }}
+                            <span>Featured</span>
+                        </label>
+                        <span class="form-hint">Highlight this facility</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ form.show_on_homepage }}
+                            <span>Show on Homepage</span>
+                        </label>
+                        <span class="form-hint">Display in homepage facilities section</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_display_order">Display Order</label>
+                        {{ form.display_order }}
+                        <span class="form-hint">Lower numbers appear first</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block">
+                    {% if object %}Update{% else %}Create{% endif %} Facility
+                </button>
+                <a href="{% url 'admin_dashboard:facilities:list' %}" class="btn btn-ghost btn-block">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

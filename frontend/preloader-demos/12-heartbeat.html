@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 12 - Heartbeat Pulse | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #030303;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* ECG Line Container */
+        .ecg-container {
+            position: absolute;
+            width: 100%;
+            height: 200px;
+            top: 50%;
+            transform: translateY(-50%);
+            overflow: hidden;
+        }
+
+        /* ECG Line SVG */
+        .ecg-line {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            left: 0;
+        }
+
+        .ecg-path {
+            fill: none;
+            stroke: #D4AF37;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawLine 2s ease-in-out 0.5s forwards;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Scanning Line */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #D4AF37, transparent);
+            filter: blur(2px);
+            animation: scanMove 2s linear 0.5s forwards;
+        }
+
+        @keyframes scanMove {
+            0% { left: 0; opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        /* Heartbeat Pulse Effect */
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border: 2px solid #D4AF37;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .pulse-ring:nth-child(1) {
+            animation: pulseOut 1s ease-out 2.5s;
+        }
+
+        .pulse-ring:nth-child(2) {
+            animation: pulseOut 1s ease-out 2.7s;
+        }
+
+        .pulse-ring:nth-child(3) {
+            animation: pulseOut 1s ease-out 2.9s;
+        }
+
+        @keyframes pulseOut {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(3);
+            }
+        }
+
+        /* Logo Container */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: logoBeat 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2.5s forwards;
+        }
+
+        @keyframes logoBeat {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .logo-img {
+            width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
+            margin-bottom: 20px;
+            animation: heartbeat 1s ease-in-out 3s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            60% { transform: scale(1); }
+        }
+
+        .brand-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* BPM Counter */
+        .bpm-display {
+            position: absolute;
+            top: 30%;
+            right: 10%;
+            text-align: right;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 1s forwards;
+        }
+
+        .bpm-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            color: #D4AF37;
+            line-height: 1;
+        }
+
+        .bpm-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Passion Text */
+        .passion-text {
+            position: absolute;
+            bottom: 30%;
+            left: 10%;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: rgba(212, 175, 55, 0.3);
+            letter-spacing: 10px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 3s forwards;
+        }
+
+        /* Grid Lines */
+        .grid-lines {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Loading */
+        .loading-container {
+            position: absolute;
+            bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 3.5s forwards;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #D4AF37;
+            animation: load 1.5s ease-in-out 4s forwards;
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        .loading-text {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="grid-lines"></div>
+
+        <!-- ECG Line -->
+        <div class="ecg-container">
+            <svg class="ecg-line" viewBox="0 0 1200 200" preserveAspectRatio="none">
+                <path class="ecg-path" d="M0,100 L100,100 L120,100 L140,100 L160,100 L180,100 L200,100 L220,100 L240,100 L260,100 L280,100 L300,100 L320,100 L340,100 L360,100 L380,100 L400,100 L420,80 L430,100 L440,100 L460,100 L480,20 L500,180 L520,100 L540,100 L560,70 L580,100 L600,100 L620,100 L640,100 L660,100 L680,100 L700,100 L720,100 L740,100 L760,100 L780,100 L800,100 L820,80 L830,100 L840,100 L860,100 L880,20 L900,180 L920,100 L940,100 L960,70 L980,100 L1000,100 L1020,100 L1040,100 L1060,100 L1080,100 L1100,100 L1120,100 L1140,100 L1160,100 L1180,100 L1200,100"/>
+            </svg>
+            <div class="scan-line"></div>
+        </div>
+
+        <!-- Pulse Rings -->
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+
+        <!-- BPM Display -->
+        <div class="bpm-display">
+            <div class="bpm-number">120</div>
+            <div class="bpm-label">PASSION BPM</div>
+        </div>
+
+        <!-- Passion Text -->
+        <div class="passion-text">THE HEART OF A CHAMPION</div>
+
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="../assets/images/logo.png" alt="AIFA" class="logo-img">
+            <div class="brand-text">AIFA</div>
+            <div class="tagline">Where Champions Are Made</div>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading-container">
+            <div class="loading-bar"></div>
+            <div class="loading-text">Feel the passion</div>
+        </div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

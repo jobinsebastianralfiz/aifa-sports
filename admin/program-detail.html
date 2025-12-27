@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Details | AIFA Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/admin-css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="/assets/images/logo.png" alt="AIFA" class="sidebar-logo">
+                <span class="sidebar-title">AIFA ADMIN</span>
+            </div>
+                        <nav class="sidebar-nav">
+                <a href="/dashboard/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="/dashboard/hero-slides/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                        <line x1="7" y1="2" x2="7" y2="22"/>
+                        <line x1="17" y1="2" x2="17" y2="22"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                    </svg>
+                    Hero Slides
+                </a>
+                <a href="/dashboard/programs/" class="sidebar-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Programs
+                </a>
+                <a href="/dashboard/coaches/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Coaches
+                </a>
+                <a href="/dashboard/gallery/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Gallery
+                </a>
+                <a href="/dashboard/testimonials/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Testimonials
+                </a>
+                <a href="/dashboard/messages/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    Messages
+                </a>
+                <a href="/dashboard/settings/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/login/" class="sidebar-link text-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+                    <nav class="breadcrumb">
+                        <a href="/dashboard/programs/">Programs</a>
+                        <span>/</span>
+                        <span>Junior Stars</span>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="header-user">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100" alt="Admin">
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Page Header -->
+                <div class="content-header">
+                    <div class="content-header-left">
+                        <a href="/dashboard/programs/" class="btn btn-ghost btn-sm mb-4">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                            Back to Programs
+                        </a>
+                        <h2>Program Details</h2>
+                    </div>
+                    <div class="content-header-right">
+                        <button class="btn btn-outline text-danger">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            Delete
+                        </button>
+                        <button class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detail Content -->
+                <div class="detail-layout">
+                    <!-- Left Column - Summary Card -->
+                    <div class="detail-sidebar">
+                        <div class="profile-card">
+                            <div class="program-icon-large" style="background: linear-gradient(135deg, var(--success), var(--success-600)); width: 80px; height: 80px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4);">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                            </div>
+                            <h3 class="profile-name">Junior Stars</h3>
+                            <p class="profile-id">Ages 7-10 years</p>
+                            <span class="badge badge-success">Active</span>
+
+                            <div class="profile-stats">
+                                <div class="profile-stat">
+                                    <span class="stat-value">42</span>
+                                    <span class="stat-label">Students</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span class="stat-value">3</span>
+                                    <span class="stat-label">Batches</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span class="stat-value">2</span>
+                                    <span class="stat-label">Coaches</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="info-card">
+                            <h4>Fee Structure</h4>
+                            <div class="info-row">
+                                <span class="info-label">Monthly Fee</span>
+                                <span class="info-value">Rs. 3,500</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Quarterly</span>
+                                <span class="info-value">Rs. 9,500</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Annual</span>
+                                <span class="info-value">Rs. 35,000</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Registration</span>
+                                <span class="info-value">Rs. 2,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Forms -->
+                    <div class="detail-main">
+                        <!-- Basic Information -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Basic Information</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Program Name</label>
+                                        <input type="text" class="form-input" value="Junior Stars">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Short Code</label>
+                                        <input type="text" class="form-input" value="JS" maxlength="4">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Age Range (From)</label>
+                                        <input type="number" class="form-input" value="7" min="4" max="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Age Range (To)</label>
+                                        <input type="number" class="form-input" value="10" min="4" max="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Max Capacity</label>
+                                        <input type="number" class="form-input" value="60">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        <select class="form-input form-select">
+                                            <option value="active" selected>Active</option>
+                                            <option value="inactive">Inactive</option>
+                                            <option value="coming-soon">Coming Soon</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">Short Description</label>
+                                        <input type="text" class="form-input" value="Building fundamentals and love for the game">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">Full Description</label>
+                                        <textarea class="form-input form-textarea" rows="4">The Junior Stars program is designed for children aged 7-10 who are ready to develop their football skills in a fun, supportive environment. Our experienced coaches focus on fundamental techniques, teamwork, and building a genuine love for the sport.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Schedule & Sessions -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Schedule & Sessions</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Sessions per Week</label>
+                                        <input type="number" class="form-input" value="3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Session Duration</label>
+                                        <select class="form-input form-select">
+                                            <option value="60">60 minutes</option>
+                                            <option value="90" selected>90 minutes</option>
+                                            <option value="120">120 minutes</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">Training Days</label>
+                                        <div class="checkbox-group">
+                                            <label class="checkbox-label"><input type="checkbox" checked> Monday</label>
+                                            <label class="checkbox-label"><input type="checkbox"> Tuesday</label>
+                                            <label class="checkbox-label"><input type="checkbox" checked> Wednesday</label>
+                                            <label class="checkbox-label"><input type="checkbox"> Thursday</label>
+                                            <label class="checkbox-label"><input type="checkbox" checked> Friday</label>
+                                            <label class="checkbox-label"><input type="checkbox"> Saturday</label>
+                                            <label class="checkbox-label"><input type="checkbox"> Sunday</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fee Structure -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Fee Structure</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Monthly Fee (Rs.)</label>
+                                        <input type="number" class="form-input" value="3500">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Quarterly Fee (Rs.)</label>
+                                        <input type="number" class="form-input" value="9500">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Annual Fee (Rs.)</label>
+                                        <input type="number" class="form-input" value="35000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Registration Fee (Rs.)</label>
+                                        <input type="number" class="form-input" value="2000">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Curriculum Highlights -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Curriculum Highlights (for Website)</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="curriculum-items">
+                                    <div class="curriculum-item">
+                                        <input type="text" class="form-input" value="Ball control and dribbling fundamentals">
+                                        <button class="btn-icon text-danger"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                                    </div>
+                                    <div class="curriculum-item">
+                                        <input type="text" class="form-input" value="Passing and receiving techniques">
+                                        <button class="btn-icon text-danger"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                                    </div>
+                                    <div class="curriculum-item">
+                                        <input type="text" class="form-input" value="Basic shooting skills">
+                                        <button class="btn-icon text-danger"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                                    </div>
+                                    <div class="curriculum-item">
+                                        <input type="text" class="form-input" value="Teamwork and sportsmanship">
+                                        <button class="btn-icon text-danger"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline btn-sm mt-4">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    Add Curriculum Item
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Display Settings -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Display Settings</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Display Order</label>
+                                        <input type="number" class="form-input" value="2" min="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Theme Color</label>
+                                        <input type="color" class="form-input" value="#22c55e" style="height: 42px;">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">
+                                            <input type="checkbox" checked> Show on Website
+                                        </label>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">
+                                            <input type="checkbox" checked> Accept New Enrollments
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin-js/admin.js"></script>
+</body>
+</html>

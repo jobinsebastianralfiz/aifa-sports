@@ -1,0 +1,418 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Form Builder - {{ event.title }}{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-builder-layout {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: var(--space-6);
+    }
+    .form-preview-card {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-6);
+    }
+    .field-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+    .field-item {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        cursor: grab;
+        transition: all var(--transition-fast);
+    }
+    .field-item:hover {
+        border-color: var(--primary);
+    }
+    .field-item.dragging {
+        opacity: 0.5;
+        cursor: grabbing;
+    }
+    .field-handle {
+        color: var(--glass-white-30);
+        cursor: grab;
+    }
+    .field-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--glass);
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .field-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--primary);
+    }
+    .field-info {
+        flex: 1;
+    }
+    .field-info h4 {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        margin: 0;
+    }
+    .field-info p {
+        font-size: var(--text-xs);
+        color: var(--glass-white-50);
+        margin: 0;
+    }
+    .field-badges {
+        display: flex;
+        gap: var(--space-2);
+    }
+    .field-actions {
+        display: flex;
+        gap: var(--space-2);
+    }
+    .add-field-form {
+        margin-top: var(--space-6);
+        padding-top: var(--space-6);
+        border-top: 1px solid var(--glass-border);
+    }
+    .field-type-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+        margin-bottom: var(--space-4);
+    }
+    .field-type-option {
+        position: relative;
+    }
+    .field-type-option input {
+        position: absolute;
+        opacity: 0;
+    }
+    .field-type-option label {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-3);
+        background: var(--glass);
+        border: 2px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+    }
+    .field-type-option input:checked + label {
+        border-color: var(--primary);
+        background: rgba(212, 164, 24, 0.1);
+    }
+    .field-type-option label svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--glass-white-50);
+    }
+    .field-type-option input:checked + label svg {
+        stroke: var(--primary);
+    }
+    .preview-form-group {
+        margin-bottom: var(--space-4);
+    }
+    .preview-label {
+        display: block;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        margin-bottom: var(--space-2);
+    }
+    .preview-label .required {
+        color: var(--danger);
+    }
+    .preview-hint {
+        font-size: var(--text-xs);
+        color: var(--glass-white-50);
+        margin-top: var(--space-1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Registration Form Builder</h2>
+        <p class="text-muted">{{ event.title }} - Customize the registration form fields</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:events:registrations' event.pk %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            View Registrations
+        </a>
+        <a href="{% url 'admin_dashboard:events:update' event.pk %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to Event
+        </a>
+    </div>
+</div>
+
+<div class="form-builder-layout">
+    <!-- Form Fields -->
+    <div>
+        <div class="form-card">
+            <h3 class="form-card-title">Form Fields ({{ form_fields.count }})</h3>
+
+            <div class="field-list" id="fieldList">
+                {% for field in form_fields %}
+                <div class="field-item" data-id="{{ field.pk }}">
+                    <div class="field-handle">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"/>
+                            <line x1="8" y1="12" x2="21" y2="12"/>
+                            <line x1="8" y1="18" x2="21" y2="18"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18"/>
+                        </svg>
+                    </div>
+                    <div class="field-icon">
+                        {% if field.field_type == 'text' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+                        {% elif field.field_type == 'email' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        {% elif field.field_type == 'phone' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        {% elif field.field_type == 'number' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+                        {% elif field.field_type == 'date' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        {% elif field.field_type == 'textarea' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        {% elif field.field_type == 'select' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                        {% elif field.field_type == 'radio' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                        {% elif field.field_type == 'checkbox' %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        {% else %}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                        {% endif %}
+                    </div>
+                    <div class="field-info">
+                        <h4>{{ field.label }}</h4>
+                        <p>{{ field.get_field_type_display }}</p>
+                    </div>
+                    <div class="field-badges">
+                        {% if field.is_required %}
+                        <span class="badge badge-danger">Required</span>
+                        {% endif %}
+                    </div>
+                    <div class="field-actions">
+                        <form method="post" action="{% url 'admin_dashboard:events:delete-form-field' event.pk field.pk %}" style="display: inline;" onsubmit="return confirm('Delete this field?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon text-danger" title="Delete">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state" style="padding: var(--space-8);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon" style="width: 48px; height: 48px;">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <path d="M14 2v6h6"/>
+                        <line x1="12" y1="18" x2="12" y2="12"/>
+                        <line x1="9" y1="15" x2="15" y2="15"/>
+                    </svg>
+                    <h3 class="empty-title">No Form Fields Yet</h3>
+                    <p class="empty-text">Add fields below to create your registration form.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Add Field Form -->
+            <div class="add-field-form">
+                <h4 style="margin-bottom: var(--space-4);">Add New Field</h4>
+                <form method="post" action="{% url 'admin_dashboard:events:add-form-field' event.pk %}">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label class="form-label">Field Type <span class="required">*</span></label>
+                        <div class="field-type-grid">
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_text" value="text" checked>
+                                <label for="type_text">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+                                    Text
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_email" value="email">
+                                <label for="type_email">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                    Email
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_phone" value="phone">
+                                <label for="type_phone">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
+                                    Phone
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_number" value="number">
+                                <label for="type_number">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/></svg>
+                                    Number
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_date" value="date">
+                                <label for="type_date">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+                                    Date
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_textarea" value="textarea">
+                                <label for="type_textarea">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8"/></svg>
+                                    Textarea
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_select" value="select">
+                                <label for="type_select">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                                    Dropdown
+                                </label>
+                            </div>
+                            <div class="field-type-option">
+                                <input type="radio" name="field_type" id="type_checkbox" value="checkbox">
+                                <label for="type_checkbox">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/></svg>
+                                    Checkbox
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_label" class="form-label">Field Label <span class="required">*</span></label>
+                        {{ field_form.label }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_placeholder" class="form-label">Placeholder Text</label>
+                        {{ field_form.placeholder }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_help_text" class="form-label">Help Text</label>
+                        {{ field_form.help_text }}
+                    </div>
+
+                    <div class="form-group" id="optionsGroup" style="display: none;">
+                        <label for="id_options" class="form-label">Options (for Dropdown)</label>
+                        {{ field_form.options }}
+                        <span class="form-hint">Enter as JSON array: ["Option 1", "Option 2", "Option 3"]</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            {{ field_form.is_required }}
+                            <span>Required Field</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add Field
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview -->
+    <div>
+        <div class="form-preview-card">
+            <h3 class="form-card-title">Form Preview</h3>
+            <p class="text-muted mb-4">This is how the registration form will look.</p>
+
+            {% for field in form_fields %}
+            <div class="preview-form-group">
+                <label class="preview-label">
+                    {{ field.label }}
+                    {% if field.is_required %}<span class="required">*</span>{% endif %}
+                </label>
+                {% if field.field_type == 'text' or field.field_type == 'email' or field.field_type == 'phone' or field.field_type == 'number' %}
+                <input type="{{ field.field_type }}" class="form-input" placeholder="{{ field.placeholder }}" disabled>
+                {% elif field.field_type == 'date' %}
+                <input type="date" class="form-input" disabled>
+                {% elif field.field_type == 'textarea' %}
+                <textarea class="form-textarea" rows="3" placeholder="{{ field.placeholder }}" disabled></textarea>
+                {% elif field.field_type == 'select' %}
+                <select class="form-select" disabled>
+                    <option>{{ field.placeholder|default:"Select an option" }}</option>
+                    {% for opt in field.options %}
+                    <option>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+                {% elif field.field_type == 'checkbox' %}
+                <label class="checkbox-label">
+                    <input type="checkbox" disabled>
+                    <span>{{ field.placeholder|default:"Yes" }}</span>
+                </label>
+                {% endif %}
+                {% if field.help_text %}
+                <span class="preview-hint">{{ field.help_text }}</span>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="text-center text-muted" style="padding: var(--space-8);">
+                <p>Add fields to see the preview</p>
+            </div>
+            {% endfor %}
+
+            {% if form_fields %}
+            <button class="btn btn-primary btn-block mt-6" disabled>Register</button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Show/hide options field based on field type
+    document.querySelectorAll('input[name="field_type"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            const optionsGroup = document.getElementById('optionsGroup');
+            if (this.value === 'select' || this.value === 'radio') {
+                optionsGroup.style.display = 'block';
+            } else {
+                optionsGroup.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

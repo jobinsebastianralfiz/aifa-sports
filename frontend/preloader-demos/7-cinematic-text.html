@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preloader 7 - Cinematic Text Reveal | AIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #030303;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #030303;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Cinematic Bars */
+        .cinematic-bar {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #000;
+            z-index: 100;
+        }
+
+        .cinematic-bar.top { top: 0; }
+        .cinematic-bar.bottom { bottom: 0; }
+
+        /* Text Container */
+        .text-container {
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Main Text Lines */
+        .text-line {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 120px;
+            color: #fff;
+            letter-spacing: 20px;
+            line-height: 1;
+            opacity: 0;
+            transform: translateY(100%);
+            position: relative;
+        }
+
+        .text-line.line-1 {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        .text-line.line-2 {
+            color: #D4AF37;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        }
+
+        .text-line.line-3 {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Text Mask/Wipe Effect */
+        .text-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: #030303;
+            animation: wipeLeft 0.6s ease-out forwards;
+            animation-delay: inherit;
+        }
+
+        .line-1::after { animation-delay: 1s; }
+        .line-2::after { animation-delay: 1.3s; }
+        .line-3::after { animation-delay: 1.6s; }
+
+        @keyframes wipeLeft {
+            to {
+                width: 0;
+            }
+        }
+
+        /* Glitch Effect on Text */
+        .text-container.glitch {
+            animation: textGlitch 0.3s ease-out 2.5s;
+        }
+
+        @keyframes textGlitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(5px, -5px); }
+            60% { transform: translate(-5px, -5px); }
+            80% { transform: translate(5px, 5px); }
+        }
+
+        /* Text Fade Out */
+        .text-container {
+            animation: fadeOut 0.5s ease-out 3s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+
+        /* Logo Reveal */
+        .logo-container {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: scale(1.5);
+            animation: logoZoom 1s cubic-bezier(0.16, 1, 0.3, 1) 3.2s forwards;
+        }
+
+        @keyframes logoZoom {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .logo-img {
+            width: 200px;
+            height: auto;
+            filter: drop-shadow(0 0 60px rgba(212, 175, 55, 0.8));
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            color: #D4AF37;
+            letter-spacing: 15px;
+            margin-top: 20px;
+        }
+
+        /* Flash Effect */
+        .flash {
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            opacity: 0;
+            animation: flash 0.3s ease-out 3s;
+            pointer-events: none;
+        }
+
+        @keyframes flash {
+            0% { opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+
+        /* Horizontal Lines */
+        .h-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            opacity: 0;
+        }
+
+        .h-line.top-line {
+            top: 35%;
+            width: 0;
+            animation: lineExpand 0.8s ease-out 2s forwards;
+        }
+
+        .h-line.bottom-line {
+            bottom: 35%;
+            width: 0;
+            animation: lineExpand 0.8s ease-out 2.2s forwards;
+        }
+
+        @keyframes lineExpand {
+            to {
+                width: 80%;
+                opacity: 1;
+            }
+        }
+
+        /* Loading */
+        .loading-bar {
+            position: absolute;
+            bottom: 100px;
+            width: 300px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 4s forwards;
+        }
+
+        .loading-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            background: #D4AF37;
+            animation: load 1.5s ease-in-out 4.3s forwards;
+            width: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        /* Replay Button */
+        .replay-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #030303;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10000;
+        }
+
+        .replay-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .text-line {
+                font-size: 48px;
+                letter-spacing: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="cinematic-bar top"></div>
+        <div class="cinematic-bar bottom"></div>
+
+        <div class="h-line top-line"></div>
+        <div class="h-line bottom-line"></div>
+
+        <div class="text-container glitch">
+            <div class="text-line line-1">WHERE</div>
+            <div class="text-line line-2">CHAMPIONS</div>
+            <div class="text-line line-3">ARE MADE</div>
+        </div>
+
+        <div class="flash"></div>
+
+        <div class="logo-container">
+            <img src="../assets/images/logo.png" alt="AIFA" class="logo-img">
+            <div class="logo-text">FOOTBALL ACADEMY</div>
+        </div>
+
+        <div class="loading-bar"></div>
+    </div>
+
+    <button class="replay-btn" onclick="location.reload()">Replay Animation</button>
+</body>
+</html>

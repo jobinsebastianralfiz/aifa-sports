@@ -1,0 +1,220 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}About Us | {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+
+{% block meta_description %}Learn about Altius International Football Academy (AIFA) - Our mission, vision, values, and the journey of building champions through excellence since 2014.{% endblock %}
+
+{% block og_title %}About Us | {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+{% block og_description %}Learn about Altius International Football Academy - Our mission, vision, and commitment to developing future football stars.{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="page-hero-bg" style="background-image: url('{% if page_settings.hero_image %}{{ page_settings.hero_image.url }}{% else %}https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80{% endif %}');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <h1 class="page-hero-title">{{ page_settings.hero_title|default:"ABOUT <span class='text-gradient'>US</span>"|safe }}</h1>
+        <p class="page-hero-text">{{ page_settings.hero_subtitle|default:"Building Champions Through Excellence Since 2014" }}</p>
+    </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="section" id="story">
+    <div class="container">
+        <div class="about-story-grid">
+            <div class="about-story-content animate-left">
+                <div class="section-tag">
+                    <span class="tag-line"></span>
+                    Our Story
+                </div>
+                <h2 class="section-title">{{ about_content.story_title|default:"WHERE PASSION <span class='text-gradient'>MEETS EXCELLENCE</span>"|safe }}</h2>
+                {% if about_content.story_content %}
+                    {{ about_content.story_content|safe }}
+                {% else %}
+                <p class="mb-6">
+                    {{ site_settings.site_name|default:"AIFA Sports Academy" }} was founded in {{ about_content.founding_year|default:"2014" }} with a vision to provide world-class sports training to aspiring athletes. We believe that every child has the potential to become a champion with the right guidance and training.
+                </p>
+                <p class="mb-6">
+                    Our academy is committed to developing not just athletes, but well-rounded individuals who excel both on and off the field. We focus on building character, discipline, and sportsmanship alongside technical skills.
+                </p>
+                <p>
+                    With state-of-the-art facilities and experienced coaches, we provide an environment where talent can flourish and dreams can become reality.
+                </p>
+                {% endif %}
+            </div>
+            <div class="about-story-image animate-right">
+                <img src="{% if about_content.story_image %}{{ about_content.story_image.url }}{% else %}https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80{% endif %}" alt="AIFA Academy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision Section -->
+<section class="section section-dark" id="mission-vision">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag animate-on-scroll">What Drives Us</div>
+            <h2 class="section-title animate-on-scroll">MISSION & <span class="text-gradient">VISION</span></h2>
+        </div>
+        <div class="mission-vision-grid">
+            <div class="mission-box animate-left">
+                <div class="mission-header">
+                    <div class="mission-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="mission-title">{{ about_content.mission_title|default:"Our Mission" }}</h3>
+                </div>
+                {% if about_content.mission_content %}
+                    <div class="mission-content">{{ about_content.mission_content|safe }}</div>
+                {% else %}
+                    <p class="mission-content">To nurture and develop young athletes through world-class training, instilling values of discipline, teamwork, and excellence that extend beyond the playing field.</p>
+                {% endif %}
+                <span class="mission-highlight">Building Champions Daily</span>
+            </div>
+            <div class="vision-box animate-right">
+                <div class="mission-header">
+                    <div class="mission-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="mission-title">{{ about_content.vision_title|default:"Our Vision" }}</h3>
+                </div>
+                {% if about_content.vision_content %}
+                    <div class="mission-content">{{ about_content.vision_content|safe }}</div>
+                {% else %}
+                    <p class="mission-content">To be the premier sports academy producing champions who excel in their sport and life, contributing positively to society and inspiring future generations.</p>
+                {% endif %}
+                <span class="mission-highlight">Excellence in Every Step</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="section section-dark" id="values">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag animate-on-scroll">Our Core Values</div>
+            <h2 class="section-title animate-on-scroll">WHAT WE <span class="text-gradient">BELIEVE IN</span></h2>
+        </div>
+
+        <div class="grid grid-cols-4 stagger-children">
+            {% for value in about_content.get_values_list %}
+            <div class="text-center animate-scale {% if not forloop.first %}delay-{{ forloop.counter0 }}00{% endif %}">
+                <div class="value-icon">
+                    {% include 'includes/icon.html' with icon=value.icon %}
+                </div>
+                <h4 class="mt-6 mb-2">{{ value.title }}</h4>
+                <p class="text-muted">{{ value.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Board of Directors Section -->
+{% if board_members %}
+<section class="section" id="board">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag animate-on-scroll">Leadership</div>
+            <h2 class="section-title animate-on-scroll">BOARD OF <span class="text-gradient">DIRECTORS</span></h2>
+            <p class="section-subtitle">Visionary leaders guiding our academy towards excellence</p>
+        </div>
+
+        <div class="board-grid stagger-children">
+            {% for member in board_members %}
+            <div class="board-card animate-scale">
+                <div class="board-image">
+                    {% if member.photo %}
+                    <img src="{{ member.photo.url }}" alt="{{ member.first_name }} {{ member.last_name }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="{{ member.first_name }} {{ member.last_name }}">
+                    {% endif %}
+                </div>
+                <div class="board-info">
+                    <h3 class="board-name">{{ member.first_name }} {{ member.last_name }}</h3>
+                    <p class="board-role">{{ member.designation }}</p>
+                    {% if member.bio %}
+                    <p class="board-bio">{{ member.bio|truncatewords:12 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonials Section -->
+{% if testimonials %}
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag animate-on-scroll">Testimonials</div>
+            <h2 class="section-title animate-on-scroll">WHAT PARENTS <span class="text-gradient">SAY</span></h2>
+        </div>
+
+        <div class="testimonials-wrapper">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-card animate-scale">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">{{ testimonial.content }}</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">
+                        {% if testimonial.photo %}
+                        <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}">
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="{{ testimonial.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>{{ testimonial.name }}</h4>
+                        <p>{{ testimonial.role }}</p>
+                    </div>
+                    {% if testimonial.rating %}
+                    <div class="testimonial-rating">
+                        {% for i in "12345" %}
+                        {% if forloop.counter <= testimonial.rating %}
+                        <svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="cta-box animate-scale container">
+        <div class="cta-bg-icon">&#9917;</div>
+        <h2 class="cta-title">READY TO JOIN?</h2>
+        <p class="cta-text">
+            Take the first step towards becoming a champion. Contact us today to learn more about our programs.
+        </p>
+        <div class="cta-buttons">
+            <a href="{% url 'frontend:contact' %}" class="btn btn-primary">
+                Contact Us
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            <a href="{% url 'programs:list' %}" class="btn btn-outline">
+                View Programs
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

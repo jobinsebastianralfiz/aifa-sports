@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | AIFA Football Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/landing.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-scrolled">
+        <a href="/" class="navbar-brand">
+            <img src="../assets/images/logo.png" alt="AIFA Football Academy">
+        </a>
+        <ul class="navbar-menu">
+            <li><a href="/" class="navbar-link">Home</a></li>
+            <li><a href="/about/" class="navbar-link">About</a></li>
+            <li><a href="/programs/" class="navbar-link">Programs</a></li>
+            <li><a href="/coaches/" class="navbar-link">Coaches</a></li>
+            <li><a href="/gallery/" class="navbar-link active">Gallery</a></li>
+            <li><a href="/contact/" class="navbar-link">Contact</a></li>
+        </ul>
+        <a href="/contact/" class="btn btn-primary hide-mobile">Join Academy</a>
+        <div class="menu-toggle"><span></span><span></span><span></span></div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1920&q=80')"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <div class="section-tag animate-on-scroll">Moments Captured</div>
+            <h1 class="page-hero-title animate-on-scroll">OUR <span class="text-gradient">GALLERY</span></h1>
+            <p class="page-hero-text animate-on-scroll">Relive the action, passion, and triumphs of AIFA</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section">
+        <div class="container">
+            <!-- Gallery Filters -->
+            <div class="gallery-filters animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="training">Training</button>
+                <button class="filter-btn" data-filter="matches">Matches</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="facilities">Facilities</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid stagger-children">
+                <!-- Training Images -->
+                <div class="gallery-item wide" data-category="training">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80" alt="Team Training">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Morning Training Session</div>
+                            <div class="gallery-item-category">Training</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="matches">
+                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="Match Action">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">District Championship</div>
+                            <div class="gallery-item-category">Matches</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item tall" data-category="training">
+                    <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" alt="Youth Training">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Youth Academy Practice</div>
+                            <div class="gallery-item-category">Training</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="events">
+                    <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&q=80" alt="Trophy Ceremony">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Trophy Celebration</div>
+                            <div class="gallery-item-category">Events</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="facilities">
+                    <img src="https://images.unsplash.com/photo-1518604666860-9ed391f76460?w=600&q=80" alt="Stadium View">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Main Training Ground</div>
+                            <div class="gallery-item-category">Facilities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item wide" data-category="matches">
+                    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80" alt="Team Photo">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">State Finals Team</div>
+                            <div class="gallery-item-category">Matches</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="training">
+                    <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&q=80" alt="Kids Training">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Little Champions Class</div>
+                            <div class="gallery-item-category">Training</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="facilities">
+                    <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&q=80" alt="Gym Facility">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Fitness Center</div>
+                            <div class="gallery-item-category">Facilities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item tall" data-category="events">
+                    <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=600&q=80" alt="Award Ceremony">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Annual Awards Night</div>
+                            <div class="gallery-item-category">Events</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="matches">
+                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Match Action">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Penalty Shootout</div>
+                            <div class="gallery-item-category">Matches</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="training">
+                    <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80" alt="Tactics Session">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Tactical Analysis</div>
+                            <div class="gallery-item-category">Training</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item wide" data-category="events">
+                    <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80" alt="Tournament">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Summer Tournament 2024</div>
+                            <div class="gallery-item-category">Events</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="facilities">
+                    <img src="https://images.unsplash.com/photo-1556056504-5c7696c4c28d?w=600&q=80" alt="Night Training">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Floodlit Pitch</div>
+                            <div class="gallery-item-category">Facilities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="training">
+                    <img src="https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=600&q=80" alt="Goalkeeper Training">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">GK Masterclass</div>
+                            <div class="gallery-item-category">Training</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="matches">
+                    <img src="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=600&q=80" alt="Goal Celebration">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Winning Goal</div>
+                            <div class="gallery-item-category">Matches</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="events">
+                    <img src="https://images.unsplash.com/photo-1544919982-b61976f0ba43?w=600&q=80" alt="Community Event">
+                    <div class="gallery-item-overlay">
+                        <div>
+                            <div class="gallery-item-title">Community Football Day</div>
+                            <div class="gallery-item-category">Events</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="">
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="cta-box animate-scale">
+            <h2 class="cta-title">BE PART OF THE STORY</h2>
+            <p class="cta-text">Join AIFA and create your own unforgettable moments</p>
+            <div class="cta-buttons">
+                <a href="/contact/" class="btn btn-primary">Join Now</a>
+                <a href="/contact/" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid container">
+            <div class="footer-brand">
+                <a href="/" class="footer-logo">
+                    <img src="../assets/images/logo-white.png" alt="AIFA Football Academy">
+                </a>
+                <p>Training champions since 2014. Where passion meets excellence.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/programs/">Programs</a></li>
+                    <li><a href="/coaches/">Coaches</a></li>
+                    <li><a href="/gallery/">Gallery</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Programs</h4>
+                <ul class="footer-links">
+                    <li><a href="/programs/#little-champions">Little Champions</a></li>
+                    <li><a href="/programs/#junior-stars">Junior Stars</a></li>
+                    <li><a href="/programs/#elite-youth">Elite Youth</a></li>
+                    <li><a href="/programs/#adult-league">Adult League</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul class="footer-links footer-contact">
+                    <li>123 Sports Complex, Stadium Road</li>
+                    <li>+91 98765 43210</li>
+                    <li>hello@aifa-academy.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AIFA Football Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float whatsapp-pulse" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Gallery Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.style.opacity = '1', 10);
+                    } else {
+                        item.style.opacity = '0';
+                        setTimeout(() => item.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        let currentImageIndex = 0;
+        const images = Array.from(document.querySelectorAll('.gallery-item img'));
+
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentImageIndex = index;
+                openLightbox(item.querySelector('img').src);
+            });
+        });
+
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-image');
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = images.length - 1;
+            if (currentImageIndex >= images.length) currentImageIndex = 0;
+            document.getElementById('lightbox-image').src = images[currentImageIndex].src;
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+    </script>
+</body>
+</html>

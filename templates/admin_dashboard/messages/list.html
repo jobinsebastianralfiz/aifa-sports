@@ -1,0 +1,95 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Messages{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Contact Messages</h2>
+        <p class="text-muted">View and manage messages from the contact form</p>
+    </div>
+</div>
+
+<!-- Messages Table -->
+<div class="data-table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+            <tr class="{% if not message.is_read %}unread{% endif %}">
+                <td>
+                    <div class="user-cell">
+                        <div>
+                            <div class="user-name">{{ message.name }}</div>
+                            <div class="user-email">{{ message.email }}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>{{ message.subject|truncatewords:8 }}</td>
+                <td>{{ message.created_at|date:"M d, Y H:i" }}</td>
+                <td>
+                    {% if message.is_read %}
+                    <span class="badge badge-secondary">Read</span>
+                    {% else %}
+                    <span class="badge badge-primary">New</span>
+                    {% endif %}
+                </td>
+                <td class="text-right">
+                    <div class="action-buttons">
+                        <a href="{% url 'admin_dashboard:messages:detail' message.pk %}" class="btn-icon" title="View">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'admin_dashboard:messages:delete' message.pk %}" class="btn-icon text-danger" title="Delete">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <h3 class="empty-title">No Messages Yet</h3>
+                        <p class="empty-text">Messages from the contact form will appear here.</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-ghost">Previous</a>
+        {% endif %}
+        <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-ghost">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

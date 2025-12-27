@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Details | AIFA Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/admin-css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="/assets/images/logo.png" alt="AIFA" class="sidebar-logo">
+                <span class="sidebar-title">AIFA ADMIN</span>
+            </div>
+                        <nav class="sidebar-nav">
+                <a href="/dashboard/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="/dashboard/hero-slides/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                        <line x1="7" y1="2" x2="7" y2="22"/>
+                        <line x1="17" y1="2" x2="17" y2="22"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                    </svg>
+                    Hero Slides
+                </a>
+                <a href="/dashboard/programs/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Programs
+                </a>
+                <a href="/dashboard/coaches/" class="sidebar-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Coaches
+                </a>
+                <a href="/dashboard/gallery/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Gallery
+                </a>
+                <a href="/dashboard/testimonials/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Testimonials
+                </a>
+                <a href="/dashboard/messages/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    Messages
+                </a>
+                <a href="/dashboard/settings/" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/login/" class="sidebar-link text-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+                    <nav class="breadcrumb">
+                        <a href="/dashboard/coaches/">Coaches</a>
+                        <span>/</span>
+                        <span>Mohammed Rahman</span>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="header-user">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100" alt="Admin">
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Page Header -->
+                <div class="content-header">
+                    <div class="content-header-left">
+                        <a href="/dashboard/coaches/" class="btn btn-ghost btn-sm mb-4">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                            Back to Coaches
+                        </a>
+                        <h2>Coach Profile</h2>
+                    </div>
+                    <div class="content-header-right">
+                        <button class="btn btn-outline text-danger">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            Delete
+                        </button>
+                        <button class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detail Content -->
+                <div class="detail-layout">
+                    <!-- Left Column - Profile Card -->
+                    <div class="detail-sidebar">
+                        <div class="profile-card">
+                            <div class="profile-avatar-wrapper">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300" alt="Coach" class="profile-avatar">
+                                <button class="avatar-edit-btn">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                </button>
+                            </div>
+                            <h3 class="profile-name">Mohammed Rahman</h3>
+                            <p class="profile-id">Technical Director</p>
+                            <span class="badge badge-warning">Head Coach</span>
+
+                            <div class="profile-stats">
+                                <div class="profile-stat">
+                                    <span class="stat-value">45</span>
+                                    <span class="stat-label">Students</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span class="stat-value">3</span>
+                                    <span class="stat-label">Batches</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span class="stat-value">5</span>
+                                    <span class="stat-label">Years</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Assigned Programs -->
+                        <div class="info-card">
+                            <h4>Assigned Programs</h4>
+                            <div class="tag-list">
+                                <span class="tag">Elite Youth</span>
+                                <span class="tag">Adult League</span>
+                            </div>
+                        </div>
+
+                        <!-- Certifications -->
+                        <div class="info-card">
+                            <h4>Certifications</h4>
+                            <div class="cert-list">
+                                <div class="cert-item">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                                    <span>AFC C License</span>
+                                </div>
+                                <div class="cert-item">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                                    <span>AIFF D License</span>
+                                </div>
+                                <div class="cert-item">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                                    <span>First Aid Certified</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Forms -->
+                    <div class="detail-main">
+                        <!-- Personal Information -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-input" value="Mohammed">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-input" value="Rahman">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-input" value="1985-03-20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-input form-select">
+                                            <option value="male" selected>Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Nationality</label>
+                                        <input type="text" class="form-input" value="Indian">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Languages</label>
+                                        <input type="text" class="form-input" value="English, Hindi, Malayalam">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Contact Information</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-input" value="+91 98765 43210">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-input" value="rahman@aifa.com">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label">Address</label>
+                                        <textarea class="form-input form-textarea" rows="3">15, Palm Grove, Edappally, Kochi, Kerala - 682024</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Professional Details -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Professional Details</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Role</label>
+                                        <select class="form-input form-select">
+                                            <option value="head-coach" selected>Head Coach</option>
+                                            <option value="senior-coach">Senior Coach</option>
+                                            <option value="assistant-coach">Assistant Coach</option>
+                                            <option value="goalkeeper-coach">Goalkeeper Coach</option>
+                                            <option value="fitness-coach">Fitness Coach</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Specialization</label>
+                                        <input type="text" class="form-input" value="Technical Training, Youth Development">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Experience (Years)</label>
+                                        <input type="number" class="form-input" value="12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Joining Date</label>
+                                        <input type="date" class="form-input" value="2019-08-01">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Employment Type</label>
+                                        <select class="form-input form-select">
+                                            <option value="full-time" selected>Full Time</option>
+                                            <option value="part-time">Part Time</option>
+                                            <option value="contract">Contract</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        <select class="form-input form-select">
+                                            <option value="active" selected>Active</option>
+                                            <option value="on-leave">On Leave</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Assigned Batches -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Assigned Batches</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="batch-assignment-list">
+                                    <div class="batch-assignment-item">
+                                        <div class="batch-info">
+                                            <h4>Elite Youth - Morning</h4>
+                                            <p>Mon, Wed, Fri | 6:00 - 7:30 AM</p>
+                                        </div>
+                                        <span class="badge badge-info">18 students</span>
+                                    </div>
+                                    <div class="batch-assignment-item">
+                                        <div class="batch-info">
+                                            <h4>Adult League - Evening</h4>
+                                            <p>Tue, Thu, Sat | 6:00 - 7:30 PM</p>
+                                        </div>
+                                        <span class="badge badge-info">15 students</span>
+                                    </div>
+                                    <div class="batch-assignment-item">
+                                        <div class="batch-info">
+                                            <h4>Elite Youth - Weekend</h4>
+                                            <p>Sat, Sun | 8:00 - 10:00 AM</p>
+                                        </div>
+                                        <span class="badge badge-info">12 students</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline btn-sm mt-4">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    Assign New Batch
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bio -->
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Bio (for Website)</h3>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-group">
+                                    <textarea class="form-input form-textarea" rows="5" placeholder="Coach bio for the website...">Former professional footballer with over 12 years of coaching experience. Mohammed brings a wealth of knowledge from his playing days and has trained hundreds of young talents. His focus on technical development and tactical awareness has helped many students advance to professional academies.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" checked> Show on Website
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin-js/admin.js"></script>
+</body>
+</html>

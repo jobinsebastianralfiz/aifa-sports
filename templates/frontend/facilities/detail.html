@@ -1,0 +1,116 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}{{ facility.name }} | AIFA Football Academy{% endblock %}
+
+{% block meta_description %}{{ facility.description|truncatewords:25 }}{% endblock %}
+
+{% block og_title %}{{ facility.name }} | AIFA Football Academy{% endblock %}
+{% block og_description %}{{ facility.description|truncatewords:20 }}{% endblock %}
+{% block og_image %}{% if facility.image %}{{ facility.image.url }}{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero" style="min-height: 50vh;">
+    <div class="page-hero-bg" style="background-image: url('{% if facility.image %}{{ facility.image.url }}{% else %}https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80{% endif %}')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        {% if facility.category %}
+        <div class="section-tag animate-on-scroll">{{ facility.category.name }}</div>
+        {% endif %}
+        <h1 class="page-hero-title animate-on-scroll">{{ facility.name|upper }}</h1>
+        {% if facility.area_size %}
+        <p class="page-hero-text animate-on-scroll">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle; margin-right: 8px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+            {{ facility.area_size }}
+        </p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Facility Details -->
+<section class="section">
+    <div class="container">
+        <div class="facility-detail-card animate-on-scroll">
+            <div class="facility-detail-grid">
+                <div class="facility-detail-image">
+                    {% if facility.image %}
+                    <img src="{{ facility.image.url }}" alt="{{ facility.name }}">
+                    {% endif %}
+                </div>
+                <div class="facility-detail-content">
+                    <h2 class="h2 mb-4">About This Facility</h2>
+
+                    {% if facility.description %}
+                    <div class="text-light mb-6">{{ facility.description|linebreaks }}</div>
+                    {% elif facility.short_description %}
+                    <div class="text-light mb-6">{{ facility.short_description }}</div>
+                    {% endif %}
+
+                    {% if facility.get_features_list %}
+                    <h3 class="h4 mb-4">Key Features</h3>
+                    <ul class="facility-features-list">
+                        {% for feature in facility.get_features_list %}
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            {{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if facility.area_size %}
+                    <div class="facility-info-badge">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                        <span>Area: {{ facility.area_size }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if related_facilities %}
+<!-- Related Facilities -->
+<section class="section" style="background: var(--surface-secondary);">
+    <div class="container">
+        <h2 class="section-title text-center mb-12">Other {{ facility.category.name }}</h2>
+        <div class="facilities-grid">
+            {% for related in related_facilities %}
+            <div class="facility-card animate-scale">
+                <div class="facility-image">
+                    {% if related.image %}
+                    <img src="{{ related.image.url }}" alt="{{ related.name }}">
+                    {% endif %}
+                    {% if related.area_size %}
+                    <span class="facility-size">{{ related.area_size }}</span>
+                    {% endif %}
+                </div>
+                <div class="facility-content">
+                    <h3 class="facility-name">{{ related.name }}</h3>
+                    <p class="facility-desc">{{ related.short_description|truncatewords:15 }}</p>
+                    <a href="{% url 'facilities:detail' related.slug %}" class="facility-link">
+                        View Details
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="section cta-section">
+    <div class="cta-box animate-scale">
+        <h2 class="cta-title">EXPERIENCE OUR FACILITIES</h2>
+        <p class="cta-text">Schedule a campus tour and see our world-class infrastructure in person.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'frontend:contact' %}" class="btn btn-primary">Schedule a Visit</a>
+            <a href="{% url 'facilities:list' %}" class="btn btn-outline">View All Facilities</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

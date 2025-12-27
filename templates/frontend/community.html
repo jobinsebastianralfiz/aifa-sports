@@ -1,0 +1,195 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Community Outreach | {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+
+{% block meta_description %}Learn about our community outreach programs at Altius International Football Academy. Making football accessible and creating positive impact in our community.{% endblock %}
+
+{% block og_title %}Community Outreach | AIFA Football Academy{% endblock %}
+{% block og_description %}Learn about our community outreach programs at AIFA Football Academy.{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="page-hero-bg" style="background-image: url('{% if page_content.hero_image %}{{ page_content.hero_image.url }}{% else %}https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1920&q=80{% endif %}');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <h1 class="page-hero-title">{{ page_content.hero_title|default:"COMMUNITY <span class='text-gradient'>OUTREACH</span>"|safe }}</h1>
+        <p class="page-hero-text">{{ page_content.hero_subtitle|default:"Making a Difference Beyond the Field" }}</p>
+    </div>
+</section>
+
+<!-- Introduction Section -->
+<section class="section" id="intro">
+    <div class="container">
+        <div class="community-intro animate-on-scroll">
+            <div class="section-header">
+                <div class="section-tag">Our Commitment</div>
+                <h2 class="section-title">{{ page_content.intro_title|default:"GIVING BACK TO OUR <span class='text-gradient'>COMMUNITY</span>"|safe }}</h2>
+            </div>
+            {% if page_content.intro_content %}
+                <div class="intro-content">{{ page_content.intro_content|safe }}</div>
+            {% else %}
+                <p class="intro-content">
+                    At {{ site_settings.site_name|default:"AIFA Sports Academy" }}, we believe in the power of sports to transform lives and communities.
+                    Our community outreach programs aim to make sports accessible to everyone, regardless of their background or circumstances.
+                    Through various initiatives, we strive to create positive impact and inspire the next generation.
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Stats Section -->
+        <div class="community-stats">
+            <div class="stat-item animate-scale">
+                <div class="stat-number" data-count="{{ page_content.stats_volunteers|default:50 }}">{{ page_content.stats_volunteers|default:50 }}+</div>
+                <div class="stat-label">Volunteers</div>
+            </div>
+            <div class="stat-item animate-scale delay-100">
+                <div class="stat-number" data-count="{{ page_content.stats_events|default:25 }}">{{ page_content.stats_events|default:25 }}+</div>
+                <div class="stat-label">Events Conducted</div>
+            </div>
+            <div class="stat-item animate-scale delay-200">
+                <div class="stat-number" data-count="{{ page_content.stats_beneficiaries|default:2000 }}">{{ page_content.stats_beneficiaries|default:2000 }}+</div>
+                <div class="stat-label">Beneficiaries</div>
+            </div>
+            <div class="stat-item animate-scale delay-300">
+                <div class="stat-number" data-count="{{ page_content.stats_hours|default:500 }}">{{ page_content.stats_hours|default:500 }}+</div>
+                <div class="stat-label">Volunteer Hours</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Activities Section -->
+{% if featured_activities %}
+<section class="section section-dark" id="featured">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag animate-on-scroll">Highlights</div>
+            <h2 class="section-title animate-on-scroll">FEATURED <span class="text-gradient">INITIATIVES</span></h2>
+        </div>
+
+        <div class="featured-activities-grid">
+            {% for activity in featured_activities %}
+            <div class="featured-activity-card animate-scale">
+                <div class="featured-activity-image">
+                    {% if activity.image %}
+                    <img src="{{ activity.image.url }}" alt="{{ activity.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&q=80" alt="{{ activity.title }}">
+                    {% endif %}
+                    <div class="activity-category">{{ activity.get_category_display }}</div>
+                </div>
+                <div class="featured-activity-content">
+                    <div class="activity-date">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        {{ activity.date|date:"d M Y" }}
+                    </div>
+                    <h3 class="featured-activity-title">{{ activity.title }}</h3>
+                    <p class="featured-activity-desc">{{ activity.short_description|default:activity.description|truncatewords:25 }}</p>
+                    {% if activity.beneficiaries %}
+                    <div class="activity-impact">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        {{ activity.beneficiaries }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- All Activities Section -->
+{% if activities %}
+<section class="section" id="activities">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag animate-on-scroll">Our Work</div>
+            <h2 class="section-title animate-on-scroll">ALL <span class="text-gradient">ACTIVITIES</span></h2>
+        </div>
+
+        <div class="activities-grid stagger-children">
+            {% for activity in activities %}
+            <div class="activity-card animate-scale">
+                <div class="activity-card-image">
+                    {% if activity.image %}
+                    <img src="{{ activity.image.url }}" alt="{{ activity.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400&q=80" alt="{{ activity.title }}">
+                    {% endif %}
+                    <div class="activity-overlay">
+                        <span class="activity-category-badge">{{ activity.get_category_display }}</span>
+                    </div>
+                </div>
+                <div class="activity-card-content">
+                    <div class="activity-meta">
+                        <span class="activity-date-small">{{ activity.date|date:"d M Y" }}</span>
+                        {% if activity.location %}
+                        <span class="activity-location">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            {{ activity.location }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    <h4 class="activity-card-title">{{ activity.title }}</h4>
+                    <p class="activity-card-desc">{{ activity.short_description|default:activity.description|truncatewords:15 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<!-- No Activities Yet -->
+<section class="section">
+    <div class="container">
+        <div class="no-activities text-center">
+            <div class="no-activities-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="80" height="80">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            </div>
+            <h3>Coming Soon</h3>
+            <p class="text-muted">We're working on exciting community initiatives. Stay tuned for updates!</p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Get Involved CTA -->
+<section class="section cta-section">
+    <div class="cta-box animate-scale container">
+        <div class="cta-bg-icon">&#x2764;</div>
+        <h2 class="cta-title">WANT TO GET INVOLVED?</h2>
+        <p class="cta-text">
+            Join us in making a difference. Whether you want to volunteer, donate, or partner with us, we'd love to hear from you.
+        </p>
+        <div class="cta-buttons">
+            <a href="{% url 'frontend:contact' %}" class="btn btn-primary">
+                Contact Us
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
