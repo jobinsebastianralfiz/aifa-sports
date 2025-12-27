@@ -1756,14 +1756,14 @@ img, video, iframe, embed, object {
 .stat-number {
     font-family: var(--font-heading);
     font-size: clamp(50px, 8vw, 90px);
-    color: var(--darker);
+    color: #000000;
     line-height: 1;
 }
 
 .stat-label {
     font-size: var(--text-sm);
     font-weight: var(--font-semibold);
-    color: var(--darker);
+    color: #000000;
     letter-spacing: var(--tracking-widest);
     text-transform: uppercase;
     margin-top: var(--space-3);
