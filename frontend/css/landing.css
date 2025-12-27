@@ -813,10 +813,10 @@ img, video, iframe, embed, object {
 .hero-news-panel {
     position: absolute;
     right: 5%;
-    top: 35%;
-    transform: translateY(-30%);
+    top: 50%;
+    transform: translateY(-50%);
     width: 380px;
-    max-height: 380px;
+    max-height: 450px;
     background: var(--glass);
     backdrop-filter: blur(30px);
     border: 1px solid var(--glass-border);
