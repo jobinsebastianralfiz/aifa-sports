@@ -162,7 +162,9 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoise configuration for serving static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Use CompressedStaticFilesStorage instead of CompressedManifestStaticFilesStorage
+# to avoid missing file hash errors
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files (Uploads)
 MEDIA_URL = '/media/'
