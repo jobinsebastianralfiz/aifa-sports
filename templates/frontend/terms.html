@@ -1,0 +1,130 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Terms & Conditions | {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+
+{% block meta_description %}Terms and Conditions for {{ site_settings.site_name|default:"AIFA Sports Academy" }}. Please read these terms carefully before using our services.{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-small">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <h1 class="page-hero-title">Terms & Conditions</h1>
+        <p class="page-hero-subtitle">Please read these terms carefully before using our services</p>
+    </div>
+</section>
+
+<section class="section legal-content">
+    <div class="container">
+        <div class="legal-wrapper">
+            <p class="legal-updated">Last Updated: December 2024</p>
+
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using the services of {{ site_settings.site_name|default:"Altius International Football Academy (AIFA)" }} ("the Academy"), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our services.</p>
+
+            <h2>2. Services</h2>
+            <p>The Academy provides football training programs, coaching services, and related activities for various age groups. Services include but are not limited to:</p>
+            <ul>
+                <li>Regular training sessions</li>
+                <li>Football coaching programs</li>
+                <li>Tournament participation</li>
+                <li>Sports camps and workshops</li>
+                <li>Trial sessions and assessments</li>
+            </ul>
+
+            <h2>3. Registration and Enrollment</h2>
+            <ul>
+                <li>All participants must complete the registration process</li>
+                <li>Minors must have parental/guardian consent</li>
+                <li>Accurate information must be provided during registration</li>
+                <li>Medical information must be disclosed for safety purposes</li>
+                <li>Registration is subject to availability and acceptance by the Academy</li>
+            </ul>
+
+            <h2>4. Fees and Payment</h2>
+            <ul>
+                <li>Fees are as per the current fee structure published by the Academy</li>
+                <li>Payment must be made according to the payment schedule</li>
+                <li>Fees once paid are non-refundable unless specified otherwise</li>
+                <li>The Academy reserves the right to revise fees with prior notice</li>
+            </ul>
+
+            <h2>5. Code of Conduct</h2>
+            <p>All participants must:</p>
+            <ul>
+                <li>Behave respectfully towards coaches, staff, and fellow participants</li>
+                <li>Follow instructions given by coaches and staff</li>
+                <li>Arrive on time for training sessions</li>
+                <li>Wear appropriate sports attire and footwear</li>
+                <li>Not engage in any form of bullying or harassment</li>
+                <li>Report any injuries or health concerns immediately</li>
+            </ul>
+
+            <h2>6. Health and Safety</h2>
+            <ul>
+                <li>Participants must be medically fit to participate in physical activities</li>
+                <li>Any medical conditions must be disclosed to the Academy</li>
+                <li>The Academy is not responsible for pre-existing medical conditions</li>
+                <li>Participants must follow all safety guidelines and instructions</li>
+                <li>Emergency medical treatment may be provided if necessary</li>
+            </ul>
+
+            <h2>7. Liability Waiver</h2>
+            <p>By enrolling in our programs:</p>
+            <ul>
+                <li>You acknowledge that football is a physical sport with inherent risks</li>
+                <li>You accept the risk of injury during training and activities</li>
+                <li>The Academy is not liable for injuries resulting from normal sports activities</li>
+                <li>You release the Academy from claims arising from participation</li>
+            </ul>
+
+            <h2>8. Intellectual Property</h2>
+            <ul>
+                <li>All content on our website is owned by the Academy</li>
+                <li>Logos, images, and materials may not be used without permission</li>
+                <li>Photos and videos taken during activities may be used for promotional purposes</li>
+            </ul>
+
+            <h2>9. Photography and Media</h2>
+            <p>By enrolling, you consent to:</p>
+            <ul>
+                <li>Photographs and videos being taken during training and events</li>
+                <li>Use of such media for promotional and marketing purposes</li>
+                <li>Publication on social media, website, and print materials</li>
+            </ul>
+            <p>If you do not consent, please inform us in writing.</p>
+
+            <h2>10. Cancellation and Refunds</h2>
+            <ul>
+                <li>Cancellation requests must be made in writing</li>
+                <li>Refunds are subject to Academy policies</li>
+                <li>No refunds for missed sessions due to personal reasons</li>
+                <li>Sessions cancelled by the Academy will be rescheduled or refunded</li>
+            </ul>
+
+            <h2>11. Termination</h2>
+            <p>The Academy reserves the right to terminate enrollment for:</p>
+            <ul>
+                <li>Violation of the code of conduct</li>
+                <li>Non-payment of fees</li>
+                <li>Behavior that endangers others</li>
+                <li>Any other reason deemed necessary by the Academy</li>
+            </ul>
+
+            <h2>12. Changes to Terms</h2>
+            <p>The Academy reserves the right to modify these terms at any time. Continued use of our services after changes constitutes acceptance of the modified terms.</p>
+
+            <h2>13. Governing Law</h2>
+            <p>These terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts in Kerala, India.</p>
+
+            <h2>14. Contact Information</h2>
+            <p>For questions about these Terms and Conditions:</p>
+            <ul class="contact-info">
+                {% if site_settings.email %}<li><strong>Email:</strong> {{ site_settings.email }}</li>{% endif %}
+                {% if site_settings.phone %}<li><strong>Phone:</strong> {{ site_settings.phone }}</li>{% endif %}
+                {% if site_settings.address %}<li><strong>Address:</strong> {{ site_settings.address }}</li>{% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

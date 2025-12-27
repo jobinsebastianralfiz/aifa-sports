@@ -85,6 +85,13 @@
 
     <div class="footer-bottom">
         <p>&copy; {% now "Y" %} {{ site_settings.copyright_text|default:site_settings.site_name|default:"AIFA Football Academy" }}. All rights reserved.</p>
+        <div class="footer-legal-links">
+            <a href="{% url 'frontend:privacy' %}">Privacy Policy</a>
+            <span>|</span>
+            <a href="{% url 'frontend:terms' %}">Terms & Conditions</a>
+            <span>|</span>
+            <a href="{% url 'frontend:sitemap' %}">Sitemap</a>
+        </div>
         <p>Designed by <a href="#">Ralfiz Technologies</a></p>
     </div>
 </footer>

@@ -2182,6 +2182,29 @@ img, video, iframe, embed, object {
     color: var(--primary);
 }
 
+.footer-legal-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-3) 0;
+}
+
+.footer-legal-links a {
+    color: var(--glass-white-60);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer-legal-links a:hover {
+    color: var(--primary);
+}
+
+.footer-legal-links span {
+    color: var(--glass-white-40);
+    font-size: var(--text-xs);
+}
+
 /* ==========================================================================
    WHATSAPP & BACK TO TOP
    ========================================================================== */

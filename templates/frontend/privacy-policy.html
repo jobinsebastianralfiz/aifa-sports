@@ -1,0 +1,105 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy | {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+
+{% block meta_description %}Privacy Policy for {{ site_settings.site_name|default:"AIFA Sports Academy" }}. Learn how we collect, use, and protect your personal information.{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-small">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <h1 class="page-hero-title">Privacy Policy</h1>
+        <p class="page-hero-subtitle">How we collect, use, and protect your information</p>
+    </div>
+</section>
+
+<section class="section legal-content">
+    <div class="container">
+        <div class="legal-wrapper">
+            <p class="legal-updated">Last Updated: December 2024</p>
+
+            <h2>1. Introduction</h2>
+            <p>{{ site_settings.site_name|default:"Altius International Football Academy (AIFA)" }} ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
+
+            <h2>2. Information We Collect</h2>
+            <h3>Personal Information</h3>
+            <p>We may collect personal information that you voluntarily provide to us when you:</p>
+            <ul>
+                <li>Register for our programs or services</li>
+                <li>Fill out contact forms or inquiry forms</li>
+                <li>Subscribe to our newsletter</li>
+                <li>Participate in events or competitions</li>
+            </ul>
+            <p>This information may include:</p>
+            <ul>
+                <li>Name, email address, phone number</li>
+                <li>Date of birth (for student registration)</li>
+                <li>Parent/guardian information (for minors)</li>
+                <li>Address and location</li>
+                <li>Emergency contact information</li>
+                <li>Medical information relevant to sports participation</li>
+            </ul>
+
+            <h3>Automatically Collected Information</h3>
+            <p>When you visit our website, we may automatically collect:</p>
+            <ul>
+                <li>IP address and browser type</li>
+                <li>Device information</li>
+                <li>Pages visited and time spent</li>
+                <li>Referring website information</li>
+            </ul>
+
+            <h2>3. How We Use Your Information</h2>
+            <p>We use the information we collect to:</p>
+            <ul>
+                <li>Process registrations and enrollments</li>
+                <li>Communicate about programs, schedules, and events</li>
+                <li>Send newsletters and promotional materials (with consent)</li>
+                <li>Improve our website and services</li>
+                <li>Ensure safety during training sessions</li>
+                <li>Comply with legal obligations</li>
+            </ul>
+
+            <h2>4. Information Sharing</h2>
+            <p>We do not sell, trade, or rent your personal information to third parties. We may share information with:</p>
+            <ul>
+                <li>Service providers who assist in our operations</li>
+                <li>Sports federations for tournament registrations</li>
+                <li>Emergency services when necessary for safety</li>
+                <li>Legal authorities when required by law</li>
+            </ul>
+
+            <h2>5. Data Security</h2>
+            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+
+            <h2>6. Children's Privacy</h2>
+            <p>As a football academy, we work with children. We collect information about minors only with parental/guardian consent. Parents have the right to review, update, or request deletion of their child's information.</p>
+
+            <h2>7. Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access your personal information</li>
+                <li>Correct inaccurate information</li>
+                <li>Request deletion of your information</li>
+                <li>Opt-out of marketing communications</li>
+                <li>Withdraw consent at any time</li>
+            </ul>
+
+            <h2>8. Cookies</h2>
+            <p>Our website may use cookies to enhance your browsing experience. You can control cookie settings through your browser preferences.</p>
+
+            <h2>9. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page with an updated date.</p>
+
+            <h2>10. Contact Us</h2>
+            <p>If you have questions about this Privacy Policy, please contact us:</p>
+            <ul class="contact-info">
+                {% if site_settings.email %}<li><strong>Email:</strong> {{ site_settings.email }}</li>{% endif %}
+                {% if site_settings.phone %}<li><strong>Phone:</strong> {{ site_settings.phone }}</li>{% endif %}
+                {% if site_settings.address %}<li><strong>Address:</strong> {{ site_settings.address }}</li>{% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Sitemap | {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+
+{% block meta_description %}Sitemap for {{ site_settings.site_name|default:"AIFA Sports Academy" }}. Find all pages and navigate easily through our website.{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-small">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <h1 class="page-hero-title">Sitemap</h1>
+        <p class="page-hero-subtitle">Navigate our website easily</p>
+    </div>
+</section>
+
+<section class="section sitemap-content">
+    <div class="container">
+        <div class="sitemap-grid">
+            <!-- Main Pages -->
+            <div class="sitemap-section">
+                <h2>Main Pages</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'frontend:home' %}">Home</a></li>
+                    <li><a href="{% url 'frontend:about' %}">About Us</a></li>
+                    <li><a href="{% url 'frontend:community' %}">Community</a></li>
+                    <li><a href="{% url 'frontend:contact' %}">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Programs -->
+            <div class="sitemap-section">
+                <h2>Programs</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'programs:list' %}">All Programs</a></li>
+                    {% for program in programs %}
+                    <li><a href="{{ program.get_absolute_url }}">{{ program.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Coaches & Team -->
+            <div class="sitemap-section">
+                <h2>Our Team</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'coaches:list' %}">All Coaches</a></li>
+                    {% for coach in coaches %}
+                    <li><a href="{{ coach.get_absolute_url }}">{{ coach.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Facilities -->
+            <div class="sitemap-section">
+                <h2>Facilities</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'facilities:list' %}">All Facilities</a></li>
+                    {% for facility in facilities %}
+                    <li><a href="{{ facility.get_absolute_url }}">{{ facility.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- News & Events -->
+            <div class="sitemap-section">
+                <h2>News & Events</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'news:list' %}">Latest News</a></li>
+                    <li><a href="{% url 'events:list' %}">Upcoming Events</a></li>
+                </ul>
+            </div>
+
+            <!-- Gallery -->
+            <div class="sitemap-section">
+                <h2>Gallery</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'gallery:list' %}">Photo Gallery</a></li>
+                    {% for category in gallery_categories %}
+                    <li><a href="{% url 'gallery:category' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Achievements -->
+            <div class="sitemap-section">
+                <h2>Achievements</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'achievements:list' %}">Our Achievements</a></li>
+                    <li><a href="{% url 'accreditations:list' %}">Accreditations</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal Pages -->
+            <div class="sitemap-section">
+                <h2>Legal</h2>
+                <ul class="sitemap-list">
+                    <li><a href="{% url 'frontend:privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'frontend:terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'frontend:sitemap' %}">Sitemap</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

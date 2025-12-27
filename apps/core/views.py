@@ -24,6 +24,7 @@ from apps.core.models import AboutPageContent, HomepageContent, SiteSettings, Bo
 from apps.achievements.models import Achievement
 from apps.accreditations.models import Accreditation
 from apps.facilities.models import Facility
+from apps.gallery.models import GalleryCategory
 
 
 class HomeView(TemplateView):
@@ -453,3 +454,26 @@ I can help you with:
 Please try asking about one of these topics!""",
             'topic': 'default'
         }
+
+
+class PrivacyPolicyView(TemplateView):
+    """Privacy Policy page view."""
+    template_name = 'frontend/privacy-policy.html'
+
+
+class TermsConditionsView(TemplateView):
+    """Terms & Conditions page view."""
+    template_name = 'frontend/terms.html'
+
+
+class SitemapView(TemplateView):
+    """Sitemap page view."""
+    template_name = 'frontend/sitemap.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['programs'] = Program.objects.filter(status='active')
+        context['coaches'] = Coach.objects.filter(status='active', show_on_website=True)
+        context['facilities'] = Facility.objects.filter(is_active=True)
+        context['gallery_categories'] = GalleryCategory.objects.filter(is_active=True)
+        return context
