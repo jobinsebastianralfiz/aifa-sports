@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 class CustomLoginView(LoginView):
     """Custom login view with admin dashboard template."""
-    template_name = 'admin_html/login.html'
+    template_name = 'login.html'
     redirect_authenticated_user = True
 
     def get_success_url(self):
