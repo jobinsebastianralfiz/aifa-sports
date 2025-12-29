@@ -3,10 +3,11 @@ URL configuration for AIFA Sports Academy.
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
+from django.views.static import serve
 
 def health_check(request):
     return JsonResponse({"status": "ok"})
@@ -38,7 +39,9 @@ urlpatterns = [
 
 # Serve media files (both development and production)
 # Note: For high-traffic production, consider using cloud storage (S3, Cloudinary)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
 
 # Serve additional assets in development
 if settings.DEBUG:
