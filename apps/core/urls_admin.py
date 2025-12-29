@@ -62,4 +62,7 @@ urlpatterns = [
     path('achievements/', include(('apps.achievements.urls_admin', 'achievements'), namespace='achievements')),
     path('accreditations/', include(('apps.accreditations.urls_admin', 'accreditations'), namespace='accreditations')),
     path('facilities/', include(('apps.facilities.urls_admin', 'facilities'), namespace='facilities')),
+    path('tournaments/', include(('apps.tournaments.urls_admin', 'tournaments'), namespace='tournaments')),
+    path('teams/', include(('apps.tournaments.urls_admin_teams', 'teams'), namespace='teams')),
+    path('matches/', include(('apps.tournaments.urls_admin_matches', 'matches'), namespace='matches')),
 ]

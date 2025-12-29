@@ -33,6 +33,7 @@ urlpatterns = [
     path('achievements/', include('apps.achievements.urls', namespace='achievements')),
     path('accreditations/', include('apps.accreditations.urls', namespace='accreditations')),
     path('facilities/', include('apps.facilities.urls', namespace='facilities')),
+    path('tournaments/', include('apps.tournaments.urls', namespace='tournaments')),
 ]
 
 # Serve media files in development

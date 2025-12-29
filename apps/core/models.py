@@ -48,6 +48,12 @@ class SiteSettings(models.Model):
     # Analytics
     google_analytics_id = models.CharField(max_length=50, blank=True)
 
+    # Federation Logos
+    aifl_logo = models.ImageField(upload_to='site/', blank=True, help_text="All India Football League logo for navbar")
+    aifl_logo_alt = models.CharField(max_length=200, blank=True, default="AIFL", help_text="Alt text for AIFL logo")
+    kfa_logo = models.ImageField(upload_to='site/', blank=True, help_text="Kerala Football Association logo for navbar")
+    kfa_logo_alt = models.CharField(max_length=200, blank=True, default="KFA", help_text="Alt text for KFA logo")
+
     # Footer
     footer_about = models.TextField(blank=True, help_text="Short about text for footer")
     copyright_text = models.CharField(max_length=200, blank=True)

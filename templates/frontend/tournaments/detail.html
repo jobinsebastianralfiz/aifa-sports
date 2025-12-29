@@ -1,0 +1,140 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}{{ tournament.name }} - {{ site_settings.site_name|default:"AIFA Sports Academy" }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="page-hero page-hero-small">
+    <div class="page-hero-bg" style="background-image: url('{% if tournament.banner %}{{ tournament.banner.url }}{% else %}https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&q=80{% endif %}');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <div class="breadcrumb">
+            <a href="{% url 'tournaments:list' %}">Tournaments</a>
+            <span>/</span>
+            <span>{{ tournament.name }}</span>
+        </div>
+        <h1 class="page-hero-title">{{ tournament.name|upper }}</h1>
+        <p class="page-hero-subtitle">
+            {{ tournament.get_tournament_type_display }} | {{ tournament.start_date|date:"d M Y" }}{% if tournament.end_date %} - {{ tournament.end_date|date:"d M Y" }}{% endif %}
+        </p>
+        <span class="tournament-status-badge-lg {{ tournament.status }}">{{ tournament.get_status_display }}</span>
+    </div>
+</section>
+
+<!-- Tournament Content -->
+<section class="section tournament-detail-section">
+    <div class="container">
+        <!-- Tournament Info -->
+        {% if tournament.description %}
+        <div class="tournament-info-box">
+            <p>{{ tournament.description }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Match Results -->
+        <div class="scores-section">
+            <div class="section-header-left">
+                <h2 class="section-title-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="title-icon"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20M2 12h20"/></svg>
+                    Match Results
+                </h2>
+            </div>
+
+            {% if completed_matches %}
+            <div class="scores-grid">
+                {% for match in completed_matches %}
+                <div class="score-card">
+                    <div class="score-card-header">
+                        <span class="match-type">{{ match.get_match_type_display }}</span>
+                        <span class="match-date">{{ match.match_date|date:"d M Y" }}</span>
+                    </div>
+                    <div class="score-card-body">
+                        <div class="score-team home">
+                            <div class="team-logo-lg">
+                                {% if match.home_team.logo %}
+                                <img src="{{ match.home_team.logo.url }}" alt="{{ match.home_team.name }}">
+                                {% else %}
+                                <span class="team-abbr">{{ match.home_team.short_name|slice:":3" }}</span>
+                                {% endif %}
+                            </div>
+                            <span class="team-name-full">{{ match.home_team.name }}</span>
+                        </div>
+                        <div class="score-result">
+                            <div class="score-numbers">
+                                <span class="score-home {% if match.home_score > match.away_score %}winner{% endif %}">{{ match.home_score }}</span>
+                                <span class="score-separator">-</span>
+                                <span class="score-away {% if match.away_score > match.home_score %}winner{% endif %}">{{ match.away_score }}</span>
+                            </div>
+                            <span class="score-status">Full-Time</span>
+                        </div>
+                        <div class="score-team away">
+                            <div class="team-logo-lg">
+                                {% if match.away_team.logo %}
+                                <img src="{{ match.away_team.logo.url }}" alt="{{ match.away_team.name }}">
+                                {% else %}
+                                <span class="team-abbr">{{ match.away_team.short_name|slice:":3" }}</span>
+                                {% endif %}
+                            </div>
+                            <span class="team-name-full">{{ match.away_team.name }}</span>
+                        </div>
+                    </div>
+                    {% if match.venue %}
+                    <div class="score-card-footer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        {{ match.venue }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20M2 12h20"/></svg>
+                <h4>No Completed Matches</h4>
+                <p>Match results will appear here once games are completed.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Upcoming Matches -->
+        {% if upcoming_matches %}
+        <div class="upcoming-section">
+            <div class="section-header-left">
+                <h2 class="section-title-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="title-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Upcoming Matches
+                </h2>
+            </div>
+
+            <div class="upcoming-grid">
+                {% for match in upcoming_matches %}
+                <div class="upcoming-card">
+                    <div class="upcoming-date">
+                        <span class="day">{{ match.match_date|date:"d" }}</span>
+                        <span class="month">{{ match.match_date|date:"M" }}</span>
+                    </div>
+                    <div class="upcoming-teams">
+                        <span class="team">{{ match.home_team.short_name }}</span>
+                        <span class="vs">vs</span>
+                        <span class="team">{{ match.away_team.short_name }}</span>
+                    </div>
+                    <div class="upcoming-time">
+                        {% if match.match_time %}{{ match.match_time|date:"H:i" }}{% else %}TBD{% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Back Link -->
+        <div class="back-link-wrapper">
+            <a href="{% url 'tournaments:list' %}" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Tournaments
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

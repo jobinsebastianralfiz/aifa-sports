@@ -18,6 +18,7 @@ class SiteSettingsForm(forms.ModelForm):
             'facebook_url', 'instagram_url', 'twitter_url', 'youtube_url',
             'meta_title', 'meta_description', 'meta_keywords', 'og_image',
             'google_analytics_id',
+            'aifl_logo', 'aifl_logo_alt', 'kfa_logo', 'kfa_logo_alt',
             'footer_about', 'copyright_text',
         ]
         widgets = {
@@ -36,6 +37,8 @@ class SiteSettingsForm(forms.ModelForm):
             'meta_description': forms.Textarea(attrs={'class': 'form-textarea', 'rows': 3, 'maxlength': '160'}),
             'meta_keywords': forms.TextInput(attrs={'class': 'form-input'}),
             'google_analytics_id': forms.TextInput(attrs={'class': 'form-input'}),
+            'aifl_logo_alt': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g., All India Football League'}),
+            'kfa_logo_alt': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g., Kerala Football Association'}),
             'footer_about': forms.Textarea(attrs={'class': 'form-textarea', 'rows': 3}),
             'copyright_text': forms.TextInput(attrs={'class': 'form-input'}),
         }

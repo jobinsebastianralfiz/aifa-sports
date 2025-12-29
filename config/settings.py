@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'apps.achievements',
     'apps.accreditations',
     'apps.facilities',
+    'apps.tournaments',
 ]
 
 MIDDLEWARE = [

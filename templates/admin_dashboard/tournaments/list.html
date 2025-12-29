@@ -1,0 +1,147 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Tournaments{% endblock %}
+{% block header_title %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>Manage Tournaments</h2>
+        <p class="text-muted">Create and manage football tournaments</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:teams:list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Manage Teams
+        </a>
+        <a href="{% url 'admin_dashboard:matches:list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a10 10 0 0 0 0 20M2 12h20"/>
+            </svg>
+            Manage Matches
+        </a>
+        <a href="{% url 'admin_dashboard:tournaments:create' %}" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Tournament
+        </a>
+    </div>
+</div>
+
+<!-- Tournaments Table -->
+<div class="data-table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Tournament</th>
+                <th>Type</th>
+                <th>Dates</th>
+                <th>Status</th>
+                <th>Display</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tournament in tournaments %}
+            <tr>
+                <td>
+                    <div class="table-item-main">
+                        {% if tournament.logo %}
+                        <img src="{{ tournament.logo.url }}" alt="{{ tournament.name }}" class="table-thumbnail">
+                        {% else %}
+                        <div class="table-thumbnail-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                            </svg>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <strong>{{ tournament.name|truncatewords:6 }}</strong>
+                            {% if tournament.is_major %}<span class="badge badge-warning ml-2">Major</span>{% endif %}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="badge badge-info">{{ tournament.get_tournament_type_display }}</span>
+                </td>
+                <td>
+                    <div class="date-display">
+                        <span class="date-main">{{ tournament.start_date|date:"M d, Y" }}</span>
+                        {% if tournament.end_date %}
+                        <span class="date-time">to {{ tournament.end_date|date:"M d" }}</span>
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    <span class="badge {% if tournament.status == 'ongoing' %}badge-success{% elif tournament.status == 'upcoming' %}badge-warning{% elif tournament.status == 'completed' %}badge-secondary{% else %}badge-danger{% endif %}">
+                        {{ tournament.get_status_display }}
+                    </span>
+                </td>
+                <td>
+                    {% if tournament.show_on_homepage %}<span class="badge badge-info">Homepage</span>{% endif %}
+                    {% if tournament.is_featured %}<span class="badge badge-primary">Featured</span>{% endif %}
+                </td>
+                <td class="text-right">
+                    <div class="table-actions">
+                        <a href="{% url 'admin_dashboard:tournaments:update' tournament.pk %}" class="btn-icon" title="Edit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'admin_dashboard:tournaments:delete' tournament.pk %}" class="btn-icon text-danger" title="Delete">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                        </svg>
+                        <h3 class="empty-title">No Tournaments Yet</h3>
+                        <p class="empty-text">Get started by creating your first tournament.</p>
+                        <a href="{% url 'admin_dashboard:tournaments:create' %}" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add First Tournament
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-ghost">Previous</a>
+        {% endif %}
+        <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-ghost">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

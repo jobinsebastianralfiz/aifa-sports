@@ -1,0 +1,27 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}Delete Team{% endblock %}
+
+{% block content %}
+<div class="delete-confirm-container">
+    <div class="delete-confirm-card">
+        <div class="delete-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+        </div>
+        <h2>Delete Team</h2>
+        <p>Are you sure you want to delete <strong>"{{ object.name }}"</strong>?</p>
+        <p class="text-danger">This action cannot be undone.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="delete-actions">
+                <a href="{% url 'admin_dashboard:teams:list' %}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-danger">Delete Team</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

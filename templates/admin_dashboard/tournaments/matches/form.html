@@ -1,0 +1,200 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block page_title %}{% if object %}Edit{% else %}Add{% endif %} Match{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h2>{% if object %}Edit Match{% else %}Add Match{% endif %}</h2>
+        <p class="text-muted">{% if object %}Update match details and scores{% else %}Add a new match{% endif %}</p>
+    </div>
+    <div class="content-header-right">
+        <a href="{% url 'admin_dashboard:matches:list' %}" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to Matches
+        </a>
+    </div>
+</div>
+
+<form method="post" class="admin-form">
+    {% csrf_token %}
+
+    <div class="form-grid">
+        <div class="form-main">
+            <div class="form-card">
+                <h3 class="form-card-title">Match Information</h3>
+
+                <div class="form-group">
+                    <label for="id_tournament" class="form-label">Tournament <span class="required">*</span></label>
+                    {{ form.tournament }}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_home_team" class="form-label">Home Team <span class="required">*</span></label>
+                        {{ form.home_team }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_away_team" class="form-label">Away Team <span class="required">*</span></label>
+                        {{ form.away_team }}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_match_type" class="form-label">Match Type</label>
+                        {{ form.match_type }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_group_name" class="form-label">Group</label>
+                        {{ form.group_name }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_match_number" class="form-label">Match Number</label>
+                    {{ form.match_number }}
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3 class="form-card-title">Schedule</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_match_date" class="form-label">Match Date <span class="required">*</span></label>
+                        {{ form.match_date }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_match_time" class="form-label">Kick-off Time</label>
+                        {{ form.match_time }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_venue" class="form-label">Venue</label>
+                    {{ form.venue }}
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3 class="form-card-title">Score</h3>
+
+                <div class="score-input-grid">
+                    <div class="score-team">
+                        <label>Home Team</label>
+                    </div>
+                    <div class="score-inputs">
+                        <div class="form-group">
+                            <label class="form-label">Regular</label>
+                            {{ form.home_score }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Extra Time</label>
+                            {{ form.home_score_extra }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Penalties</label>
+                            {{ form.home_score_penalties }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-input-grid">
+                    <div class="score-team">
+                        <label>Away Team</label>
+                    </div>
+                    <div class="score-inputs">
+                        <div class="form-group">
+                            <label class="form-label">Regular</label>
+                            {{ form.away_score }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Extra Time</label>
+                            {{ form.away_score_extra }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Penalties</label>
+                            {{ form.away_score_penalties }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-sidebar">
+            <div class="form-card">
+                <h3 class="form-card-title">Match Status</h3>
+
+                <div class="form-group">
+                    <label for="id_status" class="form-label">Status <span class="required">*</span></label>
+                    {{ form.status }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_current_minute" class="form-label">Current Minute</label>
+                    {{ form.current_minute }}
+                    <span class="form-hint">For live matches</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_highlights_url" class="form-label">Highlights URL</label>
+                    {{ form.highlights_url }}
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3 class="form-card-title">Display Options</h3>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        {{ form.show_on_homepage }}
+                        <span>Show on Homepage</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        {{ form.is_featured }}
+                        <span>Featured Match</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <button type="submit" class="btn btn-primary btn-block">
+                    {% if object %}Update{% else %}Create{% endif %} Match
+                </button>
+                {% if object %}
+                <a href="{% url 'admin_dashboard:matches:delete' object.pk %}" class="btn btn-outline-danger btn-block mt-3">Delete Match</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+.score-input-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+}
+.score-team label { font-weight: 600; }
+.score-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.score-inputs .form-group { margin-bottom: 0; }
+.score-inputs .form-label { font-size: 11px; margin-bottom: 4px; }
+.score-input { width: 60px; text-align: center; font-weight: 700; font-size: 18px; }
+</style>
+{% endblock %}

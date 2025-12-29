@@ -200,6 +200,42 @@
                 </div>
             </div>
 
+            <!-- Federation Logos -->
+            <div class="form-card">
+                <h3 class="form-card-title">Federation Logos</h3>
+                <span class="form-hint" style="display: block; margin-bottom: var(--space-3);">Logos displayed in the navbar</span>
+
+                {% if object and object.aifl_logo %}
+                <div class="current-image" style="margin-bottom: var(--space-2);">
+                    <img src="{{ object.aifl_logo.url }}" alt="{{ object.aifl_logo_alt|default:'AIFL' }}" style="max-width: 80px;">
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="id_aifl_logo" class="form-label">AIFL Logo</label>
+                    {{ form.aifl_logo }}
+                </div>
+                <div class="form-group">
+                    <label for="id_aifl_logo_alt" class="form-label">AIFL Alt Text</label>
+                    {{ form.aifl_logo_alt }}
+                    <span class="form-hint">Describe the image for accessibility</span>
+                </div>
+
+                {% if object and object.kfa_logo %}
+                <div class="current-image" style="margin-bottom: var(--space-2);">
+                    <img src="{{ object.kfa_logo.url }}" alt="{{ object.kfa_logo_alt|default:'KFA' }}" style="max-width: 80px;">
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="id_kfa_logo" class="form-label">KFA Logo</label>
+                    {{ form.kfa_logo }}
+                </div>
+                <div class="form-group">
+                    <label for="id_kfa_logo_alt" class="form-label">KFA Alt Text</label>
+                    {{ form.kfa_logo_alt }}
+                    <span class="form-hint">Describe the image for accessibility</span>
+                </div>
+            </div>
+
             <!-- Save Button -->
             <div class="form-card">
                 <button type="submit" class="btn btn-primary btn-block">

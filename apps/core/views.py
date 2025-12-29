@@ -25,6 +25,7 @@ from apps.achievements.models import Achievement
 from apps.accreditations.models import Accreditation
 from apps.facilities.models import Facility
 from apps.gallery.models import GalleryCategory
+from apps.tournaments.models import Tournament, Match
 
 
 class HomeView(TemplateView):
@@ -49,6 +50,20 @@ class HomeView(TemplateView):
         context['accreditations'] = Accreditation.objects.filter(is_active=True, show_on_homepage=True).order_by('display_order')[:8]
         # Add facilities
         context['facilities'] = Facility.objects.filter(is_active=True, show_on_homepage=True).select_related('category').order_by('display_order')[:6]
+        # Add tournaments and matches
+        context['tournaments'] = Tournament.objects.filter(
+            show_on_homepage=True,
+            status__in=['upcoming', 'ongoing']
+        ).order_by('-is_major', 'display_order')[:3]
+        context['major_tournaments'] = Tournament.objects.filter(
+            is_major=True,
+            status__in=['upcoming', 'ongoing']
+        ).order_by('display_order')[:2]
+        # Only show latest 2 completed matches (Full-Time scores)
+        context['featured_matches'] = Match.objects.filter(
+            show_on_homepage=True,
+            status='completed'
+        ).select_related('tournament', 'home_team', 'away_team').order_by('-match_date', '-match_time')[:2]
         return context
 
 

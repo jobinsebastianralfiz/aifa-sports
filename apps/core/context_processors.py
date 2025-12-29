@@ -70,6 +70,13 @@ def navigation(request):
             'match_url_name': None,
         },
         {
+            'name': 'Tournaments',
+            'url_name': 'tournaments:list',
+            'url': '/tournaments/',
+            'match_path': 'tournaments',
+            'match_url_name': None,
+        },
+        {
             'name': 'Gallery',
             'url_name': 'gallery:list',
             'url': '/gallery/',
@@ -113,6 +120,7 @@ def navigation(request):
         {'name': 'Our Team', 'url_name': 'coaches:list'},
         {'name': 'Facilities', 'url_name': 'facilities:list'},
         {'name': 'Achievements', 'url_name': 'achievements:list'},
+        {'name': 'Tournaments', 'url_name': 'tournaments:list'},
         {'name': 'Gallery', 'url_name': 'gallery:list'},
         {'name': 'Contact', 'url_name': 'frontend:contact'},
     ]

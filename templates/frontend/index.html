@@ -127,88 +127,77 @@
     <div class="orb orb-secondary orb-2"></div>
     <div class="orb orb-primary orb-3"></div>
 
-    <!-- News & Events Panel -->
-    <div class="hero-news-panel animate-right delay-600">
-        <div class="hero-panel-header">
-            <div class="hero-panel-title">
-                <h3>Latest Updates</h3>
-                <p>News & Events</p>
+    <!-- Tournament Scoreboard Panel -->
+    <div class="hero-scoreboard-panel animate-right delay-600">
+        <div class="scoreboard-header">
+            <div class="scoreboard-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20M2 12h20M12 2c2.5 2.5 4 6 4 10s-1.5 7.5-4 10c-2.5-2.5-4-6-4-10s1.5-7.5 4-10"/></svg>
+                <h3>Full-Time Scores</h3>
             </div>
+            {% if major_tournaments.first %}
+            <span class="tournament-badge-header">{{ major_tournaments.first.name|truncatewords:3 }}</span>
+            {% endif %}
         </div>
 
-        <div class="hero-panel-content">
-            {% if news %}
-            {% for item in news %}
-            <a href="{% url 'news:detail' item.slug %}" class="hero-panel-item">
-                <div class="hero-panel-item-icon {% if item.category == 'announcement' %}announcement{% elif item.category == 'achievement' %}achievement{% else %}news{% endif %}">
-                    {% if item.category == 'announcement' %}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                    {% elif item.category == 'achievement' %}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-                    {% else %}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                    {% endif %}
+        <div class="scoreboard-content">
+            {% if featured_matches %}
+            {% for match in featured_matches %}
+            <div class="match-card-new">
+                <div class="match-team home">
+                    <div class="team-logo-large">
+                        {% if match.home_team.logo %}
+                        <img src="{{ match.home_team.logo.url }}" alt="{{ match.home_team.name }}">
+                        {% else %}
+                        <span class="team-initial-large">{{ match.home_team.short_name|slice:":3" }}</span>
+                        {% endif %}
+                    </div>
+                    <span class="team-name-below">{{ match.home_team.short_name }}</span>
                 </div>
-                <div class="hero-panel-item-content">
-                    <span class="hero-panel-item-tag">{{ item.get_category_display }}</span>
-                    <h4>{{ item.title|truncatewords:8 }}</h4>
-                    <p>{{ item.excerpt|truncatewords:12 }}</p>
-                    <span class="hero-panel-item-date">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                        {{ item.published_at|date:"M d, Y" }}
+                <div class="match-score-center">
+                    <div class="score-display">
+                        <span class="score-num {% if match.home_score > match.away_score %}winner{% endif %}">{{ match.home_score }}</span>
+                        <span class="score-dash">-</span>
+                        <span class="score-num {% if match.away_score > match.home_score %}winner{% endif %}">{{ match.away_score }}</span>
+                    </div>
+                    <span class="match-status-text">
+                        {% if match.status == 'completed' %}Full-Time{% elif match.status == 'scheduled' %}{{ match.match_date|date:"d M" }}{% else %}{{ match.get_status_display }}{% endif %}
                     </span>
                 </div>
-                <div class="hero-panel-item-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <div class="match-team away">
+                    <div class="team-logo-large">
+                        {% if match.away_team.logo %}
+                        <img src="{{ match.away_team.logo.url }}" alt="{{ match.away_team.name }}">
+                        {% else %}
+                        <span class="team-initial-large">{{ match.away_team.short_name|slice:":3" }}</span>
+                        {% endif %}
+                    </div>
+                    <span class="team-name-below">{{ match.away_team.short_name }}</span>
                 </div>
-            </a>
+            </div>
             {% endfor %}
-            {% endif %}
-
-            {% if upcoming_events %}
-            {% for event in upcoming_events %}
-            <a href="{% url 'events:detail' event.slug %}" class="hero-panel-item event-item">
-                <div class="hero-panel-event-date">
-                    <span class="day">{{ event.start_date|date:"d" }}</span>
-                    <span class="month">{{ event.start_date|date:"M" }}</span>
-                </div>
-                <div class="hero-panel-item-content">
-                    <span class="hero-panel-item-tag event">{{ event.get_event_type_display }}</span>
-                    <h4>{{ event.title|truncatewords:6 }}</h4>
-                    <p>{{ event.short_description|truncatewords:10 }}</p>
-                    <span class="hero-panel-item-venue">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        {{ event.venue|truncatewords:4 }}
-                    </span>
-                </div>
-                <div class="hero-panel-item-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </a>
-            {% endfor %}
-            {% endif %}
-
-            {% if not news and not upcoming_events %}
-            <div class="hero-panel-empty">
-                <div class="hero-panel-empty-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6M9 15h6"/></svg>
-                </div>
-                <h4>Stay Tuned!</h4>
-                <p>Exciting news and events coming soon. Check back for updates on tournaments, trials, and academy announcements.</p>
+            {% else %}
+            <div class="scoreboard-empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20M2 12h20"/></svg>
+                <h4>No Matches</h4>
+                <p>Stay tuned for upcoming matches!</p>
             </div>
             {% endif %}
         </div>
 
-        <div class="hero-panel-footer">
-            <a href="{% url 'news:list' %}" class="hero-panel-link">
-                View All News
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="{% url 'events:list' %}" class="hero-panel-link">
-                All Events
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+        {% if major_tournaments %}
+        <div class="major-tournaments">
+            <h4>Tournaments</h4>
+            {% for tournament in major_tournaments %}
+            <div class="major-tournament-card">
+                <div class="tournament-info">
+                    <h5>{{ tournament.name }}</h5>
+                    <span class="tournament-dates">{{ tournament.start_date|date:"d M" }}{% if tournament.end_date %} - {{ tournament.end_date|date:"d M" }}{% endif %}</span>
+                </div>
+                <span class="tournament-status {{ tournament.status }}">{{ tournament.get_status_display }}</span>
+            </div>
+            {% endfor %}
         </div>
+        {% endif %}
     </div>
 
     <!-- Scroll Indicator -->
@@ -218,21 +207,49 @@
     </div>
 </section>
 
-<!-- Marquee -->
-<div class="marquee-wrapper">
-    <div class="marquee-track">
-        <div class="marquee-content">
-            {% for item in homepage_content.get_marquee_items %}
-            <span class="marquee-item"><span class="marquee-dot"></span> {{ item }}</span>
+<!-- News & Events Marquee -->
+{% if news or upcoming_events %}
+<div class="news-marquee-wrapper">
+    <div class="news-marquee-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+        News & Events
+    </div>
+    <div class="news-marquee-track">
+        <div class="news-marquee-content">
+            {% for item in news %}
+            <a href="{% url 'news:detail' item.slug %}" class="news-marquee-item news">
+                <span class="news-tag">{{ item.get_category_display }}</span>
+                <span class="news-title">{{ item.title }}</span>
+                <span class="news-date">{{ item.published_at|date:"d M" }}</span>
+            </a>
+            {% endfor %}
+            {% for event in upcoming_events %}
+            <a href="{% url 'events:detail' event.slug %}" class="news-marquee-item event">
+                <span class="news-tag event">{{ event.get_event_type_display }}</span>
+                <span class="news-title">{{ event.title }}</span>
+                <span class="news-date">{{ event.start_date|date:"d M" }}</span>
+            </a>
             {% endfor %}
         </div>
-        <div class="marquee-content">
-            {% for item in homepage_content.get_marquee_items %}
-            <span class="marquee-item"><span class="marquee-dot"></span> {{ item }}</span>
+        <div class="news-marquee-content">
+            {% for item in news %}
+            <a href="{% url 'news:detail' item.slug %}" class="news-marquee-item news">
+                <span class="news-tag">{{ item.get_category_display }}</span>
+                <span class="news-title">{{ item.title }}</span>
+                <span class="news-date">{{ item.published_at|date:"d M" }}</span>
+            </a>
+            {% endfor %}
+            {% for event in upcoming_events %}
+            <a href="{% url 'events:detail' event.slug %}" class="news-marquee-item event">
+                <span class="news-tag event">{{ event.get_event_type_display }}</span>
+                <span class="news-title">{{ event.title }}</span>
+                <span class="news-date">{{ event.start_date|date:"d M" }}</span>
+            </a>
             {% endfor %}
         </div>
     </div>
 </div>
+{% endif %}
 
 <!-- About Section -->
 <section class="section about-section" id="about">
