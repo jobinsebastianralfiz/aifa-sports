@@ -36,9 +36,12 @@ urlpatterns = [
     path('tournaments/', include('apps.tournaments.urls', namespace='tournaments')),
 ]
 
-# Serve media files in development
+# Serve media files (both development and production)
+# Note: For high-traffic production, consider using cloud storage (S3, Cloudinary)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Serve additional assets in development
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
     # Serve frontend assets at root level (for HTML templates that use ../css/, ../assets/)
