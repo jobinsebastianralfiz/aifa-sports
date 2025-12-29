@@ -3877,8 +3877,24 @@ img, video, iframe, embed, object {
    ========================================================================== */
 
 .tournaments-section {
-    padding: var(--space-16) 0;
+    padding: var(--space-16) var(--space-4);
     background: var(--bg-primary);
+}
+
+@media (min-width: 768px) {
+    .tournaments-section {
+        padding: var(--space-20) var(--space-8);
+    }
+}
+
+@media (min-width: 1024px) {
+    .tournaments-section {
+        padding: var(--space-24) var(--space-12);
+    }
+}
+
+.tournaments-section .container {
+    max-width: 1400px;
 }
 
 .scores-section {
@@ -4217,6 +4233,27 @@ img, video, iframe, embed, object {
 }
 
 /* Tournament Detail */
+.tournament-detail-section {
+    padding: var(--space-16) var(--space-4);
+    background: var(--bg-primary);
+}
+
+@media (min-width: 768px) {
+    .tournament-detail-section {
+        padding: var(--space-20) var(--space-8);
+    }
+}
+
+@media (min-width: 1024px) {
+    .tournament-detail-section {
+        padding: var(--space-24) var(--space-12);
+    }
+}
+
+.tournament-detail-section .container {
+    max-width: 1200px;
+}
+
 .tournament-info-box {
     background: var(--bg-secondary);
     border-radius: var(--radius-xl);
