@@ -35,20 +35,13 @@
             </a>
         </li>
     </ul>
-    <div class="navbar-actions hide-mobile">
-        <div class="navbar-federation-logos">
-            {% if site_settings.aifl_logo %}
-            <div class="navbar-federation-logo" title="{{ site_settings.aifl_logo_alt|default:'AIFL' }}">
-                <img src="{{ site_settings.aifl_logo.url }}" alt="{{ site_settings.aifl_logo_alt|default:'AIFL' }}">
-            </div>
-            {% endif %}
-            {% if site_settings.kfa_logo %}
-            <div class="navbar-federation-logo" title="{{ site_settings.kfa_logo_alt|default:'KFA' }}">
-                <img src="{{ site_settings.kfa_logo.url }}" alt="{{ site_settings.kfa_logo_alt|default:'KFA' }}">
-            </div>
-            {% endif %}
-        </div>
+    <!-- Federation Logo at end of navbar -->
+    {% if site_settings.kfa_logo %}
+    <div class="navbar-federation-logo">
+        <img src="{{ site_settings.kfa_logo.url }}" alt="{{ site_settings.kfa_logo_alt|default:'KFA' }}">
     </div>
+    {% endif %}
+
     <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
         <span class="menu-icon-open">⚽</span>
         <span class="menu-icon-close">✕</span>

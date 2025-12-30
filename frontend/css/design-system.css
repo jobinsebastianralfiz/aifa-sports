@@ -342,27 +342,33 @@
 html {
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: var(--primary) var(--darker);
+    scrollbar-color: rgba(255, 215, 0, 0.5) transparent;
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
 }
 
+/* Custom Scrollbar - Modern Slim Design */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--darker);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
     border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-light);
+    background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%);
+}
+
+/* Hide scrollbar when not scrolling (optional - shows on hover/scroll) */
+body {
+    scrollbar-gutter: stable;
 }
 
 html {
