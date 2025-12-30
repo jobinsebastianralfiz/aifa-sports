@@ -96,9 +96,13 @@ const initNavbar = () => {
         // Mobile dropdown toggle
         navMenu.querySelectorAll('.has-dropdown > a').forEach(link => {
             link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 991) {
                     e.preventDefault();
                     const parent = link.parentElement;
+                    // Close other dropdowns
+                    navMenu.querySelectorAll('.has-dropdown.active').forEach(item => {
+                        if (item !== parent) item.classList.remove('active');
+                    });
                     parent.classList.toggle('active');
                 }
             });

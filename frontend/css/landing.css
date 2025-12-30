@@ -4423,3 +4423,136 @@ img, video, iframe, embed, object {
         grid-template-columns: 1fr;
     }
 }
+
+/* ----------------------------------------
+   Premier League Style Mini Scorecard
+   (For Home Page Scoreboard Panel)
+---------------------------------------- */
+.pl-score-card-mini {
+    background: var(--dark);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pl-score-card-mini:last-child {
+    margin-bottom: 0;
+}
+
+.pl-score-bar-mini {
+    display: flex;
+    align-items: stretch;
+    min-height: 50px;
+}
+
+.pl-team-mini {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+}
+
+.pl-team-home-mini {
+    background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+    justify-content: flex-start;
+}
+
+.pl-team-away-mini {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    justify-content: flex-end;
+}
+
+.pl-team-logo-mini {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.pl-team-away-mini .pl-team-logo-mini {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.pl-team-logo-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2px;
+}
+
+.pl-team-abbr-mini {
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pl-team-away-mini .pl-team-abbr-mini {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.pl-team-name-mini {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70px;
+}
+
+.pl-team-away-mini .pl-team-name-mini {
+    color: #1a1a1a;
+}
+
+.pl-score-center-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-1) var(--space-3);
+    background: linear-gradient(180deg, #37003c 0%, #2d0033 100%);
+    min-width: 65px;
+}
+
+.pl-score-numbers-mini {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.pl-score-mini {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    min-width: 18px;
+    text-align: center;
+}
+
+.pl-score-mini.winner {
+    color: #00ff87;
+}
+
+.pl-score-divider-mini {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+}
+
+.pl-match-status-mini {
+    font-size: 8px;
+    font-weight: 700;
+    color: #00ff87;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}

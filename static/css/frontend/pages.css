@@ -1236,3 +1236,218 @@
         padding: var(--space-6);
     }
 }
+
+/* ----------------------------------------
+   Premier League Style Scorecard
+---------------------------------------- */
+.pl-scores-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.pl-score-card {
+    background: var(--dark);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.pl-score-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    background: rgba(0, 0, 0, 0.3);
+    font-size: var(--text-xs);
+    color: var(--glass-white-70);
+}
+
+.pl-match-type {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pl-score-bar {
+    display: flex;
+    align-items: stretch;
+    min-height: 70px;
+}
+
+.pl-team {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+}
+
+.pl-team-home {
+    background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+    justify-content: flex-start;
+}
+
+.pl-team-away {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    justify-content: flex-end;
+}
+
+.pl-team-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.pl-team-away .pl-team-logo {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.pl-team-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+.pl-team-abbr {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pl-team-away .pl-team-abbr {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.pl-team-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pl-team-away .pl-team-name {
+    color: #1a1a1a;
+}
+
+.pl-score-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-4);
+    background: linear-gradient(180deg, #37003c 0%, #2d0033 100%);
+    min-width: 100px;
+}
+
+.pl-score-numbers {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.pl-score {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    min-width: 28px;
+    text-align: center;
+}
+
+.pl-score.winner {
+    color: #00ff87;
+}
+
+.pl-score-divider {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+}
+
+.pl-match-status {
+    font-size: 10px;
+    font-weight: 700;
+    color: #00ff87;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    padding: 2px 8px;
+    background: rgba(0, 255, 135, 0.15);
+    border-radius: var(--radius-sm);
+}
+
+.pl-score-venue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: rgba(0, 0, 0, 0.2);
+    font-size: var(--text-xs);
+    color: var(--glass-white-70);
+}
+
+.pl-score-venue svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--primary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .pl-score-bar {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .pl-team {
+        justify-content: center !important;
+        padding: var(--space-3);
+    }
+
+    .pl-team-home {
+        border-radius: 0;
+    }
+
+    .pl-team-away {
+        border-radius: 0;
+    }
+
+    .pl-score-center {
+        order: -1;
+        flex-direction: row;
+        gap: var(--space-4);
+        padding: var(--space-3);
+    }
+
+    .pl-score-numbers {
+        gap: var(--space-3);
+    }
+
+    .pl-score {
+        font-size: 32px;
+    }
+
+    .pl-match-status {
+        margin-top: 0;
+    }
+
+    .pl-team-name {
+        font-size: var(--text-sm);
+    }
+
+    .pl-team-logo {
+        width: 40px;
+        height: 40px;
+    }
+}

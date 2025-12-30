@@ -142,36 +142,41 @@
         <div class="scoreboard-content">
             {% if featured_matches %}
             {% for match in featured_matches %}
-            <div class="match-card-new">
-                <div class="match-team home">
-                    <div class="team-logo-large">
-                        {% if match.home_team.logo %}
-                        <img src="{{ match.home_team.logo.url }}" alt="{{ match.home_team.name }}">
-                        {% else %}
-                        <span class="team-initial-large">{{ match.home_team.short_name|slice:":3" }}</span>
-                        {% endif %}
+            <div class="pl-score-card-mini">
+                <div class="pl-score-bar-mini">
+                    <!-- Home Team -->
+                    <div class="pl-team-mini pl-team-home-mini">
+                        <div class="pl-team-logo-mini">
+                            {% if match.home_team.logo %}
+                            <img src="{{ match.home_team.logo.url }}" alt="{{ match.home_team.name }}">
+                            {% else %}
+                            <span class="pl-team-abbr-mini">{{ match.home_team.short_name|slice:":3" }}</span>
+                            {% endif %}
+                        </div>
+                        <span class="pl-team-name-mini">{{ match.home_team.short_name }}</span>
                     </div>
-                    <span class="team-name-below">{{ match.home_team.short_name }}</span>
-                </div>
-                <div class="match-score-center">
-                    <div class="score-display">
-                        <span class="score-num {% if match.home_score > match.away_score %}winner{% endif %}">{{ match.home_score }}</span>
-                        <span class="score-dash">-</span>
-                        <span class="score-num {% if match.away_score > match.home_score %}winner{% endif %}">{{ match.away_score }}</span>
+                    <!-- Score Center -->
+                    <div class="pl-score-center-mini">
+                        <div class="pl-score-numbers-mini">
+                            <span class="pl-score-mini {% if match.home_score > match.away_score %}winner{% endif %}">{{ match.home_score }}</span>
+                            <span class="pl-score-divider-mini">-</span>
+                            <span class="pl-score-mini {% if match.away_score > match.home_score %}winner{% endif %}">{{ match.away_score }}</span>
+                        </div>
+                        <span class="pl-match-status-mini">
+                            {% if match.status == 'completed' %}FT{% elif match.status == 'scheduled' %}{{ match.match_date|date:"d M" }}{% else %}{{ match.get_status_display }}{% endif %}
+                        </span>
                     </div>
-                    <span class="match-status-text">
-                        {% if match.status == 'completed' %}Full-Time{% elif match.status == 'scheduled' %}{{ match.match_date|date:"d M" }}{% else %}{{ match.get_status_display }}{% endif %}
-                    </span>
-                </div>
-                <div class="match-team away">
-                    <div class="team-logo-large">
-                        {% if match.away_team.logo %}
-                        <img src="{{ match.away_team.logo.url }}" alt="{{ match.away_team.name }}">
-                        {% else %}
-                        <span class="team-initial-large">{{ match.away_team.short_name|slice:":3" }}</span>
-                        {% endif %}
+                    <!-- Away Team -->
+                    <div class="pl-team-mini pl-team-away-mini">
+                        <span class="pl-team-name-mini">{{ match.away_team.short_name }}</span>
+                        <div class="pl-team-logo-mini">
+                            {% if match.away_team.logo %}
+                            <img src="{{ match.away_team.logo.url }}" alt="{{ match.away_team.name }}">
+                            {% else %}
+                            <span class="pl-team-abbr-mini">{{ match.away_team.short_name|slice:":3" }}</span>
+                            {% endif %}
+                        </div>
                     </div>
-                    <span class="team-name-below">{{ match.away_team.short_name }}</span>
                 </div>
             </div>
             {% endfor %}

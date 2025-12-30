@@ -84,15 +84,42 @@ const initNavbar = () => {
             document.body.classList.toggle('menu-open');
         });
 
-        // Close menu on link click
+        // Close menu on link click (except for dropdown parent links on mobile)
         navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
+            link.addEventListener('click', (e) => {
+                // Don't close if it's a dropdown toggle on mobile
+                const isDropdownToggle = link.classList.contains('navbar-link') &&
+                                        link.closest('.has-dropdown') &&
+                                        window.innerWidth <= 991;
+                if (!isDropdownToggle) {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                    // Also close any open dropdowns
+                    navMenu.querySelectorAll('.has-dropdown.active').forEach(d => d.classList.remove('active'));
+                }
             });
         });
     }
+
+    // Mobile dropdown toggle
+    const dropdownItems = $$('.navbar-menu > li.has-dropdown');
+    dropdownItems.forEach(item => {
+        const link = item.querySelector('.navbar-link');
+        link.addEventListener('click', (e) => {
+            // Only toggle on mobile
+            if (window.innerWidth <= 991) {
+                e.preventDefault();
+                item.classList.toggle('active');
+                // Close other dropdowns
+                dropdownItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('active');
+                    }
+                });
+            }
+        });
+    });
 
     // Active link on scroll
     const sections = $$('section[id]');

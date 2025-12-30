@@ -1070,44 +1070,65 @@ body.menu-open {
         display: none;
     }
 
-    /* Mobile Dropdown */
+    /* Mobile Dropdown - Show properly in mobile menu */
+    .has-dropdown {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .has-dropdown > .navbar-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     .dropdown-arrow {
-        margin-left: auto;
-    }
-
-    .dropdown-menu {
-        position: static;
-        transform: none;
-        min-width: 100%;
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        padding: 0;
-        opacity: 1;
-        visibility: visible;
-        box-shadow: none;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height var(--transition-normal);
-    }
-
-    .has-dropdown.active .dropdown-menu {
-        max-height: 300px;
+        margin-left: var(--space-2);
+        transition: transform var(--transition-fast);
     }
 
     .has-dropdown.active .dropdown-arrow {
         transform: rotate(180deg);
     }
 
+    .dropdown-menu {
+        position: static !important;
+        transform: none !important;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+        border-radius: var(--radius-lg);
+        padding: 0;
+        margin-top: var(--space-2);
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .has-dropdown.active .dropdown-menu {
+        max-height: 400px;
+        padding: var(--space-2) 0;
+    }
+
+    .dropdown-menu li {
+        padding: 0 !important;
+    }
+
     .dropdown-link {
-        padding: var(--space-2) var(--space-4);
+        display: block;
+        padding: var(--space-3) var(--space-4) !important;
         font-size: var(--text-sm);
-        color: var(--glass-white-50);
+        color: var(--glass-white-70);
+        text-align: left;
+        border-bottom: none !important;
     }
 
     .dropdown-link:hover {
-        background: transparent;
-        color: var(--primary);
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--secondary);
     }
 
     /* Mobile menu actions */
