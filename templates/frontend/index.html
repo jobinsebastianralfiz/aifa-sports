@@ -13,6 +13,21 @@
 {% endblock %}
 
 {% block content %}
+<!-- Floating Accreditation Banner -->
+{% if site_settings.kfa_logo %}
+<div class="floating-accreditation" id="accreditationBanner">
+    <div class="accreditation-inner">
+        <span class="accreditation-label">Accredited</span>
+        <img src="{{ site_settings.kfa_logo.url }}" alt="{{ site_settings.kfa_logo_alt|default:'Accreditation' }}">
+    </div>
+    <button class="accreditation-close" id="closeAccreditation" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+    </button>
+</div>
+{% endif %}
+
 <!-- Hero Section with Slider -->
 <section class="hero" id="home">
     {% if hero_slides %}
@@ -127,83 +142,54 @@
     <div class="orb orb-secondary orb-2"></div>
     <div class="orb orb-primary orb-3"></div>
 
-    <!-- Tournament Scoreboard Panel -->
-    <div class="hero-scoreboard-panel animate-right delay-600">
-        <div class="scoreboard-header">
-            <div class="scoreboard-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20M2 12h20M12 2c2.5 2.5 4 6 4 10s-1.5 7.5-4 10c-2.5-2.5-4-6-4-10s1.5-7.5 4-10"/></svg>
-                <h3>Full-Time Scores</h3>
-            </div>
-            {% if major_tournaments.first %}
-            <span class="tournament-badge-header">{{ major_tournaments.first.name|truncatewords:3 }}</span>
-            {% endif %}
+    <!-- Match Result Card -->
+    {% if featured_match %}
+    <div class="hero-match-card animate-right delay-600">
+        <div class="match-card-header">
+            <span class="match-tournament">{{ featured_match.tournament_name|default:"FRIENDLY MATCH" }}</span>
+            <span class="match-status-badge">FT</span>
         </div>
-
-        <div class="scoreboard-content">
-            {% if featured_matches %}
-            {% for match in featured_matches %}
-            <div class="pl-score-card-mini">
-                <div class="pl-score-bar-mini">
-                    <!-- Home Team -->
-                    <div class="pl-team-mini pl-team-home-mini">
-                        <div class="pl-team-logo-mini">
-                            {% if match.home_team.logo %}
-                            <img src="{{ match.home_team.logo.url }}" alt="{{ match.home_team.name }}">
-                            {% else %}
-                            <span class="pl-team-abbr-mini">{{ match.home_team.short_name|slice:":3" }}</span>
-                            {% endif %}
-                        </div>
-                        <span class="pl-team-name-mini">{{ match.home_team.short_name }}</span>
-                    </div>
-                    <!-- Score Center -->
-                    <div class="pl-score-center-mini">
-                        <div class="pl-score-numbers-mini">
-                            <span class="pl-score-mini {% if match.home_score > match.away_score %}winner{% endif %}">{{ match.home_score }}</span>
-                            <span class="pl-score-divider-mini">-</span>
-                            <span class="pl-score-mini {% if match.away_score > match.home_score %}winner{% endif %}">{{ match.away_score }}</span>
-                        </div>
-                        <span class="pl-match-status-mini">
-                            {% if match.status == 'completed' %}FT{% elif match.status == 'scheduled' %}{{ match.match_date|date:"d M" }}{% else %}{{ match.get_status_display }}{% endif %}
-                        </span>
-                    </div>
-                    <!-- Away Team -->
-                    <div class="pl-team-mini pl-team-away-mini">
-                        <span class="pl-team-name-mini">{{ match.away_team.short_name }}</span>
-                        <div class="pl-team-logo-mini">
-                            {% if match.away_team.logo %}
-                            <img src="{{ match.away_team.logo.url }}" alt="{{ match.away_team.name }}">
-                            {% else %}
-                            <span class="pl-team-abbr-mini">{{ match.away_team.short_name|slice:":3" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
+        <div class="match-card-body">
+            <!-- AIFA (Home Team) -->
+            <div class="match-team match-team-home">
+                <div class="match-team-logo">
+                    <img src="{% if site_settings.logo %}{{ site_settings.logo.url }}{% else %}{% static 'assets/images/logo.png' %}{% endif %}" alt="AIFA">
                 </div>
+                <span class="match-team-name">AIFA</span>
             </div>
-            {% endfor %}
-            {% else %}
-            <div class="scoreboard-empty">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20M2 12h20"/></svg>
-                <h4>No Matches</h4>
-                <p>Stay tuned for upcoming matches!</p>
-            </div>
-            {% endif %}
-        </div>
-
-        {% if major_tournaments %}
-        <div class="major-tournaments">
-            <h4>Tournaments</h4>
-            {% for tournament in major_tournaments %}
-            <div class="major-tournament-card">
-                <div class="tournament-info">
-                    <h5>{{ tournament.name }}</h5>
-                    <span class="tournament-dates">{{ tournament.start_date|date:"d M" }}{% if tournament.end_date %} - {{ tournament.end_date|date:"d M" }}{% endif %}</span>
+            <!-- Score -->
+            <div class="match-score-center">
+                <div class="match-score">
+                    <span class="score-num">{{ featured_match.aifa_score|default:0 }}</span>
+                    <span class="score-divider">-</span>
+                    <span class="score-num">{{ featured_match.opponent_score|default:0 }}</span>
                 </div>
-                <span class="tournament-status {{ tournament.status }}">{{ tournament.get_status_display }}</span>
+                {% if featured_match.aifa_score > featured_match.opponent_score %}
+                <span class="match-result-badge win">WIN</span>
+                {% elif featured_match.aifa_score < featured_match.opponent_score %}
+                <span class="match-result-badge defeat">DEFEAT</span>
+                {% else %}
+                <span class="match-result-badge draw">DRAW</span>
+                {% endif %}
             </div>
-            {% endfor %}
+            <!-- Opponent (Away Team) -->
+            <div class="match-team match-team-away">
+                <div class="match-team-logo">
+                    {% if featured_match.opponent_logo %}
+                    <img src="{{ featured_match.opponent_logo.url }}" alt="{{ featured_match.opponent_name }}">
+                    {% else %}
+                    <div class="match-team-placeholder">{{ featured_match.opponent_name|slice:":2"|upper }}</div>
+                    {% endif %}
+                </div>
+                <span class="match-team-name">{{ featured_match.opponent_name|default:"Opponent" }}</span>
+            </div>
         </div>
-        {% endif %}
+        <a href="{% url 'tournaments:list' %}" class="match-card-footer">
+            View All Results
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
     </div>
+    {% endif %}
 
     <!-- Scroll Indicator -->
     <div class="scroll-indicator animate-on-scroll delay-1000">
@@ -256,6 +242,56 @@
 </div>
 {% endif %}
 
+<!-- Mobile Match Result Card -->
+{% if featured_match %}
+<section class="mobile-match-section">
+    <div class="container">
+        <div class="mobile-match-card">
+            <div class="mobile-match-header">
+                <span class="mobile-match-tournament">{{ featured_match.tournament_name|default:"FRIENDLY MATCH" }}</span>
+                <span class="mobile-match-status">FT</span>
+            </div>
+            <div class="mobile-match-body">
+                <div class="mobile-match-team">
+                    <div class="mobile-team-logo">
+                        <img src="{% if site_settings.logo %}{{ site_settings.logo.url }}{% else %}{% static 'assets/images/logo.png' %}{% endif %}" alt="AIFA">
+                    </div>
+                    <span class="mobile-team-name">AIFA</span>
+                </div>
+                <div class="mobile-match-score">
+                    <div class="mobile-score-display">
+                        <span class="mobile-score-num">{{ featured_match.aifa_score|default:0 }}</span>
+                        <span class="mobile-score-divider">-</span>
+                        <span class="mobile-score-num">{{ featured_match.opponent_score|default:0 }}</span>
+                    </div>
+                    {% if featured_match.aifa_score > featured_match.opponent_score %}
+                    <span class="mobile-result-badge win">WIN</span>
+                    {% elif featured_match.aifa_score < featured_match.opponent_score %}
+                    <span class="mobile-result-badge defeat">DEFEAT</span>
+                    {% else %}
+                    <span class="mobile-result-badge draw">DRAW</span>
+                    {% endif %}
+                </div>
+                <div class="mobile-match-team">
+                    <div class="mobile-team-logo">
+                        {% if featured_match.opponent_logo %}
+                        <img src="{{ featured_match.opponent_logo.url }}" alt="{{ featured_match.opponent_name }}">
+                        {% else %}
+                        <span class="mobile-team-initial">{{ featured_match.opponent_name|slice:":2"|upper }}</span>
+                        {% endif %}
+                    </div>
+                    <span class="mobile-team-name">{{ featured_match.opponent_name|default:"Opponent" }}</span>
+                </div>
+            </div>
+            <a href="{% url 'tournaments:list' %}" class="mobile-match-footer">
+                View All Results
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <!-- About Section -->
 <section class="section about-section" id="about">
     <div class="about-grid container">
@@ -294,13 +330,21 @@
 
         <div class="about-images animate-right">
             <div class="about-image about-img-1">
+                {% if homepage_content.about_section_image_1 %}
+                <img src="{{ homepage_content.about_section_image_1.url }}" alt="Football Training">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80" alt="Football Training">
+                {% endif %}
             </div>
             <div class="about-image about-img-2">
+                {% if homepage_content.about_section_image_2 %}
+                <img src="{{ homepage_content.about_section_image_2.url }}" alt="Football Match">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" alt="Football Match">
+                {% endif %}
             </div>
             <div class="about-experience">
-                <div class="about-experience-number" data-count="10">0</div>
+                <div class="about-experience-number" data-count="{{ about_content.years_experience|default:8 }}">0</div>
                 <div class="about-experience-text">Years Excellence</div>
             </div>
         </div>
@@ -423,19 +467,28 @@
 
 <!-- Gallery Section -->
 <section class="gallery-section">
-    <div class="gallery-scroll">
-        {% for image in gallery_images %}
-        <div class="gallery-item hover-zoom"><img src="{{ image.image.url }}" alt="{{ image.title|default:'Gallery' }}"></div>
-        {% empty %}
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" alt="Gallery"></div>
-        <div class="gallery-item hover-zoom"><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=80" alt="Gallery"></div>
-        {% endfor %}
+    <div class="gallery-marquee-track">
+        <div class="gallery-marquee-content">
+            {% for image in gallery_images %}
+            <div class="gallery-marquee-item"><img src="{{ image.image.url }}" alt="{{ image.title|default:'Gallery' }}"></div>
+            {% empty %}
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Gallery"></div>
+            {% endfor %}
+            <!-- Duplicate for seamless loop -->
+            {% for image in gallery_images %}
+            <div class="gallery-marquee-item"><img src="{{ image.image.url }}" alt="{{ image.title|default:'Gallery' }}"></div>
+            {% empty %}
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80" alt="Gallery"></div>
+            <div class="gallery-marquee-item"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Gallery"></div>
+            {% endfor %}
+        </div>
     </div>
 </section>
 
@@ -494,6 +547,9 @@
         <div class="coach-card animate-scale {% if forloop.counter == 2 %}delay-100{% elif forloop.counter == 3 %}delay-200{% endif %}">
             <div class="coach-bg" style="background-image: url('{% if coach.photo %}{{ coach.photo.url }}{% else %}https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80{% endif %}')"></div>
             <div class="coach-overlay"></div>
+            <a href="{% url 'coaches:detail' coach.slug %}" class="coach-view-profile" aria-label="View Profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </a>
             <div class="coach-content">
                 {% if coach.qualifications %}
                 <div class="badge badge-outline-primary">{{ coach.qualifications|truncatewords:3 }}</div>
@@ -566,40 +622,32 @@
 
     <div class="achievements-grid container">
         {% for achievement in achievements %}
-        <div class="achievement-card animate-scale {% if forloop.counter == 2 %}delay-100{% elif forloop.counter == 3 %}delay-200{% elif forloop.counter == 4 %}delay-300{% endif %}">
-            <div class="achievement-icon">
-                {% if achievement.category == 'trophy' %}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-                    <path d="M4 22h16"/>
-                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
-                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
-                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
-                </svg>
-                {% elif achievement.category == 'championship' %}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="8" r="6"/>
-                    <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-                </svg>
-                {% elif achievement.category == 'award' %}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
+        <a href="{% url 'achievements:detail' achievement.slug %}" class="achievement-card-new animate-scale {% if forloop.counter == 2 %}delay-100{% elif forloop.counter == 3 %}delay-200{% elif forloop.counter == 4 %}delay-300{% endif %}">
+            <div class="achievement-card-image">
+                {% if achievement.image %}
+                <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}">
                 {% else %}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
-                </svg>
+                <div class="achievement-card-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                        <path d="M4 22h16"/>
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                    </svg>
+                </div>
+                {% endif %}
+                <span class="achievement-year-badge">{{ achievement.year }}</span>
+            </div>
+            <div class="achievement-card-content">
+                <h3 class="achievement-card-title">{{ achievement.title }}</h3>
+                <span class="achievement-category-badge">{{ achievement.get_category_display|upper }}</span>
+                {% if achievement.description %}
+                <p class="achievement-card-desc">{{ achievement.description|truncatewords:20 }}</p>
                 {% endif %}
             </div>
-            <div class="achievement-year">{{ achievement.year }}</div>
-            <h3 class="achievement-title">{{ achievement.title }}</h3>
-            <p class="achievement-category">{{ achievement.get_category_display }}</p>
-            {% if achievement.description %}
-            <p class="achievement-desc">{{ achievement.description|truncatewords:15 }}</p>
-            {% endif %}
-        </div>
+        </a>
         {% endfor %}
     </div>
 
